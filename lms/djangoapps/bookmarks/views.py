@@ -165,7 +165,10 @@ class BookmarksListView(ListCreateAPIView, BookmarksViewMixin):
         else:
             course_key = None
 
-        return api.get_bookmarks(user=self.request.user, course_key=course_key, serialized=False)
+        return api.get_bookmarks(
+            user=self.request.user, course_key=course_key,
+            fields=self.fields_to_return(self.request.QUERY_PARAMS), serialized=False
+        )
 
     def paginate_queryset(self, queryset, page_size=None):
         """ Override GenericAPIView.paginate_queryset for the purpose of eventing """
