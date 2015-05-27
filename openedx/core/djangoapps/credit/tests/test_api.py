@@ -26,7 +26,14 @@ from openedx.core.djangoapps.credit.models import (
     CreditProvider,
     CreditRequirement,
     CreditRequirementStatus,
-    CreditEligibility,
+    CreditEligibility
+)
+from openedx.core.djangoapps.credit.api import (
+    get_credit_requirements,
+    set_credit_requirements,
+    _get_requirements_to_disable,
+    set_credit_requirement_status,
+    get_credit_requirement
 )
 
 
@@ -190,6 +197,40 @@ class CreditRequirementApiTests(CreditApiTestBase):
         grade_req = CreditRequirement.objects.filter(namespace="grade", name="grade")
         self.assertEqual(len(grade_req), 1)
         self.assertEqual(grade_req[0].active, False)
+
+    def test_set_credit_requirement_status(self):
+        self.add_credit_course()
+        requirements = [
+            {
+                "namespace": "grade",
+                "name": "grade",
+                "display_name": "Grade",
+                "criteria": {
+                    "min_grade": 0.8
+                }
+            },
+            {
+                "namespace": "reverification",
+                "name": "i4x://edX/DemoX/edx-reverification-block/assessment_uuid",
+                "display_name": "Assessment 1",
+                "criteria": {}
+            }
+        ]
+
+        set_credit_requirements(self.course_key, requirements)
+        course_requirements = CreditRequirement.get_course_requirements(self.course_key)
+        self.assertEqual(len(course_requirements), 2)
+
+        requirement = get_credit_requirement(self.course_key, "grade", "grade")
+        status, created = set_credit_requirement_status("staff", requirement, 'satisfied', {})
+        self.assertTrue(created)
+        self.assertEqual(status.requirement.namespace, requirement.namespace)
+
+        status, created = set_credit_requirement_status(
+            "staff", requirement, 'failed', {'failure_reason': "requirements not satisfied"}
+        )
+        self.assertFalse(created)
+        self.assertEqual(status.requirement.namespace, requirement.namespace)
 
 
 @ddt.ddt
@@ -374,6 +415,7 @@ class CreditProviderIntegrationApiTests(CreditApiTestBase):
         self.assertEqual(requests, [])
 
     def _configure_credit(self):
+
         """
         Configure a credit course and its requirements.
 
