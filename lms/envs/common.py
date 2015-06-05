@@ -1864,7 +1864,7 @@ INSTALLED_APPS = (
     'teams',
 
     # Bookmarks
-    'bookmarks',
+    'openedx.core.djangoapps.bookmarks',
 )
 
 ######################### CSRF #########################################
