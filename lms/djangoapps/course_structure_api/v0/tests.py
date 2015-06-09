@@ -21,7 +21,6 @@ from xmodule.tests import get_test_system
 from courseware.tests.factories import GlobalStaffFactory, StaffFactory
 from openedx.core.djangoapps.content.course_structures.models import CourseStructure
 from openedx.core.djangoapps.content.course_structures.tasks import update_course_structure
-from util.url import reload_django_url_config
 
 
 TEST_SERVER_HOST = 'http://testserver'
@@ -388,14 +387,6 @@ class CourseBlocksAndNavigationMixin(CourseDetailMixin, CourseViewTestsMixin):
     block_navigation_view_type = ''
     view_supports_debug_mode = False
     block_fields = ['id', 'type', 'display_name', 'web_url', 'block_url', 'graded', 'format']
-
-    @patch.dict(
-        'django.conf.settings.FEATURES',
-        {'ENABLE_COURSE_BLOCKS_NAVIGATION_API': True, 'ENABLE_RENDER_XBLOCK_API': True}
-    )
-    def setUp(self):
-        reload_django_url_config()
-        super(CourseBlocksAndNavigationMixin, self).setUp()
 
     @property
     def view(self):
