@@ -430,7 +430,7 @@ class CourseBlocksAndNavigation(ListAPIView):
             except:
                 raise ParseError
 
-    class ResultInfo(object):
+    class ResultData(object):
         """
         A class for encapsulating the result information, specifically the blocks and navigation data.
         """
@@ -455,7 +455,7 @@ class CourseBlocksAndNavigation(ListAPIView):
         """
         A class for encapsulating a block's information as needed during traversal of a block hierarcy.
         """
-        def __init__(self, block, parent_block_info=None):
+        def __init__(self, block, request_info, parent_block_info=None):
             # the block for which the recursion is being computed
             self.block = block
 
@@ -465,9 +465,6 @@ class CourseBlocksAndNavigation(ListAPIView):
             # the block's depth in the block hierarchy
             self.depth = 0
 
-            # the block's data to include in the response
-            self.value = None
-
             # descendants_of_parent: the list of descendants for this block's parent
             self.descendants_of_parent = []
             self.descendants_of_self = []
@@ -476,6 +473,24 @@ class CourseBlocksAndNavigation(ListAPIView):
             if parent_block_info:
                 self.depth = parent_block_info.depth + 1
                 self.descendants_of_parent = parent_block_info.descendants_of_self
+
+            # the block's data to include in the response
+            self.value = {
+                "id": unicode(block.location),
+                "type": self.type,
+                "display_name": block.display_name,
+                "web_url": reverse(
+                    "jump_to",
+                    kwargs={"course_id": unicode(request_info.course.id), "location": unicode(block.location)},
+                    request=request_info.request,
+                ),
+                "block_url": reverse(
+                    "courseware.views.render_xblock",
+                    kwargs={"usage_key_string": unicode(block.location)},
+                    request=request_info.request,
+                ),
+            }
+
 
     @view_course_access(depth=None)
     def list(self, request, course, return_blocks=True, return_nav=True, *args, **kwargs):
@@ -488,7 +503,7 @@ class CourseBlocksAndNavigation(ListAPIView):
 
         # initialize request and result objects
         request_info = self.RequestInfo(request, course)
-        result_info = self.ResultInfo(return_blocks, return_nav)
+        result_data = self.ResultData(return_blocks, return_nav)
 
         # create and populate a field data cache by pre-fetching for the course (with depth=None)
         request_info.field_data_cache = FieldDataCache.cache_for_descriptor_descendents(
@@ -496,19 +511,22 @@ class CourseBlocksAndNavigation(ListAPIView):
         )
 
         # start the recursion with the start_block
-        self.recurse_blocks_nav(request_info, result_info, self.BlockInfo(start_block))
+        self.recurse_blocks_nav(request_info, result_data, self.BlockInfo(start_block, request_info))
 
         # return response
         response = {"root": unicode(start_block.location)}
-        result_info.update_response(response, return_blocks, return_nav)
+        result_data.update_response(response, return_blocks, return_nav)
         return Response(response)
 
-    def recurse_blocks_nav(self, request_info, result_info, block_info):
+    def recurse_blocks_nav(self, request_info, result_data, block_info):
         """
         A depth-first recursive function that supports calculation of both the list of blocks in the course
-        and the navigation information up to requested navigation_depth of the course.
+        and the navigation information up to the requested navigation_depth of the course.
 
         Arguments:
+            request_info - Object encapsulating the request information.
+            result_data - Running result data that is updated during the recursion.
+            block_info - Information about the current block in the recursion.
         """
         # bind user data to the block
         block_info.block = get_module_for_descriptor(
@@ -523,23 +541,27 @@ class CourseBlocksAndNavigation(ListAPIView):
         if not has_access(request_info.request.user, 'load', block_info.block, course_key=request_info.course.id):
             return
 
-        # set basic information about the block
-        self.set_block_value(request_info, result_info, block_info)
+        # add the block's value to the result
+        result_data.blocks[unicode(block_info.block.location)] = block_info.value
 
         # descendants
-        self.update_descendants(request_info, result_info, block_info)
+        self.update_descendants(request_info, result_data, block_info)
 
         # children: recursively call the function for each of the children, while supporting dynamic children.
         children = []
         if block_info.block.has_children:
             children = get_dynamic_descriptor_children(block_info.block, request_info.request.user.id)
             for child in children:
-                self.recurse_blocks_nav(request_info, result_info, self.BlockInfo(child, block_info))
+                self.recurse_blocks_nav(
+                    request_info,
+                    result_data,
+                    self.BlockInfo(child, request_info, parent_block_info=block_info)
+                )
             if request_info.children:
                 block_info.value["children"] = [unicode(child.location) for child in children]
 
         # block count
-        self.update_block_count(children, request_info, result_info, block_info)
+        self.update_block_count(children, request_info, result_data, block_info)
 
         # block JSON data
         self.add_block_json(request_info, block_info)
@@ -547,28 +569,7 @@ class CourseBlocksAndNavigation(ListAPIView):
         # additional fields
         self.add_additional_fields(request_info, block_info)
 
-    def set_block_value(self, request_info, result_info, block_info):
-        """
-        Sets the basic values for the current block in the recursion.
-        """
-        block_info.value = {
-            "id": unicode(block_info.block.location),
-            "type": block_info.type,
-            "display_name": block_info.block.display_name,
-            "web_url": reverse(
-                "jump_to",
-                kwargs={"course_id": unicode(request_info.course.id), "location": unicode(block_info.block.location)},
-                request=request_info.request,
-            ),
-            "block_url": reverse(
-                "courseware.views.render_xblock",
-                kwargs={"usage_key_string": unicode(block_info.block.location)},
-                request=request_info.request,
-            ),
-        }
-        result_info.blocks[unicode(block_info.block.location)] = block_info.value
-
-    def update_descendants(self, request_info, result_info, block_info):
+    def update_descendants(self, request_info, result_data, block_info):
         """
         Updates the descendants data for the current block.
 
@@ -601,11 +602,11 @@ class CourseBlocksAndNavigation(ListAPIView):
             # otherwise, have the block's descendants add themselves to this block's descendants by
             # referencing/attaching descendants_of_self from this block's navigation value.
             else:
-                result_info.navigation.setdefault(
+                result_data.navigation.setdefault(
                     unicode(block_info.block.location), {}
                 )["descendants"] = block_info.descendants_of_self
 
-    def update_block_count(self, children, request_info, result_info, block_info):
+    def update_block_count(self, children, request_info, result_data, block_info):
         """
         For all the block types that are requested to be counted, include the count of that block type as
         aggregated from the block's descendants.
@@ -613,7 +614,7 @@ class CourseBlocksAndNavigation(ListAPIView):
         for b_type in request_info.block_count:
             block_info.value.setdefault("block_count", {})[b_type] = (
                 sum(
-                    result_info.blocks.get(unicode(child.location), {}).get("block_count", {}).get(b_type, 0)
+                    result_data.blocks.get(unicode(child.location), {}).get("block_count", {}).get(b_type, 0)
                     for child in children
                 ) +
                 (1 if b_type == block_info.type else 0)
