@@ -70,6 +70,16 @@ class DeveloperErrorViewMixin(object):
             raise
 
 
+class ExpandableFieldViewMixin(object):
+    """A view mixin to add expansion information to the serializer context for later use by an ExpandableField."""
+
+    def get_serializer_context(self):
+        """Adds expand information from query parameters to the serializer context to support expandable fields."""
+        result = super(ExpandableFieldViewMixin, self).get_serializer_context()
+        result['expand'] = [x for x in self.request.QUERY_PARAMS.get('expand', '').split(',') if x]
+        return result
+
+
 def view_course_access(depth=0, access_action='load', check_for_milestones=False):
     """
     Method decorator for an API endpoint that verifies the user has access to the course.

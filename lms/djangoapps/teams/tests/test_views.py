@@ -121,6 +121,8 @@ class TeamAPITestCase(APITestCase, ModuleStoreTestCase):
         self.users = {
             'student_unenrolled': UserFactory.create(password=self.test_password),
             'student_enrolled': UserFactory.create(password=self.test_password),
+            'student_enrolled_not_on_team': UserFactory.create(password=self.test_password),
+            'student_enrolled_both_courses_other_team': UserFactory.create(password=self.test_password),
             'staff': AdminFactory.create(password=self.test_password),
             'course_staff': StaffFactory.create(course_key=self.test_course_1.id, password=self.test_password)
         }
@@ -135,11 +137,19 @@ class TeamAPITestCase(APITestCase, ModuleStoreTestCase):
         self.test_team_4 = CourseTeamFactory.create(name='Coal Team', course_id=self.test_course_1.id, is_active=False)
         self.test_team_4 = CourseTeamFactory.create(name='Another Team', course_id=self.test_course_2.id)
 
-        self.test_team_1.add_user(self.users['student_enrolled'])
+        for user, course in [
+                ('student_enrolled', self.test_course_1),
+                ('student_enrolled_not_on_team', self.test_course_1),
+                ('student_enrolled_both_courses_other_team', self.test_course_1),
+                ('student_enrolled_both_courses_other_team', self.test_course_2)
+        ]:
+            CourseEnrollment.enroll(
+                self.users[user], course.id, check_access=True
+            )
 
-        CourseEnrollment.enroll(
-            self.users['student_enrolled'], self.test_course_1.id, check_access=True
-        )
+        self.test_team_1.add_user(self.users['student_enrolled'])
+        self.test_team_2.add_user(self.users['student_enrolled_both_courses_other_team'])
+        self.test_team_4.add_user(self.users['student_enrolled_both_courses_other_team'])
 
     def login(self, user):
         """Given a user string, logs the given user in.
@@ -197,9 +207,9 @@ class TeamAPITestCase(APITestCase, ModuleStoreTestCase):
         """Posts data to the team creation endpoint. Verifies expected_status."""
         return self.make_call(reverse('teams_list'), expected_status, 'post', data, **kwargs)
 
-    def get_team_detail(self, team_id, expected_status=200, **kwargs):
+    def get_team_detail(self, team_id, expected_status=200, data=None, **kwargs):
         """Gets detailed team information for team_id. Verifies expected_status."""
-        return self.make_call(reverse('teams_detail', args=[team_id]), expected_status, 'get', **kwargs)
+        return self.make_call(reverse('teams_detail', args=[team_id]), expected_status, 'get', data, **kwargs)
 
     def patch_team_detail(self, team_id, expected_status, data=None, **kwargs):
         """Patches the team with team_id using data. Verifies expected_status."""
@@ -223,6 +233,33 @@ class TeamAPITestCase(APITestCase, ModuleStoreTestCase):
             expected_status,
             'get',
             data,
+            **kwargs
+        )
+
+    def get_membership_list(self, expected_status=200, data=None, **kwargs):
+        """Gets the membership list, passing data as query params. Verifies expected_status."""
+        return self.make_call(reverse('team_membership_list'), expected_status, 'get', data, **kwargs)
+
+    def post_create_membership(self, expected_status=200, data=None, **kwargs):
+        """Posts data to the membership creation endpoint. Verifies expected_status."""
+        return self.make_call(reverse('team_membership_list'), expected_status, 'post', data, **kwargs)
+
+    def get_membership_detail(self, team_id, username, expected_status=200, data=None, **kwargs):
+        """Gets an individual membership record, passing data as query params. Verifies expected_status."""
+        return self.make_call(
+            reverse('team_membership_detail', args=[team_id, username]),
+            expected_status,
+            'get',
+            data,
+            **kwargs
+        )
+
+    def delete_membership(self, team_id, username, expected_status=200, **kwargs):
+        """Deletes an individual membership record. Verifies expected_status."""
+        return self.make_call(
+            reverse('team_membership_detail', args=[team_id, username]),
+            expected_status,
+            'delete',
             **kwargs
         )
 
@@ -274,7 +311,7 @@ class TestListTeamsAPI(TeamAPITestCase):
     @ddt.data(
         (None, 200, ['Nuclear Team', u'sólar team', 'Wind Team']),
         ('name', 200, ['Nuclear Team', u'sólar team', 'Wind Team']),
-        ('open_slots', 200, ['Wind Team', 'Nuclear Team', u'sólar team']),
+        ('open_slots', 200, ['Nuclear Team', u'sólar team', 'Wind Team']),
         ('last_activity', 400, []),
     )
     @ddt.unpack
@@ -295,6 +332,10 @@ class TestListTeamsAPI(TeamAPITestCase):
         self.assertEquals(3, result['num_pages'])
         self.assertIsNone(result['next'])
         self.assertIsNotNone(result['previous'])
+
+    def test_expand_user(self):
+        result = self.get_teams_list(200, {'expand': 'user', 'topic_id': 'renewable'})
+        self.assertIn('email', result['results'][0]['membership'][0]['user'])
 
 
 @ddt.ddt
@@ -395,6 +436,10 @@ class TestDetailTeamAPI(TeamAPITestCase):
 
     def test_does_not_exist(self):
         self.get_team_detail('foobar', 404)
+
+    def test_expand_user(self):
+        result = self.get_team_detail(self.test_team_1.team_id, 200, {'expand': 'user'})
+        self.assertIn('email', result['membership'][0]['user'])
 
 
 @ddt.ddt
@@ -523,3 +568,224 @@ class TestDetailTopicAPI(TeamAPITestCase):
 
     def test_invalid_topic_id(self):
         self.get_topic_detail('foobar', self.test_course_1.id, 404)
+
+
+@ddt.ddt
+class TestListMembershipAPI(TeamAPITestCase):
+    """Test cases for the membership list endpoint."""
+
+    @ddt.data(
+        (None, 403),
+        ('student_inactive', 403),
+        ('student_unenrolled', 404),
+        ('student_enrolled', 200),
+        ('student_enrolled_both_courses_other_team', 200),
+        ('staff', 200),
+        ('course_staff', 200),
+    )
+    @ddt.unpack
+    def test_access(self, user, status):
+        membership = self.get_membership_list(status, {'team_id': self.test_team_1.team_id}, user=user)
+        if status == 200:
+            self.assertEqual(membership['count'], 1)
+            self.assertEqual(membership['results'][0]['user']['id'], self.users['student_enrolled'].username)
+
+    @ddt.data(
+        (None, 403, False),
+        ('student_inactive', 403, False),
+        ('student_unenrolled', 200, False),
+        ('student_enrolled', 200, True),
+        ('student_enrolled_both_courses_other_team', 200, True),
+        ('staff', 200, True),
+        ('course_staff', 200, True),
+    )
+    @ddt.unpack
+    def test_access_by_username(self, user, status, has_content):
+        membership = self.get_membership_list(status, {'username': self.users['student_enrolled'].username}, user=user)
+        if status == 200:
+            if has_content:
+                self.assertEqual(membership['count'], 1)
+                self.assertEqual(membership['results'][0]['team']['id'], self.test_team_1.team_id)
+            else:
+                self.assertEqual(membership['count'], 0)
+
+    def test_no_username_or_team_id(self):
+        self.get_membership_list(400, {})
+
+    def test_bad_team_id(self):
+        self.get_membership_list(404, {'team_id': 'foobar'})
+
+    def test_expand_user(self):
+        result = self.get_membership_list(200, {'team_id': self.test_team_1.team_id, 'expand': 'user'})
+        self.assertIn('email', result['results'][0]['user'])
+
+    def test_expand_team(self):
+        result = self.get_membership_list(200, {'team_id': self.test_team_1.team_id, 'expand': 'team'})
+        self.assertIn('description', result['results'][0]['team'])
+
+
+@ddt.ddt
+class TestCreateMembershipAPI(TeamAPITestCase):
+    """Test cases for the membership creation endpoint."""
+
+    def build_membership_data_raw(self, username, team):
+        """Assembles a membership creation payload based on the raw values provided."""
+        return {'username': username, 'team': team}
+
+    def build_membership_data(self, username, team):
+        """Assembles a membership creation payload based on the username and team model provided."""
+        return self.build_membership_data_raw(self.users[username].username, team.team_id)
+
+    @ddt.data(
+        (None, 403),
+        ('student_inactive', 403),
+        ('student_unenrolled', 404),
+        ('student_enrolled_not_on_team', 200),
+        ('student_enrolled', 404),
+        ('student_enrolled_both_courses_other_team', 404),
+        ('staff', 200),
+        ('course_staff', 200),
+    )
+    @ddt.unpack
+    def test_access(self, user, status):
+        membership = self.post_create_membership(
+            status,
+            self.build_membership_data('student_enrolled_not_on_team', self.test_team_1),
+            user=user
+        )
+        if status == 200:
+            self.assertEqual(membership['user']['id'], self.users['student_enrolled_not_on_team'].username)
+            self.assertEqual(membership['team']['id'], self.test_team_1.team_id)
+
+    def test_no_username(self):
+        response = self.post_create_membership(400, {'team': self.test_team_1.team_id})
+        self.assertIn('username', json.loads(response.content)['field_errors'])
+
+    def test_no_team(self):
+        response = self.post_create_membership(400, {'username': self.users['student_enrolled_not_on_team'].username})
+        self.assertIn('team', json.loads(response.content)['field_errors'])
+
+    def test_bad_team(self):
+        self.post_create_membership(
+            404,
+            self.build_membership_data_raw(self.users['student_enrolled'].username, 'foobar')
+        )
+
+    def test_bad_username(self):
+        self.post_create_membership(
+            404,
+            self.build_membership_data_raw('foobar', self.test_team_1.team_id),
+            user='staff'
+        )
+
+    @ddt.data('student_enrolled', 'staff', 'course_staff')
+    def test_join_twice(self, user):
+        response = self.post_create_membership(
+            400,
+            self.build_membership_data('student_enrolled', self.test_team_1),
+            user=user
+        )
+        self.assertIn('already a member', json.loads(response.content)['developer_message'])
+
+    def test_join_second_team_in_course(self):
+        response = self.post_create_membership(
+            400,
+            self.build_membership_data('student_enrolled_both_courses_other_team', self.test_team_1),
+            user='student_enrolled_both_courses_other_team'
+        )
+        self.assertIn('already a member', json.loads(response.content)['developer_message'])
+
+    @ddt.data('staff', 'course_staff')
+    def test_not_enrolled_in_team_course(self, user):
+        response = self.post_create_membership(
+            400,
+            self.build_membership_data('student_unenrolled', self.test_team_1),
+            user=user
+        )
+        self.assertIn('not enrolled', json.loads(response.content)['developer_message'])
+
+
+@ddt.ddt
+class TestDetailMembershipAPI(TeamAPITestCase):
+    """Test cases for the membership detail endpoint."""
+
+    @ddt.data(
+        (None, 403),
+        ('student_inactive', 403),
+        ('student_unenrolled', 404),
+        ('student_enrolled_not_on_team', 200),
+        ('student_enrolled', 200),
+        ('staff', 200),
+        ('course_staff', 200),
+    )
+    @ddt.unpack
+    def test_access(self, user, status):
+        self.get_membership_detail(
+            self.test_team_1.team_id,
+            self.users['student_enrolled'].username,
+            status,
+            user=user
+        )
+
+    def test_bad_team(self):
+        self.get_membership_detail('foobar', self.users['student_enrolled'].username, 404)
+
+    def test_bad_username(self):
+        self.get_membership_detail(self.test_team_1.team_id, 'foobar', 404)
+
+    def test_no_membership(self):
+        self.get_membership_detail(
+            self.test_team_1.team_id,
+            self.users['student_enrolled_not_on_team'].username,
+            404
+        )
+
+    def test_expand_user(self):
+        result = self.get_membership_detail(
+            self.test_team_1.team_id,
+            self.users['student_enrolled'].username,
+            200,
+            {'expand': 'user'}
+        )
+        self.assertIn('email', result['user'])
+
+    def test_expand_team(self):
+        result = self.get_membership_detail(
+            self.test_team_1.team_id,
+            self.users['student_enrolled'].username,
+            200,
+            {'expand': 'team'}
+        )
+        self.assertIn('description', result['team'])
+
+
+@ddt.ddt
+class TestDeleteMembershipAPI(TeamAPITestCase):
+    """Test cases for the membership deletion endpoint."""
+
+    @ddt.data(
+        (None, 403),
+        ('student_inactive', 403),
+        ('student_unenrolled', 404),
+        ('student_enrolled_not_on_team', 404),
+        ('student_enrolled', 204),
+        ('staff', 204),
+        ('course_staff', 204),
+    )
+    @ddt.unpack
+    def test_access(self, user, status):
+        self.delete_membership(
+            self.test_team_1.team_id,
+            self.users['student_enrolled'].username,
+            status,
+            user=user
+        )
+
+    def test_bad_team(self):
+        self.delete_membership('foobar', self.users['student_enrolled'].username, 404)
+
+    def test_bad_username(self):
+        self.delete_membership(self.test_team_1.team_id, 'foobar', 404)
+
+    def test_missing_membership(self):
+        self.delete_membership(self.test_team_2.team_id, self.users['student_enrolled'].username, 404)

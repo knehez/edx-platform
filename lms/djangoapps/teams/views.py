@@ -18,15 +18,16 @@ from rest_framework import status
 from rest_framework import permissions
 
 from django.db.models import Count
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_noop
 
-from student.models import CourseEnrollment
+from student.models import CourseEnrollment, CourseAccessRole
 from student.roles import CourseStaffRole
 
 from openedx.core.lib.api.parsers import MergePatchParser
 from openedx.core.lib.api.permissions import IsStaffOrReadOnly
-from openedx.core.lib.api.view_utils import RetrievePatchAPIView, add_serializer_errors
+from openedx.core.lib.api.view_utils import RetrievePatchAPIView, add_serializer_errors, ExpandableFieldViewMixin
 from openedx.core.lib.api.serializers import PaginationSerializer
 
 from xmodule.modulestore.django import modulestore
@@ -34,8 +35,9 @@ from xmodule.modulestore.django import modulestore
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 
-from .models import CourseTeam
-from .serializers import CourseTeamSerializer, CourseTeamCreationSerializer, TopicSerializer
+from .models import CourseTeam, CourseTeamMembership
+from .serializers import CourseTeamSerializer, CourseTeamCreationSerializer, TopicSerializer, MembershipSerializer
+from . import errors
 
 
 class TeamsDashboardView(View):
@@ -71,7 +73,7 @@ def is_feature_enabled(course):
     return settings.FEATURES.get('ENABLE_TEAMS', False) and course.teams_enabled
 
 
-def has_team_api_access(user, course_key):
+def has_team_api_access(user, course_key, access_username=None):
     """Returns True if the user has access to the Team API for the course
     given by `course_key`. The user must either be enrolled in the course,
     be course staff, or be global staff.
@@ -79,16 +81,18 @@ def has_team_api_access(user, course_key):
     Args:
       user (User): The user to check access for.
       course_key (CourseKey): The key to the course which we are checking access to.
+      access_username (string): If provided, access_username must match user.username for non staff access.
 
     Returns:
       bool: True if the user has access, False otherwise.
     """
-    return (CourseEnrollment.is_enrolled(user, course_key) or
-            CourseStaffRole(course_key).has_user(user) or
-            user.is_staff)
+    student_access = CourseEnrollment.is_enrolled(user, course_key)\
+        and (access_username == user.username if access_username else True)
+    course_staff_access = CourseStaffRole(course_key).has_user(user)
+    return student_access or course_staff_access or user.is_staff
 
 
-class TeamsListView(GenericAPIView):
+class TeamsListView(ExpandableFieldViewMixin, GenericAPIView):
     """
         **Use Cases**
 
@@ -124,6 +128,9 @@ class TeamsListView(GenericAPIView):
 
             * include_inactive: If true, inactive teams will be returned. The
               default is to not include inactive teams.
+
+            * expand: Comma separated list of types for which to return
+              expanded representations. Supports "user" and "team".
 
         **Response Values for GET**
 
@@ -206,12 +213,6 @@ class TeamsListView(GenericAPIView):
     paginate_by_param = 'page_size'
     pagination_serializer_class = PaginationSerializer
     serializer_class = CourseTeamSerializer
-
-    def get_serializer_context(self):
-        """Adds expand information from query parameters to the serializer context to support expandable fields."""
-        result = super(TeamsListView, self).get_serializer_context()
-        result['expand'] = [x for x in self.request.QUERY_PARAMS.get('expand', '').split(',') if x]
-        return result
 
     def get(self, request):
         """GET /api/team/v0/teams/"""
@@ -315,7 +316,7 @@ class TeamsListView(GenericAPIView):
             return Response(CourseTeamSerializer(team).data)
 
 
-class TeamsDetailView(RetrievePatchAPIView):
+class TeamsDetailView(ExpandableFieldViewMixin, RetrievePatchAPIView):
     """
         **Use Cases**
 
@@ -327,6 +328,11 @@ class TeamsDetailView(RetrievePatchAPIView):
             GET /api/team/v0/teams/{team_id}}
 
             PATCH /api/team/v0/teams/{team_id} "application/merge-patch+json"
+
+        **Query Parameters for GET**
+
+            * expand: Comma separated list of types for which to return
+              expanded representations. Supports "user" and "team".
 
         **Response Values for GET**
 
@@ -570,3 +576,324 @@ class TopicDetailView(APIView):
 
         serializer = TopicSerializer(topics[0])
         return Response(serializer.data)
+
+
+class MembershipListView(ExpandableFieldViewMixin, GenericAPIView):
+    """
+        **Use Cases**
+
+            List course team memberships or add a user to a course team.
+
+        **Example Requests**:
+
+            GET /api/team/v0/team_membership
+
+            POST /api/team/v0/team_membership
+
+        **Query Parameters for GET**
+
+            At least one of username and team_id must be provided.
+
+            * username: Returns membership records only for the specified user.
+              If the requesting user is not staff then only memberships for
+              teams associated with courses in which the requesting user is
+              enrolled are returned.
+
+            * team_id: Returns only membership records associated with the
+              specified team.
+
+            * page_size: Number of results to return per page.
+
+            * page: Page number to retrieve.
+
+            * expand: Comma separated list of types for which to return
+              expanded representations. Supports "user" and "team".
+
+        **Response Values for GET**
+
+            If the user is logged in and enrolled, the response contains:
+
+            * count: The total number of memberships matching the request.
+
+            * next: The URL to the next page of results, or null if this is the
+              last page.
+
+            * previous: The URL to the previous page of results, or null if this
+              is the first page.
+
+            * num_pages: The total number of pages in the result.
+
+            * results: A list of the memberships matching the request.
+
+                * user: The user associated with the membership. This field may
+                  contain an expanded or collapsed representation.
+
+                * team: The team associated with the membership. This field may
+                  contain an expanded or collapsed representation.
+
+                * date_joined: The date and time the membership was created.
+
+            For all text fields, clients rendering the values should take care
+            to HTML escape them to avoid script injections, as the data is
+            stored exactly as specified. The intention is that plain text is
+            supported, not HTML.
+
+            If the user is not logged in and active, a 403 error is returned.
+
+            If neither team_id nor username are provided, a 400 error is
+            returned.
+
+            If team_id is provided but the team does not exist, a 404 error is
+            returned.
+
+            This endpoint uses 404 error codes to avoid leaking information
+            about team or user existence. Specifically, a 404 error will be
+            returned if a logged in user specifies a team_id for a course
+            they are not enrolled in.
+
+            Additionally, when username is specified the list of returned
+            memberships will be filtered to memberships in teams associated
+            with courses that the requesting user is enrolled in.
+
+        **Response Values for POST**
+
+            Any logged in user enrolled in a course can enroll themselves in a
+            team in the course. Course and global staff can enroll any user in
+            a team, with a few exceptions noted below.
+
+            If the user is not logged in and active, a 403 error is returned.
+
+            If username and team are not provided in the posted JSON, a 400
+            error is returned describing the missing fields.
+
+            If the specified team does not exist, a 404 error is returned.
+
+            If the user is not staff and is not enrolled in the course
+            associated with the team they are trying to join, or if they are
+            trying to add a user other than themselves to a team, a 404 error
+            is returned. This is to prevent leaking information about the
+            existence of teams and users.
+
+            If the specified user does not exist, a 404 error is returned.
+
+            If the user is already a member of a team in the course associated
+            with the team they are trying to join, a 400 error is returned.
+            This applies to both staff and students.
+
+            If the user is not enrolled in the course associated with the team
+            they are trying to join, a 400 error is returned. This can occur
+            when a staff user posts a request adding another user to a team.
+    """
+
+    authentication_classes = (SessionAuthentication, OAuth2Authentication)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    serializer_class = MembershipSerializer
+
+    paginate_by = 10
+    paginate_by_param = 'page_size'
+    pagination_serializer_class = PaginationSerializer
+
+    def get(self, request):
+        """GET /api/team/v0/team_membership"""
+        queryset = CourseTeamMembership.objects.all()
+
+        specified_username_or_team = False
+
+        if 'team_id' in request.QUERY_PARAMS:
+            specified_username_or_team = True
+            team_id = request.QUERY_PARAMS['team_id']
+            try:
+                team = CourseTeam.objects.get(team_id=team_id)
+            except CourseTeam.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            if not has_team_api_access(request.user, team.course_id):
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            queryset = queryset.filter(team__team_id=team_id)
+
+        if 'username' in request.QUERY_PARAMS:
+            specified_username_or_team = True
+            if not request.user.is_staff:
+                enrolled_courses = CourseEnrollment.\
+                    enrollments_for_user(request.user).\
+                    values_list('course_id', flat=True)
+                staff_courses = CourseAccessRole.objects.\
+                    filter(user=request.user, role='staff').\
+                    values_list('course_id', flat=True)
+                valid_courses = [
+                    CourseKey.from_string(course_key_string)
+                    for course_list in [enrolled_courses, staff_courses]
+                    for course_key_string in course_list
+                ]
+                queryset = queryset.filter(team__course_id__in=valid_courses)
+            queryset = queryset.filter(user__username=request.QUERY_PARAMS['username'])
+
+        if not specified_username_or_team:
+            error_message = ugettext_noop('Username or team_id must be specified.')
+            return Response({
+                'developer_message': error_message,
+                'user_message': _(error_message),  # pylint: disable=translation-of-non-string
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        page = self.paginate_queryset(queryset)
+        serializer = self.get_pagination_serializer(page)
+        return Response(serializer.data)  # pylint: disable=maybe-no-member
+
+    def post(self, request):
+        """POST /api/team/v0/team_membership"""
+        field_errors = {}
+
+        if 'username' not in request.DATA:
+            error_message = ugettext_noop('Username is required.')
+            field_errors['username'] = {
+                'developer_message': error_message,
+                'user_message': _(error_message),  # pylint: disable=translation-of-non-string
+            }
+
+        if 'team' not in request.DATA:
+            error_message = ugettext_noop('Team is required.')
+            field_errors['team'] = {
+                'developer_message': error_message,
+                'user_message': _(error_message),  # pylint: disable=translation-of-non-string
+            }
+
+        if field_errors:
+            return Response({
+                'field_errors': field_errors,
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            team = CourseTeam.objects.get(team_id=request.DATA['team'])
+        except CourseTeam.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        username = request.DATA['username']
+        if not has_team_api_access(request.user, team.course_id, access_username=username):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            membership = team.add_user(user)
+        except errors.AlreadyOnTeamInCourse:
+            error_message = ugettext_noop('The user is already a member of a team in this course.')
+            return Response({
+                'developer_message': error_message,
+                'user_message': _(error_message),  # pylint: disable=translation-of-non-string
+            }, status=status.HTTP_400_BAD_REQUEST)
+        except errors.NotEnrolledInCourseForTeam:
+            error_message = ugettext_noop('The user is not enrolled in course associated with the team.')
+            return Response({
+                'developer_message': error_message,
+                'user_message': _(error_message),  # pylint: disable=translation-of-non-string
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(instance=membership)
+        return Response(serializer.data)
+
+
+class MembershipDetailView(ExpandableFieldViewMixin, GenericAPIView):
+    """
+        **Use Cases**
+
+            Gets individual course team memberships or removes a user from a course team.
+
+        **Example Requests**:
+
+            GET /api/team/v0/team_membership/{team_id},{username}
+
+            DELETE /api/team/v0/team_membership/{team_id},{username}
+
+        **Query Parameters for GET**
+
+            * expand: Comma separated list of types for which to return
+              expanded representations. Supports "user" and "team".
+
+        **Response Values for GET**
+
+            If the user is logged in and enrolled, or is course or global staff
+            the response contains:
+
+            * user: The user associated with the membership. This field may
+              contain an expanded or collapsed representation.
+
+            * team: The team associated with the membership. This field may
+              contain an expanded or collapsed representation.
+
+            * date_joined: The date and time the membership was created.
+
+            For all text fields, clients rendering the values should take care
+            to HTML escape them to avoid script injections, as the data is
+            stored exactly as specified. The intention is that plain text is
+            supported, not HTML.
+
+            If the user is not logged in and active, a 403 error is returned.
+
+            If specified team does not exist, a 404 error is returned.
+
+            If the user is logged in but is not enrolled in the course
+            associated with the specified team, a 404 error is returned. This
+            avoid leaking information about course or team existence.
+
+            If the membership does not exist, a 404 error is returned.
+
+        **Response Values for DELETE**
+
+            Any logged in user enrolled in a course can remove themselves from
+            a team in the course. Course and global staff can remove any user
+            from a team. Successfully deleting a membership will return a 204
+            response with no content.
+
+            If the user is not logged in and active, a 403 error is returned.
+
+            If the specified team does not exist, a 404 error is returned.
+
+            If the user is not staff and is attempting to remove another user
+            from a team, a 404 error is returned. This prevents leaking
+            information about team and user existence.
+
+            If the membership does not exist, a 404 error is returned.
+    """
+
+    authentication_classes = (SessionAuthentication, OAuth2Authentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    serializer_class = MembershipSerializer
+
+    def get_team(self, team_id):
+        """Returns the team with team_id, or throws Http404 if it does not exist."""
+        try:
+            return CourseTeam.objects.get(team_id=team_id)
+        except CourseTeam.DoesNotExist:
+            raise Http404
+
+    def get_membership(self, username, team):
+        """Returns the membership for the given user and team, or throws Http404 if it does not exist."""
+        try:
+            return CourseTeamMembership.objects.get(user__username=username, team=team)
+        except CourseTeamMembership.DoesNotExist:
+            raise Http404
+
+    def get(self, request, team_id, username):
+        """GET /api/team/v0/team_membership/{team_id},{username}"""
+        team = self.get_team(team_id)
+        if not has_team_api_access(request.user, team.course_id):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        membership = self.get_membership(username, team)
+
+        serializer = self.get_serializer(instance=membership)
+        return Response(serializer.data)
+
+    def delete(self, request, team_id, username):
+        """DELETE /api/team/v0/team_membership/{team_id},{username}"""
+        team = self.get_team(team_id)
+        if has_team_api_access(request.user, team.course_id, access_username=username):
+            membership = self.get_membership(username, team)
+            membership.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
