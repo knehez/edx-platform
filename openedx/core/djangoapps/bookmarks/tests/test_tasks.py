@@ -140,17 +140,18 @@ class XBlockCacheTaskTests(BookmarksTestsBase):
                     )
 
     @ddt.data(
-        ('course',),
-        ('other_course',)
+        ('course', 19),
+        ('other_course', 13)
     )
     @ddt.unpack
-    def test_update_xblocks_cache(self, course_attr):
+    def test_update_xblocks_cache(self, course_attr, expected_sql_queries):
         """
         Test that the xblocks data is persisted correctly.
         """
         course = getattr(self, course_attr)
-        XBlockCache.objects.filter(course_key=course.id).delete()
-        _update_xblocks_cache(course.id)
+
+        with self.assertNumQueries(expected_sql_queries):
+            _update_xblocks_cache(course.id)
 
         expected_cache_data = getattr(self, course_attr + '_expected_cache_data')
         for usage_key, __ in expected_cache_data.items():
@@ -160,3 +161,6 @@ class XBlockCacheTaskTests(BookmarksTestsBase):
                     self.assertEqual(
                         path_item.usage_key, expected_cache_data[usage_key][path_index][path_item_index + 1]
                     )
+
+        with self.assertNumQueries(1):
+            _update_xblocks_cache(course.id)
