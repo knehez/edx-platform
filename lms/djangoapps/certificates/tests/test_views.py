@@ -36,7 +36,6 @@ from certificates.tests.factories import (
     BadgeAssertionFactory,
 )
 from lms import urls
-from mock import patch
 
 FEATURES_WITH_CERTS_ENABLED = settings.FEATURES.copy()
 FEATURES_WITH_CERTS_ENABLED['CERTIFICATES_HTML_VIEW'] = True
@@ -294,7 +293,9 @@ class MicrositeCertificatesViewsTests(ModuleStoreTestCase):
                 "company_verified_certificate_url": "http://www.microsite.org/verified-certificate",
                 "document_stylesheet_url_application": "/static/certificates/sass/main-ltr.css",
                 "logo_src": "/static/certificates/images/logo-microsite.svg",
-                "logo_url": "http://www.microsite.org"
+                "logo_url": "http://www.microsite.org",
+                "company_about_description": "This is special microsite aware company_about_description content",
+                "company_about_title": "Microsite title"
             },
             "honor": {
                 "certificate_type": "Honor Code",
@@ -312,6 +313,8 @@ class MicrositeCertificatesViewsTests(ModuleStoreTestCase):
         response = self.client.get(test_url)
         self.assertIn('platform_microsite', response.content)
         self.assertIn('http://www.microsite.org', response.content)
+        self.assertIn('This is special microsite aware company_about_description content', response.content)
+        self.assertIn('Microsite title', response.content)
 
     @patch("microsite_configuration.microsite.get_value", fakemicrosite)
     def test_html_view_microsite_configuration_missing(self):
@@ -325,7 +328,8 @@ class MicrositeCertificatesViewsTests(ModuleStoreTestCase):
                 "company_verified_certificate_url": "http://www.edx.org/verified-certificate",
                 "document_stylesheet_url_application": "/static/certificates/sass/main-ltr.css",
                 "logo_src": "/static/certificates/images/logo-edx.svg",
-                "logo_url": "http://www.edx.org"
+                "logo_url": "http://www.edx.org",
+                "company_about_description": "This should not survive being overwritten by static content"
             },
             "honor": {
                 "certificate_type": "Honor Code",
@@ -343,6 +347,7 @@ class MicrositeCertificatesViewsTests(ModuleStoreTestCase):
         self.assertIn('edX', response.content)
         self.assertNotIn('platform_microsite', response.content)
         self.assertNotIn('http://www.microsite.org', response.content)
+        self.assertNotIn('This should not survive being overwritten by static content', response.content)
 
 
 @attr('shard_1')
