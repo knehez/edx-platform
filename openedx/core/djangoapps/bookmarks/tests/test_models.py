@@ -29,7 +29,7 @@ EXAMPLE_USAGE_KEY_1 = u'i4x://org.15/course_15/chapter/Week_1'
 EXAMPLE_USAGE_KEY_2 = u'i4x://org.15/course_15/chapter/Week_2'
 
 
-noop_contextmanager = contextmanager(lambda x: (yield))
+noop_contextmanager = contextmanager(lambda x: (yield))  # pylint: disable=invalid-name
 
 
 class BookmarksTestsBase(ModuleStoreTestCase):
@@ -49,6 +49,7 @@ class BookmarksTestsBase(ModuleStoreTestCase):
         self.setup_test_data(self.STORE_TYPE)
 
     def setup_test_data(self, store_type=ModuleStoreEnum.Type.mongo):
+        """ Create courses and add some test blocks. """
 
         with self.store.default_store(store_type):
 
@@ -157,10 +158,15 @@ class BookmarksTestsBase(ModuleStoreTestCase):
             course = CourseFactory.create()
             display_name = 0
 
-            with self.store.bulk_operations(course.id):
+            if store_type == ModuleStoreEnum.Type.mongo:
+                bulk_operations_manager = self.store.bulk_operations
+            else:
+                bulk_operations_manager = noop_contextmanager
+
+            with bulk_operations_manager(course.id):
                 blocks_at_next_level = [course]
 
-                for level in range(depth):
+                for __ in range(depth):
                     blocks_at_current_level = blocks_at_next_level
                     blocks_at_next_level = []
 
@@ -181,7 +187,12 @@ class BookmarksTestsBase(ModuleStoreTestCase):
 
             course = CourseFactory.create()
 
-            with self.store.bulk_operations(course.id):
+            if store_type == ModuleStoreEnum.Type.mongo:
+                bulk_operations_manager = self.store.bulk_operations
+            else:
+                bulk_operations_manager = noop_contextmanager
+
+            with bulk_operations_manager(course.id):
                 blocks = [ItemFactory.create(
                     parent_location=course.location, category='chapter', display_name=unicode(index)
                 ) for index in range(count)]
@@ -251,15 +262,19 @@ class BookmarkModelTests(BookmarksTestsBase):
         (ModuleStoreEnum.Type.mongo, 'sequential_1', ['chapter_1'], 4),
         (ModuleStoreEnum.Type.mongo, 'vertical_1', ['chapter_1', 'sequential_1'], 5),
         (ModuleStoreEnum.Type.mongo, 'html_1', ['chapter_1', 'sequential_2', 'vertical_2'], 6),
-        (ModuleStoreEnum.Type.split, 'course', [], 6),
-        (ModuleStoreEnum.Type.split, 'chapter_1', [], 5),
-        (ModuleStoreEnum.Type.split, 'sequential_1', ['chapter_1'], 6),
-        (ModuleStoreEnum.Type.split, 'vertical_1', ['chapter_1', 'sequential_1'], 6),
+        (ModuleStoreEnum.Type.split, 'course', [], 3),
+        (ModuleStoreEnum.Type.split, 'chapter_1', [], 2),
+        (ModuleStoreEnum.Type.split, 'sequential_1', ['chapter_1'], 2),
+        (ModuleStoreEnum.Type.split, 'vertical_1', ['chapter_1', 'sequential_1'], 2),
         (ModuleStoreEnum.Type.split, 'other_vertical_1', ['other_chapter_1', 'other_sequential_1'], 4),  # Two ancestors
-        (ModuleStoreEnum.Type.split, 'html_1', ['chapter_1', 'sequential_2', 'vertical_2'], 6),
+        (ModuleStoreEnum.Type.split, 'html_1', ['chapter_1', 'sequential_2', 'vertical_2'], 2),
     )
     @ddt.unpack
-    def test_get_path(self, store_type, block_to_bookmark, ancestors_attrs, expected_mongo_calls):
+    def test_path_and_queries_on_create(self, store_type, block_to_bookmark, ancestors_attrs, expected_mongo_calls):
+        """
+        In case of mongo, 1 query is used to fetch the block, and 2 by path_to_location(), and then
+        1 query per parent in path is needed to fetch the parent blocks.
+        """
 
         self.setup_test_data(store_type)
         user = UserFactory.create()
@@ -269,7 +284,6 @@ class BookmarkModelTests(BookmarksTestsBase):
         ) for ancestor_attr in ancestors_attrs]
 
         bookmark_data = self.get_bookmark_data(getattr(self, block_to_bookmark), user=user)
-        XBlockCache.objects.filter(usage_key=bookmark_data['usage_key']).delete()
 
         with check_mongo_calls(expected_mongo_calls):
             bookmark, __ = Bookmark.create(bookmark_data)
@@ -317,7 +331,6 @@ class BookmarkModelTests(BookmarksTestsBase):
         html = ItemFactory.create(
             parent_location=self.other_chapter_1.location, category='html', display_name='Other Lesson 1'
         )
-        XBlockCache.objects.filter(usage_key=html.location).delete()
 
         bookmark_data = self.get_bookmark_data(html)
         bookmark, __ = Bookmark.create(bookmark_data)
@@ -337,34 +350,33 @@ class BookmarkModelTests(BookmarksTestsBase):
         (ModuleStoreEnum.Type.mongo, 6, 2, 2),
         (ModuleStoreEnum.Type.mongo, 2, 3, 3),
         (ModuleStoreEnum.Type.mongo, 4, 3, 3),
-        # (ModuleStoreEnum.Type.mongo, 6, 3, 3),
+        (ModuleStoreEnum.Type.mongo, 6, 3, 3),
         (ModuleStoreEnum.Type.mongo, 2, 4, 4),
         (ModuleStoreEnum.Type.mongo, 4, 4, 4),
-        # (ModuleStoreEnum.Type.mongo, 6, 4, 4),
-        # (ModuleStoreEnum.Type.split, 2, 2, 2),
-        # (ModuleStoreEnum.Type.split, 4, 2, 2),
-        # (ModuleStoreEnum.Type.split, 6, 2, 2),
-        # (ModuleStoreEnum.Type.split, 2, 3, 3),
-        # (ModuleStoreEnum.Type.split, 4, 3, 3),
-        # (ModuleStoreEnum.Type.split, 6, 3, 3),
-        # (ModuleStoreEnum.Type.split, 2, 4, 4),
-        # (ModuleStoreEnum.Type.split, 4, 4, 4),
-        # (ModuleStoreEnum.Type.split, 6, 4, 4),
+        (ModuleStoreEnum.Type.split, 2, 2, 2),
+        (ModuleStoreEnum.Type.split, 4, 2, 2),
+        (ModuleStoreEnum.Type.split, 2, 3, 2),
+        (ModuleStoreEnum.Type.split, 4, 3, 2),
+        (ModuleStoreEnum.Type.split, 2, 4, 2),
     )
     @ddt.unpack
     def test_get_path_queries(self, store_type, children_per_block, depth, expected_mongo_calls):
+        """
+        In case of mongo, 2 queries are used by path_to_location(), and then
+        1 query per parent in path is needed to fetch the parent blocks.
+        """
 
         course = self.create_course_with_blocks(children_per_block, depth, store_type)
 
         # Find a leaf block.
         block = modulestore().get_course(course.id, depth=None)
-        for level in range(depth-1):
+        for __ in range(depth - 1):
             children = block.get_children()
             block = children[-1]
 
         with check_mongo_calls(expected_mongo_calls):
             path = Bookmark.get_path(block.location)
-            self.assertEqual(len(path), depth-2)
+            self.assertEqual(len(path), depth - 2)
 
     def test_get_path_in_case_of_exceptions(self):
 
@@ -380,7 +392,6 @@ class BookmarkModelTests(BookmarksTestsBase):
         modulestore().update_item(self.other_sequential_1, self.admin.id)  # pylint: disable=no-member
 
         bookmark_data = self.get_bookmark_data(self.other_vertical_2, user=user)
-        XBlockCache.objects.filter(usage_key=bookmark_data['usage_key']).delete()
         bookmark, __ = Bookmark.create(bookmark_data)
 
         self.assertEqual(bookmark.path, [])
@@ -391,7 +402,6 @@ class BookmarkModelTests(BookmarksTestsBase):
         with mock.patch('openedx.core.djangoapps.bookmarks.models.search.path_to_location') as mock_path_to_location:
             mock_path_to_location.return_value = [usage_key]
             bookmark_data = self.get_bookmark_data(self.other_sequential_1, user=user)
-            XBlockCache.objects.filter(usage_key=bookmark_data['usage_key']).delete()
             bookmark, __ = Bookmark.create(bookmark_data)
             self.assertEqual(bookmark.path, [])
 

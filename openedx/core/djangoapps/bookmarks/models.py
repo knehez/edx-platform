@@ -16,8 +16,6 @@ from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError, NoPathToItem
 from xmodule_django.models import CourseKeyField, LocationKeyField
 
-import signals
-
 log = logging.getLogger(__name__)
 
 
@@ -79,15 +77,16 @@ class Bookmark(TimeStampedModel):
         usage_key = data.pop('usage_key')
         usage_key = usage_key.replace(course_key=modulestore().fill_in_run(usage_key.course_key))
 
-        block = modulestore().get_item(usage_key)
+        with modulestore().bulk_operations(usage_key.course_key):
+            block = modulestore().get_item(usage_key)
 
-        xblock_cache = XBlockCache.create({
-            'usage_key': usage_key,
-            'display_name': block.display_name,
-        })
+            xblock_cache = XBlockCache.create({
+                'usage_key': usage_key,
+                'display_name': block.display_name,
+            })
+            data['_path'] = prepare_path_for_serialization(Bookmark.updated_path(usage_key, xblock_cache))
 
         data['course_key'] = usage_key.course_key
-        data['_path'] = prepare_path_for_serialization(Bookmark.updated_path(usage_key, xblock_cache))
         data['xblock_cache'] = xblock_cache
 
         user = data.pop('user')
@@ -162,17 +161,17 @@ class Bookmark(TimeStampedModel):
         Returns:
             list of PathItems
         """
-        try:
-            path = search.path_to_location(modulestore(), usage_key, full_path=True)
-        except ItemNotFoundError:
-            log.error(u'Block with usage_key: %s not found.', usage_key)
-            return []
-        except NoPathToItem:
-            log.error(u'No path to block with usage_key: %s.', usage_key)
-            return []
-
-        path_data = []
         with modulestore().bulk_operations(usage_key.course_key):
+            try:
+                path = search.path_to_location(modulestore(), usage_key, full_path=True)
+            except ItemNotFoundError:
+                log.error(u'Block with usage_key: %s not found.', usage_key)
+                return []
+            except NoPathToItem:
+                log.error(u'No path to block with usage_key: %s.', usage_key)
+                return []
+
+            path_data = []
             for ancestor_usage_key in path:
                 if ancestor_usage_key != usage_key and ancestor_usage_key.block_type != 'course':  # pylint: disable=no-member
                     try:

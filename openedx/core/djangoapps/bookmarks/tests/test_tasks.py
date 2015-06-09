@@ -4,11 +4,7 @@ Tests for tasks.
 import ddt
 
 from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.tests.factories import check_mongo_calls, CourseFactory, ItemFactory
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-
-from student.tests.factories import AdminFactory
+from xmodule.modulestore.tests.factories import check_mongo_calls
 
 from ..models import XBlockCache
 from ..tasks import _calculate_course_xblocks_data, _update_xblocks_cache
@@ -65,7 +61,7 @@ class XBlockCacheTaskTests(BookmarksTestsBase):
             ],
         }
 
-        self.other_course_expected_cache_data = {
+        self.other_course_expected_cache_data = {  # pylint: disable=invalid-name
             self.other_course.location: [
                 [],
             ], self.other_chapter_1.location: [
@@ -105,22 +101,14 @@ class XBlockCacheTaskTests(BookmarksTestsBase):
     @ddt.data(
         (ModuleStoreEnum.Type.mongo, 2, 2, 3),
         (ModuleStoreEnum.Type.mongo, 4, 2, 3),
-        (ModuleStoreEnum.Type.mongo, 6, 2, 3),
         (ModuleStoreEnum.Type.mongo, 2, 3, 4),
         (ModuleStoreEnum.Type.mongo, 4, 3, 4),
-        # (ModuleStoreEnum.Type.mongo, 6, 3, 5),
         (ModuleStoreEnum.Type.mongo, 2, 4, 5),
-        # (ModuleStoreEnum.Type.mongo, 4, 4, 6),
-        # (ModuleStoreEnum.Type.mongo, 6, 4, 7),
-        # (ModuleStoreEnum.Type.split, 2, 2, 3),
-        # (ModuleStoreEnum.Type.split, 4, 2, 3),
-        # (ModuleStoreEnum.Type.split, 6, 2, 3),
-        # (ModuleStoreEnum.Type.split, 2, 3, 3),
-        # (ModuleStoreEnum.Type.split, 4, 3, 3),
-        # (ModuleStoreEnum.Type.split, 6, 3, 3),
-        # (ModuleStoreEnum.Type.split, 2, 4, 3),
-        # (ModuleStoreEnum.Type.split, 4, 4, 3),
-        # (ModuleStoreEnum.Type.split, 6, 4, 3),
+        (ModuleStoreEnum.Type.mongo, 4, 4, 6),
+        (ModuleStoreEnum.Type.split, 2, 2, 3),
+        (ModuleStoreEnum.Type.split, 4, 2, 3),
+        (ModuleStoreEnum.Type.split, 2, 3, 3),
+        (ModuleStoreEnum.Type.split, 2, 4, 3),
     )
     @ddt.unpack
     def test_calculate_course_xblocks_data_queries(self, store_type, children_per_block, depth, expected_mongo_calls):

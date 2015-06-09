@@ -18,25 +18,26 @@ def _calculate_course_xblocks_data(course_key):
 
     This data consists of the display_name and path of the block.
     """
-    course = modulestore().get_course(course_key, depth=None)
+    with modulestore().bulk_operations(course_key):
 
-    blocks_info_dict = {}
+        course = modulestore().get_course(course_key, depth=None)
+        blocks_info_dict = {}
 
-    # Collect display_name and children usage keys.
-    blocks_stack = [course]
-    while blocks_stack:
-        current_block = blocks_stack.pop()
-        children = current_block.get_children() if current_block.has_children else []
-        usage_id = unicode(current_block.scope_ids.usage_id)
-        block_info = {
-            'usage_key': current_block.scope_ids.usage_id,
-            'display_name': current_block.display_name,
-            'children_ids': [unicode(child.scope_ids.usage_id) for child in children]
-        }
-        blocks_info_dict[usage_id] = block_info
+        # Collect display_name and children usage keys.
+        blocks_stack = [course]
+        while blocks_stack:
+            current_block = blocks_stack.pop()
+            children = current_block.get_children() if current_block.has_children else []
+            usage_id = unicode(current_block.scope_ids.usage_id)
+            block_info = {
+                'usage_key': current_block.scope_ids.usage_id,
+                'display_name': current_block.display_name,
+                'children_ids': [unicode(child.scope_ids.usage_id) for child in children]
+            }
+            blocks_info_dict[usage_id] = block_info
 
-        # Add this blocks children to the stack so that we can traverse them as well.
-        blocks_stack.extend(children)
+            # Add this blocks children to the stack so that we can traverse them as well.
+            blocks_stack.extend(children)
 
     # Set children
     for block in blocks_info_dict.values():
@@ -101,6 +102,7 @@ def _paths_equal(paths_1, paths_2):
 
     return True
 
+
 def _update_xblocks_cache(course_key):
     """
     Calculate the XBlock cache data for a course and update the XBlockCache table.
@@ -109,6 +111,7 @@ def _update_xblocks_cache(course_key):
     blocks_data = _calculate_course_xblocks_data(course_key)
 
     def update_block_cache_if_needed(block_cache, block_data):
+        """ Compare block_cache object with data and update if there are differences. """
         paths = _paths_from_data(block_data['paths'])
         if block_cache.display_name != block_data['display_name'] or not _paths_equal(block_cache.paths, paths):
             block_cache.display_name = block_data['display_name']
@@ -135,7 +138,7 @@ def _update_xblocks_cache(course_key):
                 update_block_cache_if_needed(block_cache, block_data)
 
 
-@task(name=u'lms.djangoapps.bookmarks.tasks.update_xblock_cache')
+@task(name=u'openedx.core.djangoapps.bookmarks.tasks.update_xblock_cache')
 def update_xblocks_cache(course_id):
     """
     Update the XBlocks cache for a course.
