@@ -23,8 +23,6 @@ class BookmarksViewsTestsBase(BookmarksTestsBase, BookmarkApiEventTestMixin):
     """
     Base class for bookmarks views tests.
     """
-    STORE_TYPE = ModuleStoreEnum.Type.split
-
     def setUp(self):
         super(BookmarksViewsTestsBase, self).setUp()
 
@@ -76,10 +74,10 @@ class BookmarksListViewTests(BookmarksViewsTestsBase):
     @ddt.data(
         (1, False),
         (10, False),
-        (100, False),
+        (25, False),
         (1, True),
         (10, True),
-        (100, True),
+        (25, True),
     )
     @ddt.unpack
     @patch('eventtracking.tracker.emit')
@@ -125,7 +123,7 @@ class BookmarksListViewTests(BookmarksViewsTestsBase):
         )
 
     @ddt.data(
-        10, 100
+        10, 25
     )
     @patch('eventtracking.tracker.emit')
     def test_get_bookmarks_with_pagination(self, bookmarks_count, mock_tracker):
