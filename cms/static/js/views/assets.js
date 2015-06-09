@@ -108,9 +108,9 @@ define(["jquery", "underscore", "gettext", "js/views/baseview", "js/models/asset
 
             afterRender: function(){
                 // Bind events with html elements
-                $('li a.upload-button').on('click', this.showUploadModal);
-                $('.upload-modal .close-button').on('click', this.hideModal);
-                $('.upload-modal .choose-file-button').on('click', this.showFileSelectionMenu);
+                $('li a.upload-button').on('click', _.bind(this.showUploadModal, this));
+                $('.upload-modal .close-button').on('click', _.bind(this.hideModal, this));
+                $('.upload-modal .choose-file-button').on('click', _.bind(this.showFileSelectionMenu, this));
                 return this;
             },
 
