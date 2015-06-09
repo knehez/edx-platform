@@ -122,7 +122,11 @@ class TeamAPITestCase(APITestCase, ModuleStoreTestCase):
             'student_unenrolled': UserFactory.create(password=self.test_password),
             'student_enrolled': UserFactory.create(password=self.test_password),
             'student_enrolled_not_on_team': UserFactory.create(password=self.test_password),
+
+            # This student is enrolled in both test courses and is a member of a team in each course, but is not on the
+            # same team as student_enrolled.
             'student_enrolled_both_courses_other_team': UserFactory.create(password=self.test_password),
+
             'staff': AdminFactory.create(password=self.test_password),
             'course_staff': StaffFactory.create(course_key=self.test_course_1.id, password=self.test_password)
         }
@@ -148,7 +152,7 @@ class TeamAPITestCase(APITestCase, ModuleStoreTestCase):
             )
 
         self.test_team_1.add_user(self.users['student_enrolled'])
-        self.test_team_2.add_user(self.users['student_enrolled_both_courses_other_team'])
+        self.test_team_3.add_user(self.users['student_enrolled_both_courses_other_team'])
         self.test_team_4.add_user(self.users['student_enrolled_both_courses_other_team'])
 
     def login(self, user):
@@ -263,6 +267,16 @@ class TeamAPITestCase(APITestCase, ModuleStoreTestCase):
             **kwargs
         )
 
+    def verify_expanded_user(self, user):
+        """Verifies that fields exist on the returned user json indicating that it is expanded."""
+        for field in ['id', 'url', 'email', 'name', 'username', 'preferences']:
+            self.assertIn(field, user)
+
+    def verify_expanded_team(self, team):
+        """Verifies that fields exist on the returned team json indicating that it is expanded."""
+        for field in ['id', 'name', 'is_active', 'course_id', 'topic_id', 'date_created', 'description']:
+            self.assertIn(field, team)
+
 
 @ddt.ddt
 class TestListTeamsAPI(TeamAPITestCase):
@@ -311,7 +325,7 @@ class TestListTeamsAPI(TeamAPITestCase):
     @ddt.data(
         (None, 200, ['Nuclear Team', u'sólar team', 'Wind Team']),
         ('name', 200, ['Nuclear Team', u'sólar team', 'Wind Team']),
-        ('open_slots', 200, ['Nuclear Team', u'sólar team', 'Wind Team']),
+        ('open_slots', 200, ['Wind Team', u'sólar team', 'Nuclear Team']),
         ('last_activity', 400, []),
     )
     @ddt.unpack
@@ -335,7 +349,7 @@ class TestListTeamsAPI(TeamAPITestCase):
 
     def test_expand_user(self):
         result = self.get_teams_list(200, {'expand': 'user', 'topic_id': 'renewable'})
-        self.assertIn('email', result['results'][0]['membership'][0]['user'])
+        self.verify_expanded_user(result['results'][0]['membership'][0]['user'])
 
 
 @ddt.ddt
@@ -439,7 +453,7 @@ class TestDetailTeamAPI(TeamAPITestCase):
 
     def test_expand_user(self):
         result = self.get_team_detail(self.test_team_1.team_id, 200, {'expand': 'user'})
-        self.assertIn('email', result['membership'][0]['user'])
+        self.verify_expanded_user(result['membership'][0]['user'])
 
 
 @ddt.ddt
@@ -617,11 +631,11 @@ class TestListMembershipAPI(TeamAPITestCase):
 
     def test_expand_user(self):
         result = self.get_membership_list(200, {'team_id': self.test_team_1.team_id, 'expand': 'user'})
-        self.assertIn('email', result['results'][0]['user'])
+        self.verify_expanded_user(result['results'][0]['user'])
 
     def test_expand_team(self):
         result = self.get_membership_list(200, {'team_id': self.test_team_1.team_id, 'expand': 'team'})
-        self.assertIn('description', result['results'][0]['team'])
+        self.verify_expanded_team(result['results'][0]['team'])
 
 
 @ddt.ddt
@@ -630,7 +644,7 @@ class TestCreateMembershipAPI(TeamAPITestCase):
 
     def build_membership_data_raw(self, username, team):
         """Assembles a membership creation payload based on the raw values provided."""
-        return {'username': username, 'team': team}
+        return {'username': username, 'team_id': team}
 
     def build_membership_data(self, username, team):
         """Assembles a membership creation payload based on the username and team model provided."""
@@ -656,14 +670,16 @@ class TestCreateMembershipAPI(TeamAPITestCase):
         if status == 200:
             self.assertEqual(membership['user']['id'], self.users['student_enrolled_not_on_team'].username)
             self.assertEqual(membership['team']['id'], self.test_team_1.team_id)
+            memberships = self.get_membership_list(200, {'team_id': self.test_team_1.team_id})
+            self.assertEqual(memberships['count'], 2)
 
     def test_no_username(self):
-        response = self.post_create_membership(400, {'team': self.test_team_1.team_id})
+        response = self.post_create_membership(400, {'team_id': self.test_team_1.team_id})
         self.assertIn('username', json.loads(response.content)['field_errors'])
 
     def test_no_team(self):
         response = self.post_create_membership(400, {'username': self.users['student_enrolled_not_on_team'].username})
-        self.assertIn('team', json.loads(response.content)['field_errors'])
+        self.assertIn('team_id', json.loads(response.content)['field_errors'])
 
     def test_bad_team(self):
         self.post_create_membership(
@@ -747,7 +763,7 @@ class TestDetailMembershipAPI(TeamAPITestCase):
             200,
             {'expand': 'user'}
         )
-        self.assertIn('email', result['user'])
+        self.verify_expanded_user(result['user'])
 
     def test_expand_team(self):
         result = self.get_membership_detail(
@@ -756,7 +772,7 @@ class TestDetailMembershipAPI(TeamAPITestCase):
             200,
             {'expand': 'team'}
         )
-        self.assertIn('description', result['team'])
+        self.verify_expanded_team(result['team'])
 
 
 @ddt.ddt

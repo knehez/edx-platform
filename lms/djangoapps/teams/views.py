@@ -86,10 +86,14 @@ def has_team_api_access(user, course_key, access_username=None):
     Returns:
       bool: True if the user has access, False otherwise.
     """
-    student_access = CourseEnrollment.is_enrolled(user, course_key)\
-        and (access_username == user.username if access_username else True)
-    course_staff_access = CourseStaffRole(course_key).has_user(user)
-    return student_access or course_staff_access or user.is_staff
+    if user.is_staff:
+        return True
+    if CourseStaffRole(course_key).has_user(user):
+        return True
+    if ((access_username == user.username if access_username else True) and
+            CourseEnrollment.is_enrolled(user, course_key)):
+        return True
+    return False
 
 
 class TeamsListView(ExpandableFieldViewMixin, GenericAPIView):
@@ -600,7 +604,8 @@ class MembershipListView(ExpandableFieldViewMixin, GenericAPIView):
               enrolled are returned.
 
             * team_id: Returns only membership records associated with the
-              specified team.
+              specified team. The requesting user must be staff or enrolled in
+              the course associated with the team.
 
             * page_size: Number of results to return per page.
 
@@ -714,12 +719,12 @@ class MembershipListView(ExpandableFieldViewMixin, GenericAPIView):
         if 'username' in request.QUERY_PARAMS:
             specified_username_or_team = True
             if not request.user.is_staff:
-                enrolled_courses = CourseEnrollment.\
-                    enrollments_for_user(request.user).\
-                    values_list('course_id', flat=True)
-                staff_courses = CourseAccessRole.objects.\
-                    filter(user=request.user, role='staff').\
-                    values_list('course_id', flat=True)
+                enrolled_courses = (
+                    CourseEnrollment.enrollments_for_user(request.user).values_list('course_id', flat=True)
+                )
+                staff_courses = (
+                    CourseAccessRole.objects.filter(user=request.user, role='staff').values_list('course_id', flat=True)
+                )
                 valid_courses = [
                     CourseKey.from_string(course_key_string)
                     for course_list in [enrolled_courses, staff_courses]
@@ -750,9 +755,9 @@ class MembershipListView(ExpandableFieldViewMixin, GenericAPIView):
                 'user_message': _(error_message),  # pylint: disable=translation-of-non-string
             }
 
-        if 'team' not in request.DATA:
+        if 'team_id' not in request.DATA:
             error_message = ugettext_noop('Team is required.')
-            field_errors['team'] = {
+            field_errors['team_id'] = {
                 'developer_message': error_message,
                 'user_message': _(error_message),  # pylint: disable=translation-of-non-string
             }
@@ -763,7 +768,7 @@ class MembershipListView(ExpandableFieldViewMixin, GenericAPIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            team = CourseTeam.objects.get(team_id=request.DATA['team'])
+            team = CourseTeam.objects.get(team_id=request.DATA['team_id'])
         except CourseTeam.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -779,16 +784,16 @@ class MembershipListView(ExpandableFieldViewMixin, GenericAPIView):
         try:
             membership = team.add_user(user)
         except errors.AlreadyOnTeamInCourse:
-            error_message = ugettext_noop('The user is already a member of a team in this course.')
+            error_message = ugettext_noop('The user {username} is already a member of a team in this course.')
             return Response({
-                'developer_message': error_message,
-                'user_message': _(error_message),  # pylint: disable=translation-of-non-string
+                'developer_message': error_message.format(username=username),
+                'user_message': _(error_message).format(username=username),  # pylint: disable=translation-of-non-string
             }, status=status.HTTP_400_BAD_REQUEST)
         except errors.NotEnrolledInCourseForTeam:
-            error_message = ugettext_noop('The user is not enrolled in course associated with the team.')
+            error_message = ugettext_noop('The user {username} is not enrolled in course associated with the team.')
             return Response({
-                'developer_message': error_message,
-                'user_message': _(error_message),  # pylint: disable=translation-of-non-string
+                'developer_message': error_message.format(username=username),
+                'user_message': _(error_message).format(username=username),  # pylint: disable=translation-of-non-string
             }, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = self.get_serializer(instance=membership)
@@ -835,8 +840,9 @@ class MembershipDetailView(ExpandableFieldViewMixin, GenericAPIView):
             If specified team does not exist, a 404 error is returned.
 
             If the user is logged in but is not enrolled in the course
-            associated with the specified team, a 404 error is returned. This
-            avoid leaking information about course or team existence.
+            associated with the specified team, or is not staff, a 404 error is
+            returned. This avoids leaking information about course or team
+            existence.
 
             If the membership does not exist, a 404 error is returned.
 
@@ -849,7 +855,8 @@ class MembershipDetailView(ExpandableFieldViewMixin, GenericAPIView):
 
             If the user is not logged in and active, a 403 error is returned.
 
-            If the specified team does not exist, a 404 error is returned.
+            If the specified team or username does not exist, a 404 error is
+            returned.
 
             If the user is not staff and is attempting to remove another user
             from a team, a 404 error is returned. This prevents leaking
