@@ -445,7 +445,7 @@ class CourseBlocksOrNavigationMixin(CourseDetailMixin, CourseViewTestsMixin):
             self.assertIn(field, blocks[root_string])
 
     def test_parse_error(self):
-        response = self.http_get_for_course(data={'block_json':'incorrect'})
+        response = self.http_get_for_course(data={'block_json': 'incorrect'})
         self.assertEqual(response.status_code, 400)
 
     def test_no_access_block(self):
@@ -462,7 +462,7 @@ class CourseBlocksMixin(object):
 
     def test_block_json(self):
         response = self.http_get_for_course(
-            data={'block_json':'{"video":{"profiles":["mobile_low"]}}'}
+            data={'block_json': '{"video":{"profiles":["mobile_low"]}}'}
         )
         self.assertEquals(response.status_code, 200)
         video_block = response.data[self.block_navigation_view_type][unicode(self.video.location)]
@@ -470,7 +470,7 @@ class CourseBlocksMixin(object):
 
     def test_block_count(self):
         response = self.http_get_for_course(
-            data={'block_count':'problem'}
+            data={'block_count': 'problem'}
         )
         self.assertEquals(response.status_code, 200)
         root_block = response.data[self.block_navigation_view_type][unicode(self.course.location)]
@@ -485,7 +485,7 @@ class CourseNavigationMixin(object):
         Tests that all descendants are bundled into the root block
         """
         response = self.http_get_for_course(
-            data={'navigation_depth':'0'}
+            data={'navigation_depth': '0'}
         )
         root_block = response.data[self.block_navigation_view_type][unicode(self.course.location)]
         self.assertIn('descendants', root_block)
@@ -518,11 +518,7 @@ class CourseNavigationTests(CourseBlocksOrNavigationMixin, CourseNavigationMixin
     block_fields = []
 
 
-class CourseBlocksAndNavigationTests(
-    CourseBlocksOrNavigationMixin,
-    CourseBlocksMixin,
-    CourseNavigationMixin,
-    ModuleStoreTestCase
-):
+class CourseBlocksAndNavigationTests(CourseBlocksOrNavigationMixin, CourseBlocksMixin, CourseNavigationMixin,
+                                     ModuleStoreTestCase):
     block_navigation_view_type = 'blocks+navigation'
     container_fields = ['children', 'descendants']

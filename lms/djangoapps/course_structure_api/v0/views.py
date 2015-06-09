@@ -491,7 +491,6 @@ class CourseBlocksAndNavigation(ListAPIView):
                 ),
             }
 
-
     @view_course_access(depth=None)
     def list(self, request, course, return_blocks=True, return_nav=True, *args, **kwargs):
         """
@@ -638,6 +637,7 @@ class CourseBlocksAndNavigation(ListAPIView):
         'format': BlockApiField(block_field_name='format', api_field_default=None),
         'responsive_ui': BlockApiField(block_field_name='has_responsive_ui', api_field_default=False),
     }
+
     def add_additional_fields(self, request_info, block_info):
         """
         Add additional field names and values of the block as requested in the request_info.
