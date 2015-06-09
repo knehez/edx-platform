@@ -21,6 +21,7 @@ from xmodule.tests import get_test_system
 from courseware.tests.factories import GlobalStaffFactory, StaffFactory
 from openedx.core.djangoapps.content.course_structures.models import CourseStructure
 from openedx.core.djangoapps.content.course_structures.tasks import update_course_structure
+from util.url import reload_django_url_config
 
 
 TEST_SERVER_HOST = 'http://testserver'
@@ -161,7 +162,9 @@ class CourseDetailMixin(object):
         # If debug mode is enabled, the view should always return data.
         if self.view_supports_debug_mode:
             with override_settings(DEBUG=True):
-                response = self.http_get(reverse(self.view, kwargs={'course_id': self.course_id}), HTTP_AUTHORIZATION=None)
+                response = self.http_get(
+                    reverse(self.view, kwargs={'course_id': self.course_id}), HTTP_AUTHORIZATION=None
+                )
                 self.assertEqual(response.status_code, 200)
 
         # HTTP 401 should be returned if the user is not authenticated.
@@ -381,14 +384,18 @@ class CourseGradingPolicyTests(CourseDetailMixin, CourseViewTestsMixin, ModuleSt
         self.assertListEqual(response.data, expected)
 
 
-@patch.dict(
-    'django.conf.settings.FEATURES',
-    {'ENABLE_COURSE_BLOCKS_NAVIGATION_API': True, 'ENABLE_RENDER_XBLOCK_API': True}
-)
 class CourseBlocksAndNavigationMixin(CourseDetailMixin, CourseViewTestsMixin):
     block_navigation_view_type = ''
     view_supports_debug_mode = False
     block_fields = ['id', 'type', 'display_name', 'web_url', 'block_url', 'graded', 'format']
+
+    @patch.dict(
+        'django.conf.settings.FEATURES',
+        {'ENABLE_COURSE_BLOCKS_NAVIGATION_API': True, 'ENABLE_RENDER_XBLOCK_API': True}
+    )
+    def setUp(self):
+        reload_django_url_config()
+        super(CourseBlocksAndNavigationMixin, self).setUp()
 
     @property
     def view(self):
