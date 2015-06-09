@@ -24,6 +24,7 @@ from xmodule.modulestore.django import modulestore
 from xmodule.contentstore.content import StaticContent
 from xmodule.tabs import CourseTab
 from openedx.core.lib.course_tabs import CourseTabPluginManager
+from openedx.core.djangoapps.credit.api import is_credit_course, get_credit_requirements
 from xmodule.modulestore import EdxJSONEncoder
 from xmodule.modulestore.exceptions import ItemNotFoundError, DuplicateCourseError
 from opaque_keys import InvalidKeyError
@@ -842,6 +843,7 @@ def settings_handler(request, course_key_string):
     """
     course_key = CourseKey.from_string(course_key_string)
     prerequisite_course_enabled = settings.FEATURES.get('ENABLE_PREREQUISITE_COURSES', False)
+    credit_eligibility_enabled = settings.FEATURES.get('ENABLE_CREDIT_ELIGIBILITY', False)
     with modulestore().bulk_operations(course_key):
         course_module = get_course_and_check_access(course_key, request.user)
         if 'text/html' in request.META.get('HTTP_ACCEPT', '') and request.method == 'GET':
@@ -875,6 +877,33 @@ def settings_handler(request, course_key_string):
                 if courses:
                     courses = _remove_in_process_courses(courses, in_process_course_actions)
                 settings_context.update({'possible_pre_requisite_courses': courses})
+
+            if credit_eligibility_enabled:
+                if is_credit_course(course_key):
+                    # get and all credit eligibility requirements
+                    credit_requirements = get_credit_requirements(course_key)
+                    # pair together requirements with same 'namespace' values
+                    paired_requirements = {}
+                    for requirement in credit_requirements:
+                        requirement_data = {
+                            "name": requirement.get('name'),
+                            "display_name": requirement.get('display_name'),
+                            "criteria": requirement.get('criteria'),
+                        }
+                        paired_requirements.setdefault(requirement.get('namespace'), []).append(requirement_data)
+
+                    # if 'minimum_grade_credit' of a course is not set or 0 then
+                    # show warning message to course author.
+                    show_min_grade_warning = False if course_module.minimum_grade_credit > 0 else True
+                    settings_context.update(
+                        {
+                            'is_credit_course': True,
+                            'credit_requirements': paired_requirements,
+                            'show_min_grade_warning': show_min_grade_warning,
+                        }
+                    )
+                else:
+                    settings_context.update({'is_credit_course': False})
 
             return render_to_response('settings.html', settings_context)
         elif 'application/json' in request.META.get('HTTP_ACCEPT', ''):
