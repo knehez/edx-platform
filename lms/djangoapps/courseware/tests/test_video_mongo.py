@@ -880,7 +880,6 @@ class TestVideoDescriptorStudentViewJson(TestCase):
     }
     TEST_EDX_VIDEO_ID = 'test_edx_video_id'
 
-
     def setUp(self):
         super(TestVideoDescriptorStudentViewJson, self).setUp()
         sample_xml = (
