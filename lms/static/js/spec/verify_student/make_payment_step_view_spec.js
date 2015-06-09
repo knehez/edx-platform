@@ -136,15 +136,15 @@ define([
 
             it( 'provides working payment buttons for a single processor', function() {
                 createView({processors: ['cybersource']});
-                checkPaymentButtons( AjaxHelpers.requests(this), {cybersource: "Pay with Credit Card"});
+                checkPaymentButtons( AjaxHelpers.requests(this), {cybersource: "Checkout"});
             });
 
             it( 'provides working payment buttons for multiple processors', function() {
                 createView({processors: ['cybersource', 'paypal', 'other']});
                 checkPaymentButtons( AjaxHelpers.requests(this), {
-                    cybersource: "Pay with Credit Card",
-                    paypal: "Pay with PayPal",
-                    other: "Pay with other"
+                    cybersource: "Checkout",
+                    paypal: "Checkout with PayPal",
+                    other: "Checkout with other"
                 });
             });
 
