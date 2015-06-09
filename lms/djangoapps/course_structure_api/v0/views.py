@@ -532,7 +532,7 @@ class CourseBlocksAndNavigation(ListAPIView):
         # children: recursively call the function for each of the children, while supporting dynamic children.
         children = []
         if block_info.block.has_children:
-            children = get_dynamic_descriptor_children(block_info.block)
+            children = get_dynamic_descriptor_children(block_info.block, request_info.request.user.id)
             for child in children:
                 self.recurse_blocks_nav(request_info, result_info, self.BlockInfo(child, block_info))
             if request_info.children:
