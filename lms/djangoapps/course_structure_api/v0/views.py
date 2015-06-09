@@ -7,7 +7,7 @@ import logging
 from django.conf import settings
 from django.http import Http404
 from rest_framework.authentication import OAuth2Authentication, SessionAuthentication
-from rest_framework.exceptions import PermissionDenied, AuthenticationFailed, ParseError
+from rest_framework.exceptions import AuthenticationFailed, ParseError
 from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -90,10 +90,10 @@ class CourseViewMixin(object):
     def check_course_permissions(self, user, course):
         """
         Checks if the request user can access the course.
-        Raises PermissionDenied if the user does not have course access.
+        Raises 404 if the user does not have course access.
         """
         if not self.user_can_access_course(user, course):
-            raise PermissionDenied
+            raise Http404
 
     def perform_authentication(self, request):
         """
@@ -648,3 +648,11 @@ class CourseBlocksAndNavigation(ListAPIView):
                     self.FIELD_MAP[field_name].block_field_name,
                     self.FIELD_MAP[field_name].api_field_default,
                 )
+
+    def perform_authentication(self, request):
+        """
+        Ensures that the user is authenticated (e.g. not an AnonymousUser)
+        """
+        super(CourseBlocksAndNavigation, self).perform_authentication(request)
+        if request.user.is_anonymous():
+            raise AuthenticationFailed

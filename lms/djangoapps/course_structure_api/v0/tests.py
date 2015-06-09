@@ -4,16 +4,17 @@ Run these tests @ Devstack:
 """
 # pylint: disable=missing-docstring,invalid-name,maybe-no-member,attribute-defined-outside-init
 from datetime import datetime
+from mock import patch, Mock
+from itertools import product
 
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
-from mock import patch, Mock
 from oauth2_provider.tests.factories import AccessTokenFactory, ClientFactory
 from opaque_keys.edx.locator import CourseLocator
 from xmodule.error_module import ErrorDescriptor
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
+from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory, check_mongo_calls
 from xmodule.modulestore.xml import CourseLocationManager
 from xmodule.tests import get_test_system
 
@@ -137,6 +138,7 @@ class CourseDetailMixin(object):
     """
     Mixin for views utilizing only the course_id kwarg.
     """
+    view_supports_debug_mode = True
 
     def test_get_invalid_course(self):
         """
@@ -157,9 +159,10 @@ class CourseDetailMixin(object):
 
     def test_not_authenticated(self):
         # If debug mode is enabled, the view should always return data.
-        with override_settings(DEBUG=True):
-            response = self.http_get(reverse(self.view, kwargs={'course_id': self.course_id}), HTTP_AUTHORIZATION=None)
-            self.assertEqual(response.status_code, 200)
+        if self.view_supports_debug_mode:
+            with override_settings(DEBUG=True):
+                response = self.http_get(reverse(self.view, kwargs={'course_id': self.course_id}), HTTP_AUTHORIZATION=None)
+                self.assertEqual(response.status_code, 200)
 
         # HTTP 401 should be returned if the user is not authenticated.
         response = self.http_get(reverse(self.view, kwargs={'course_id': self.course_id}), HTTP_AUTHORIZATION=None)
@@ -170,11 +173,12 @@ class CourseDetailMixin(object):
         access_token = AccessTokenFactory.create(user=user, client=self.oauth_client).token
         auth_header = 'Bearer ' + access_token
 
-        # If debug mode is enabled, the view should always return data.
-        with override_settings(DEBUG=True):
-            response = self.http_get(reverse(self.view, kwargs={'course_id': self.course_id}),
-                                     HTTP_AUTHORIZATION=auth_header)
-            self.assertEqual(response.status_code, 200)
+        if self.view_supports_debug_mode:
+            # If debug mode is enabled, the view should always return data.
+            with override_settings(DEBUG=True):
+                response = self.http_get(reverse(self.view, kwargs={'course_id': self.course_id}),
+                                         HTTP_AUTHORIZATION=auth_header)
+                self.assertEqual(response.status_code, 200)
 
         # Access should be granted if the proper access token is supplied.
         response = self.http_get(reverse(self.view, kwargs={'course_id': self.course_id}),
@@ -184,7 +188,7 @@ class CourseDetailMixin(object):
         # Access should be denied if the user is not course staff.
         response = self.http_get(reverse(self.view, kwargs={'course_id': unicode(self.empty_course.id)}),
                                  HTTP_AUTHORIZATION=auth_header)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 404)
 
 
 class CourseListTests(CourseViewTestsMixin, ModuleStoreTestCase):
@@ -375,3 +379,57 @@ class CourseGradingPolicyTests(CourseDetailMixin, CourseViewTestsMixin, ModuleSt
             }
         ]
         self.assertListEqual(response.data, expected)
+
+
+@patch.dict(
+    'django.conf.settings.FEATURES',
+    {'ENABLE_COURSE_BLOCKS_NAVIGATION_API': True, 'ENABLE_RENDER_XBLOCK_API': True}
+)
+class CourseBlocksAndNavigationMixin(CourseDetailMixin, CourseViewTestsMixin):
+    block_navigation_view_type = ''
+    view_supports_debug_mode = False
+    block_fields = ['id', 'type', 'display_name', 'web_url', 'block_url', 'graded', 'format']
+
+    @property
+    def view(self):
+        return 'course_structure_api:v0:' + self.block_navigation_view_type
+
+    def test_get(self):
+        with check_mongo_calls(3):
+            response = super(CourseBlocksAndNavigationMixin, self).test_get()
+
+        # verify root element
+        self.assertIn('root', response.data)
+        root_string = unicode(self.course.location)
+        self.assertEquals(response.data['root'], root_string)
+
+        # verify ~blocks element
+        self.assertTrue(self.block_navigation_view_type in response.data)
+        blocks = response.data[self.block_navigation_view_type]
+
+        # verify number of blocks
+        self.assertEquals(len(blocks), 3)
+
+        # verify fields in blocks
+        for field, block in product(self.block_fields, blocks.values()):
+            self.assertIn(field, block)
+
+        # verify container fields in container blocks
+        for field in self.container_fields:
+            self.assertIn(field, blocks[root_string])
+
+
+class CourseBlocksTests(CourseBlocksAndNavigationMixin, ModuleStoreTestCase):
+    block_navigation_view_type = 'blocks'
+    container_fields = ['children']
+
+
+class CourseNavigationTests(CourseBlocksAndNavigationMixin, ModuleStoreTestCase):
+    block_navigation_view_type = 'navigation'
+    container_fields = ['descendants']
+    block_fields = []
+
+
+class CourseBlocksAndNavigationTests(CourseBlocksAndNavigationMixin, ModuleStoreTestCase):
+    block_navigation_view_type = 'blocks+navigation'
+    container_fields = ['children', 'descendants']
