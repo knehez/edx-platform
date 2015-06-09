@@ -92,8 +92,8 @@ class Bookmark(TimeStampedModel):
 
         user = data.pop('user')
 
-        bookmark, __ = cls.objects.get_or_create(usage_key=usage_key, user=user, defaults=data)
-        return bookmark
+        bookmark, created = cls.objects.get_or_create(usage_key=usage_key, user=user, defaults=data)
+        return bookmark, created
 
     @property
     def resource_id(self):

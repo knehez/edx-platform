@@ -4,7 +4,7 @@ HTTP end-points for the Bookmarks API.
 For more information, see:
 https://openedx.atlassian.net/wiki/display/TNL/Bookmarks+API
 """
-from eventtracking import tracker
+import eventtracking
 import logging
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -191,7 +191,7 @@ class BookmarksListView(ListCreateAPIView, BookmarksViewMixin):
             event_data['list_type'] = 'per_course'
             event_data['course_id'] = course_id
 
-        tracker.emit('edx.bookmark.listed', event_data)
+        eventtracking.tracker.emit('edx.bookmark.listed', event_data)
 
         return page
 
