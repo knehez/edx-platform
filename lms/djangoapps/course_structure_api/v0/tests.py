@@ -404,7 +404,18 @@ class CourseGradingPolicyTests(CourseDetailMixin, CourseViewTestsMixin, ModuleSt
 
 
 class CourseBlocksOrNavigationMixin(CourseDetailMixin, CourseViewTestsMixin):
+    """
+    A Mixin class for testing all views related to Course blocks and/or navigation.
+    """
     view_supports_debug_mode = False
+
+    def setUp(self):
+        """
+        Override the base `setUp` method to enroll the user in the course, since these views
+        require enrollment for non-staff users.
+        """
+        super(CourseBlocksOrNavigationMixin, self).setUp()
+        CourseEnrollmentFactory(user=self.user, course_id=self.course.id)
 
     def create_user(self):
         """
@@ -412,12 +423,11 @@ class CourseBlocksOrNavigationMixin(CourseDetailMixin, CourseViewTestsMixin):
         """
         self.user = UserFactory.create()
 
-    def setUp(self):
-        super(CourseBlocksOrNavigationMixin, self).setUp()
-        CourseEnrollmentFactory(user=self.user, course_id=self.course.id)
-
     @property
     def view(self):
+        """
+        Returns the name of the view for testing to use in the django `reverse` call.
+        """
         return 'course_structure_api:v0:' + self.block_navigation_view_type
 
     def test_get(self):
@@ -445,10 +455,17 @@ class CourseBlocksOrNavigationMixin(CourseDetailMixin, CourseViewTestsMixin):
             self.assertIn(field, blocks[root_string])
 
     def test_parse_error(self):
+        """
+        Verifies the view returns a 400 when a query parameter is incorrectly formatted.
+        """
         response = self.http_get_for_course(data={'block_json': 'incorrect'})
         self.assertEqual(response.status_code, 400)
 
-    def test_no_access_block(self):
+    def test_no_access_to_block(self):
+        """
+        Verifies the view returns only the top-level course block, excluding the sequential block
+        and its descendants when the user does not have access to the sequential.
+        """
         self.sequential.visible_to_staff_only = True
         modulestore().update_item(self.sequential, self.user.id)
 
@@ -457,10 +474,16 @@ class CourseBlocksOrNavigationMixin(CourseDetailMixin, CourseViewTestsMixin):
 
 
 class CourseBlocksMixin(object):
+    """
+    A Mixin class for testing all views related to Course blocks.
+    """
     view_supports_debug_mode = False
     block_fields = ['id', 'type', 'display_name', 'web_url', 'block_url', 'graded', 'format']
 
     def test_block_json(self):
+        """
+        Verifies the view's response when the block_json data is requested.
+        """
         response = self.http_get_for_course(
             data={'block_json': '{"video":{"profiles":["mobile_low"]}}'}
         )
@@ -469,6 +492,9 @@ class CourseBlocksMixin(object):
         self.assertIn('block_json', video_block)
 
     def test_block_count(self):
+        """
+        Verifies the view's response when the block_count data is requested.
+        """
         response = self.http_get_for_course(
             data={'block_count': 'problem'}
         )
@@ -480,9 +506,12 @@ class CourseBlocksMixin(object):
 
 
 class CourseNavigationMixin(object):
+    """
+    A Mixin class for testing all views related to Course navigation.
+    """
     def test_depth_zero(self):
         """
-        Tests that all descendants are bundled into the root block
+        Tests that all descendants are bundled into the root block when the navigation_depth is set to 0.
         """
         response = self.http_get_for_course(
             data={'navigation_depth': '0'}
@@ -493,7 +522,7 @@ class CourseNavigationMixin(object):
 
     def test_depth(self):
         """
-        Tests that all container blocks have descendants
+        Tests that all container blocks have descendants listed in their data.
         """
         response = self.http_get_for_course()
 
@@ -508,11 +537,17 @@ class CourseNavigationMixin(object):
 
 
 class CourseBlocksTests(CourseBlocksOrNavigationMixin, CourseBlocksMixin, ModuleStoreTestCase):
+    """
+    A Test class for testing the Course 'blocks' view.
+    """
     block_navigation_view_type = 'blocks'
     container_fields = ['children']
 
 
 class CourseNavigationTests(CourseBlocksOrNavigationMixin, CourseNavigationMixin, ModuleStoreTestCase):
+    """
+    A Test class for testing the Course 'navigation' view.
+    """
     block_navigation_view_type = 'navigation'
     container_fields = ['descendants']
     block_fields = []
@@ -520,5 +555,8 @@ class CourseNavigationTests(CourseBlocksOrNavigationMixin, CourseNavigationMixin
 
 class CourseBlocksAndNavigationTests(CourseBlocksOrNavigationMixin, CourseBlocksMixin, CourseNavigationMixin,
                                      ModuleStoreTestCase):
+    """
+    A Test class for testing the Course 'blocks+navigation' view.
+    """
     block_navigation_view_type = 'blocks+navigation'
     container_fields = ['children', 'descendants']
