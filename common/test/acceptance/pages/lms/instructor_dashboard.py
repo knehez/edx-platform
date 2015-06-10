@@ -299,6 +299,11 @@ class CohortManagementSection(PageObject):
             textinput.send_keys(user)
             textinput.send_keys(",")
         self.q(css=self._bounded_selector("div.cohort-management-group-add .action-primary")).first.click()
+        # Expect the confirmation message substring. (The full message will differ depending on 1 or >1 students added)
+        self.wait_for(
+            lambda: "added to this cohort" in self.get_cohort_confirmation_messages()[0],
+            "Student(s) added confirmation message."
+        )
 
     def get_cohort_student_input_field_value(self):
         """
