@@ -24,6 +24,7 @@ from xmodule.modulestore.django import modulestore
 from xmodule.contentstore.content import StaticContent
 from xmodule.tabs import CourseTab
 from openedx.core.lib.course_tabs import CourseTabPluginManager
+from openedx.core.djangoapps.content.course_structures.models import CourseStructure
 from xmodule.modulestore import EdxJSONEncoder
 from xmodule.modulestore.exceptions import ItemNotFoundError, DuplicateCourseError
 from opaque_keys import InvalidKeyError
@@ -45,6 +46,7 @@ from contentstore.utils import (
     get_lms_link_for_item,
     reverse_course_url,
     reverse_library_url,
+    reverse_usage_url,
     reverse_url,
     remove_all_instructors,
 )
@@ -467,6 +469,33 @@ def _get_rerun_link_for_item(course_key):
     return reverse_course_url('course_rerun_handler', course_key)
 
 
+def _ora1_status(course_id, advanced_modules):
+    """
+    Check
+        * If "peergrading" and/or "combinedopenended" advanced modules are listed in the Advanced Module List.
+        * If one or more ORA 1 components present anywhere in the course outline.
+
+    Returns:
+        dict
+    """
+    try:
+        course_structure = CourseStructure.objects.get(course_id=course_id)
+        ordered_blocks = course_structure.ordered_blocks
+    except CourseStructure.DoesNotExist:
+        # TODO! Should we call mongo directly?
+        pass
+
+    ora1_components = []
+    for key, block in ordered_blocks.items():
+        if block['block_type'] in ['peergrading', 'combinedopenended']:
+            ora1_components.append([reverse_usage_url('container_handler', block['parent']), block['display_name']])
+
+    return {
+        'ora1_components': ora1_components,
+        'ora1_advance_modules': 'peergrading' in advanced_modules or 'combinedopenended' in advanced_modules
+    }
+
+
 @login_required
 @ensure_csrf_cookie
 def course_index(request, course_key):
@@ -507,6 +536,7 @@ def course_index(request, course_key):
             'course_release_date': course_release_date,
             'settings_url': settings_url,
             'reindex_link': reindex_link,
+            'ora1_status': _ora1_status(course_key, course_module.advanced_modules),
             'notification_dismiss_url': reverse_course_url(
                 'course_notifications_handler',
                 current_action.course_key,

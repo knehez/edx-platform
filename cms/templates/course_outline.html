@@ -50,6 +50,34 @@ from contentstore.utils import reverse_usage_url
     </div>
   </div>
   %endif
+
+  %if ora1_status["ora1_components"] or ora1_status["ora1_advance_modules"]:
+  <div class="wrapper wrapper-alert wrapper-alert-error is-shown">
+    <div class="alert announcement">
+      <i class="feedback-symbol fa fa-bullhorn"></i>
+
+      <div class="copy">
+        <h2 class="title title-3">${_("This course uses ORA1. ORA1 has been deprecated and removed from edX.")}</h2>
+
+        <p>${_("Assignments using ORA1 will not be accessible to students. Please replace any ORA1 assignments in this course with ORA2 assignments.")}</p>
+      </div>
+
+      %if ora1_status["ora1_components"]:
+          <div class="ora1-components-list">
+              <nav class="nav-related" aria-label="${_('ORA 1 Components')}">
+                  <ul>
+                      % for component_parent_key, component_display_name in ora1_status['ora1_components']:
+                        <li class="nav-item"><a href="${component_parent_key}">${_(component_display_name)}</a></li>
+                      % endfor
+                  </ul>
+              </nav>
+          </div>
+      %endif
+
+    </div>
+  </div>
+  %endif
+
 </%block>
 
 <%block name="content">
