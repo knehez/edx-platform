@@ -25,6 +25,7 @@ from xmodule.contentstore.content import StaticContent
 from xmodule.tabs import CourseTab
 from openedx.core.lib.course_tabs import CourseTabPluginManager
 from openedx.core.djangoapps.credit.api import is_credit_course, get_credit_requirements
+from openedx.core.djangoapps.credit.tasks import update_credit_course_requirements
 from xmodule.modulestore import EdxJSONEncoder
 from xmodule.modulestore.exceptions import ItemNotFoundError, DuplicateCourseError
 from opaque_keys import InvalidKeyError
@@ -1003,6 +1004,11 @@ def grading_handler(request, course_key_string, grader_index=None):
                 else:
                     return JsonResponse(CourseGradingModel.fetch_grader(course_key, grader_index))
             elif request.method in ('POST', 'PUT'):  # post or put, doesn't matter.
+                # update credit course requirements if 'minimum_grade_credit'
+                # field value is changed
+                if 'minimum_grade_credit' in request.json:
+                    update_credit_course_requirements.delay(unicode(course_key))
+
                 # None implies update the whole model (cutoffs, graceperiod, and graders) not a specific grader
                 if grader_index is None:
                     return JsonResponse(

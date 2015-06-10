@@ -63,6 +63,9 @@ var CourseGradingPolicy = Backbone.Model.extend({
     },
     parseMinimumGradeCredit : function(minimum_grade_credit) {
         // get the value of minimum grade credit value in percentage
+        if (isNaN(minimum_grade_credit)) {
+            return 0;
+        }
         return parseInt(minimum_grade_credit);
     },
     validate : function(attrs) {

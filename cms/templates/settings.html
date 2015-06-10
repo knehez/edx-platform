@@ -28,8 +28,16 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url}';
   </script>
 </%block>
 <%block name="requirejs">
-    require(["js/factories/settings"], function(SettingsFactory) {
+    require(["gettext", "js/factories/settings", "js/views/feedback_notification"], function(gettext, SettingsFactory, NotificationView) {
         SettingsFactory("${details_url}");
+
+        if ('${is_credit_course}' === 'True' && '${show_min_grade_warning}' === 'True') {
+            new NotificationView.Warning({
+                title: gettext("Credit Eligibility Requirements"),
+                message: gettext("Minimum passing grade for credit is not set."),
+                closeIcon: true
+            }).show();
+        }
     });
 </%block>
 
