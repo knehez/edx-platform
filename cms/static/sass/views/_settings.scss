@@ -749,6 +749,11 @@
       #field-course-grading-graceperiod {
         width: flex-grid(3, 9);
       }
+
+      #field-course-minimum_grade_credit {
+        width: flex-grid(4, 9);
+      }
+
     }
 
     &.assignment-types {
