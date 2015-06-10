@@ -886,12 +886,8 @@ def settings_handler(request, course_key_string):
                     # pair together requirements with same 'namespace' values
                     paired_requirements = {}
                     for requirement in credit_requirements:
-                        requirement_data = {
-                            "name": requirement.get('name'),
-                            "display_name": requirement.get('display_name'),
-                            "criteria": requirement.get('criteria'),
-                        }
-                        paired_requirements.setdefault(requirement.get('namespace'), []).append(requirement_data)
+                        namespace = requirement.pop("namespace")
+                        paired_requirements.setdefault(namespace, []).append(requirement)
 
                     # if 'minimum_grade_credit' of a course is not set or 0 then
                     # show warning message to course author.
