@@ -2340,7 +2340,7 @@ class CodeResponse(LoncapaResponse):
             self.payload
         """
         grader_payload = codeparam.find('grader_payload')
-        grader_payload = grader_payload.text if grader_payload is not None else ''
+        grader_payload = contextualize_text(grader_payload.text, self.context) if grader_payload is not None else ''
         self.payload = {
             'grader_payload': grader_payload,
         }
@@ -2355,8 +2355,8 @@ class CodeResponse(LoncapaResponse):
         self.initial_display = find_with_default(
             codeparam, 'initial_display', '')
         _ = self.capa_system.i18n.ugettext
-        self.answer = find_with_default(codeparam, 'answer_display',
-                                        _(u'No answer provided.'))
+        self.answer = contextualize_text(find_with_default(codeparam, 'answer_display',
+                                        _(u'No answer provided.')), self.context)
 
     def get_score(self, student_answers):
         _ = self.capa_system.i18n.ugettext
