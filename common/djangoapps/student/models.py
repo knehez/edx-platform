@@ -284,6 +284,9 @@ class UserProfile(models.Model):
         """
         return self.profile_image_uploaded_at is not None
 
+    def __unicode__(self):
+        return '%s - %s' % (self.user, self.name)
+
     def get_meta(self):  # pylint: disable=missing-docstring
         js_str = self.meta
         if not js_str:
@@ -441,6 +444,9 @@ class Registration(models.Model):
 
     user = models.ForeignKey(User, unique=True)
     activation_key = models.CharField(('activation key'), max_length=32, unique=True, db_index=True)
+
+    def __unicode__(self):
+        return '%s' % self.user
 
     def register(self, user):
         # MINOR TODO: Switch to crypto-secure key
