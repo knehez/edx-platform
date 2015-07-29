@@ -60,3 +60,51 @@ file_filter = conf/locale/<lang>/LC_MESSAGES/wiki.po
 source_file = conf/locale/en/LC_MESSAGES/wiki.po
 source_lang = en
 type = PO
+
+[edx-platform.analytics-dashboard]
+file_filter = conf/locale/<lang>/LC_MESSAGES/analytics-dashboard.po
+source_file = conf/locale/en/LC_MESSAGES/analytics-dashboard.po
+source_lang = en
+type = PO
+
+[edx-platform.notifier-django]
+file_filter = conf/locale/<lang>/LC_MESSAGES/notifier-django.po
+source_file = conf/locale/en/LC_MESSAGES/notifier-django.po
+source_lang = en
+type = PO
+
+[edx-platform.openassessment-js]
+file_filter = conf/locale/<lang>/LC_MESSAGES/openassessment-js.po
+source_file = conf/locale/en/LC_MESSAGES/openassessment-js.po
+source_lang = en
+type = PO
+
+[edx-platform.openassessment]
+file_filter = conf/locale/<lang>/LC_MESSAGES/openassessment.po
+source_file = conf/locale/en/LC_MESSAGES/openassessment.po
+source_lang = en
+type = PO
+
+[edx-platform.support-messaging]
+file_filter = conf/locale/<lang>/LC_MESSAGES/support-messaging.po
+source_file = conf/locale/en/LC_MESSAGES/support-messaging.po
+source_lang = en
+type = PO
+
+[edx-platform.analytics-dashboard-js]
+file_filter = conf/locale/<lang>/LC_MESSAGES/analytics-dashboard-js.po
+source_file = conf/locale/en/LC_MESSAGES/analytics-dashboard-js.po
+source_lang = en
+type = PO
+
+[edx-platform.analytics-ecommerce-js]
+file_filter = conf/locale/<lang>/LC_MESSAGES/ecommerce-js.po
+source_file = conf/locale/en/LC_MESSAGES/ecommerce-js.po
+source_lang = en
+type = PO
+
+[edx-platform.analytics-ecommerce]
+file_filter = conf/locale/<lang>/LC_MESSAGES/ecommerce.po
+source_file = conf/locale/en/LC_MESSAGES/ecommerce.po
+source_lang = en
+type = PO
