@@ -96,9 +96,3 @@ file_filter = conf/locale/<lang>/LC_MESSAGES/analytics-dashboard-js.po
 source_file = conf/locale/en/LC_MESSAGES/analytics-dashboard-js.po
 source_lang = en
 type = PO
-
-[edx-platform.analytics-ecommerce-js]
-file_filter = conf/locale/<lang>/LC_MESSAGES/ecommerce-js.po
-source_file = conf/locale/en/LC_MESSAGES/ecommerce-js.po
-source_lang = en
-type = PO
