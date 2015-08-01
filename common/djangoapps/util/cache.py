@@ -73,7 +73,7 @@ def cache_if_anonymous(*get_parameters):
 
                 # Include the values of GET parameters in the cache key.
                 for get_parameter in get_parameters:
-                    parameter_value = requeAst.GET.get(get_parameter)
+                    parameter_value = request.GET.get(get_parameter)
                     if parameter_value is not None:
                         # urlencode expects data to be of type str, and doesn't deal well with Unicode data
                         # since it doesn't provide a way to specify an encoding.
