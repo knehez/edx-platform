@@ -60,25 +60,23 @@ site_status_msg = get_site_status_msg(course_id)
       ${display_name}</h2>
     % endif
     <ol class="left nav-global">	
-
+    % if not user.is_authenticated():
 	<div style="position: absolute; left:10px;top:10px">
     <div style="float:left;width:6px;" >
-    	<form action="/i18n/setlang/" method="POST" id="language_form_hu">
-	    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }"/>
-	    <input type="hidden" name="language" value="hu"/>	 
+    	<form action="/" method="GET" id="language_form_hu">
+	<input type="hidden" name="lang" value="hu"/>
         <img src="/static/themes/memooc/images/flag_hu.gif" alt="HU" onclick="document.getElementById('language_form_hu').submit();" style="cursor: pointer;width:20px" />
 	</form>
     </div>
     <div style="float:left;">
-      <form action="/i18n/setlang/" method="POST" id="language_form_eng">
-	    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }"/>
-	    <input type="hidden" name="language" value="en"/>	 
+      <form action="/" method="GET" id="language_form_eng">
+	<input type="hidden" name="lang" value="en"/>
         <img src="/static/themes/memooc/images/flag_en.gif" alt="EN" onclick="document.getElementById('language_form_eng').submit();" style="cursor: pointer;width:20px" />
 	</form>
 	</div>
-    	<div style="clear:both;"><!-- usually leave this empty --></div>
+    	<div style="clear:both;"></div>
     </div>
-	
+    % endif
     </ol>
     % if user.is_authenticated():
     <ol class="left nav-global authenticated">

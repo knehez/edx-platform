@@ -1,54 +1,48 @@
-# #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+# #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 # edX translation file.
 # Copyright (C) 2015 EdX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # 
-# Translators:
-# kviktoria, 2014
-# Charles Nehez <knehez@gmail.com>, 2015
-# Keleti László <lkeleti@wininvestor.hu>, 2014
-# Oliver Hornyak <ohornyak@gmail.com>, 2015
-# #-#-#-#-#  djangojs-studio.po (edx-platform)  #-#-#-#-#
+# EdX Team <info@edx.org>, 2015.
+# #-#-#-#-#  djangojs-studio.po (0.1a)  #-#-#-#-#
 # edX translation file.
 # Copyright (C) 2015 EdX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # 
-# Translators:
-# Charles Nehez <knehez@gmail.com>, 2015
-# Keleti László <lkeleti@wininvestor.hu>, 2014
-# voxel <peter.mileff@yahoo.com>, 2015
-# #-#-#-#-#  underscore.po (edx-platform)  #-#-#-#-#
+# EdX Team <info@edx.org>, 2015.
+# #-#-#-#-#  underscore.po (0.1a)  #-#-#-#-#
 # edX translation file
 # Copyright (C) 2015 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # 
-# Translators:
-# Keleti László <lkeleti@wininvestor.hu>, 2014
-# Oliver Hornyak <ohornyak@gmail.com>, 2015
-# voxel <peter.mileff@yahoo.com>, 2015
-# #-#-#-#-#  underscore-studio.po (edx-platform)  #-#-#-#-#
+# EdX Team <info@edx.org>, 2015.
+# #-#-#-#-#  underscore-studio.po (0.1a)  #-#-#-#-#
 # edX translation file
 # Copyright (C) 2015 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # 
-# Translators:
-# Charles Nehez <knehez@gmail.com>, 2015
-# Keleti László <lkeleti@wininvestor.hu>, 2014
-# voxel <peter.mileff@yahoo.com>, 2015
+# EdX Team <info@edx.org>, 2015.
+# #-#-#-#-#  extra_js.po (0.1a)  #-#-#-#-#
+# edX translation file
+# Copyright (C) 2015 edX
+# This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
+# 
+# EdX Team <info@edx.org>, 2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: edx-platform\n"
+"Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-"POT-Creation-Date: 2015-07-27 13:45+0000\n"
-"PO-Revision-Date: 2015-07-27 13:49+0000\n"
-"Last-Translator: Sarina Canelake <sarina@edx.org>\n"
-"Language-Team: Hungarian (http://www.transifex.com/projects/p/edx-platform/language/hu/)\n"
+"POT-Creation-Date: 2015-07-29 22:08+0200\n"
+"PO-Revision-Date: 2015-07-31 15:35+0200\n"
+"Last-Translator: Luke Skywalker\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: cms/static/coffee/src/views/tabs.js
 #: cms/static/coffee/src/xblock/cms.runtime.v1.js
@@ -75,7 +69,7 @@ msgstr "Mentés"
 msgid "OK"
 msgstr "OK"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/coffee/src/views/tabs.js
@@ -127,7 +121,7 @@ msgstr "Törlés"
 msgid "Uploading"
 msgstr "Feltöltés"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/assets.js
@@ -173,7 +167,7 @@ msgstr "A változtatások el lettek mentve."
 msgid "Error"
 msgstr "Hiba"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/modals/base_modal.js
@@ -192,7 +186,7 @@ msgstr "Hiba"
 msgid "Save"
 msgstr "Mentés"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/modals/edit_xblock.js
@@ -394,7 +388,7 @@ msgstr "Címsor 3"
 msgid "Add to Dictionary"
 msgstr "Hozzáadás a szótárhoz"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -673,7 +667,7 @@ msgstr "Sor törlése"
 msgid "Delete table"
 msgstr "Táblázat törlése"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -714,7 +708,7 @@ msgstr "Dokumentum tulajdonságai"
 msgid "Edit HTML"
 msgstr "HTML szerkesztése"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -1126,7 +1120,7 @@ msgstr "Új dokumentum"
 msgid "New window"
 msgstr "Új ablak"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -1222,7 +1216,7 @@ msgstr "Előre"
 msgid "Prev"
 msgstr "Előző"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -1261,7 +1255,7 @@ msgstr "Összes cseréje"
 msgid "Replace with"
 msgstr "Csere"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -1478,7 +1472,7 @@ msgstr ""
 "Az az internetcím, amit begépeltél külső kapcsolatnak tűnik. Hozzá akarod "
 "adni a szükséges http:// prefixumot?"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -1541,7 +1535,7 @@ msgstr "Függőleges igazítás"
 msgid "Vertical space"
 msgstr "Függőleges távolság"
 
-#. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
+#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -2301,38 +2295,19 @@ msgstr "Válasz"
 msgid "Tags:"
 msgstr "Címkék:"
 
-#: lms/djangoapps/teams/static/teams/js/collections/team.js
 #: lms/djangoapps/teams/static/teams/js/collections/topic.js
 #: lms/templates/edxnotes/tab-item.underscore
 msgid "name"
 msgstr "név"
 
-#: lms/djangoapps/teams/static/teams/js/collections/team.js
-msgid "open_slots"
-msgstr ""
-
 #: lms/djangoapps/teams/static/teams/js/collections/topic.js
 msgid "team count"
 msgstr ""
 
-#: lms/djangoapps/teams/static/teams/js/views/team_card.js
-msgid "%(member_count)s / %(max_member_count)s Member"
-msgid_plural "%(member_count)s / %(max_member_count)s Members"
-msgstr[0] ""
-msgstr[1] ""
-
-#: lms/djangoapps/teams/static/teams/js/views/team_card.js
-msgid "View %(span_start)s %(team_name)s %(span_end)s"
-msgstr ""
-
-#: lms/djangoapps/teams/static/teams/js/views/teams.js
-msgid "Create new team"
-msgstr "Új csapat létrehozása"
-
 #: lms/djangoapps/teams/static/teams/js/views/teams_tab.js
 msgid ""
-"See all teams in your course, organized by topic. Join a team to collaborate"
-" with other learners who are interested in the same topic as you are."
+"Course teams are organized into topics created by course instructors. Try to"
+" join others in an existing team before you decide to create a new team!"
 msgstr ""
 
 #: lms/djangoapps/teams/static/teams/js/views/teams_tab.js
@@ -2346,14 +2321,6 @@ msgstr "Csapataim"
 #: lms/djangoapps/teams/static/teams/js/views/teams_tab.js
 msgid "Browse"
 msgstr "Böngészd"
-
-#: lms/djangoapps/teams/static/teams/js/views/teams_tab.js
-msgid "The page \"%(route)s\" could not be found."
-msgstr ""
-
-#: lms/djangoapps/teams/static/teams/js/views/teams_tab.js
-msgid "The topic \"%(topic)s\" could not be found."
-msgstr ""
 
 #: lms/djangoapps/teams/static/teams/js/views/topic_card.js
 msgid "%(team_count)s Team"
@@ -3257,12 +3224,6 @@ msgid "An error occurred. Please try again later."
 msgstr "Hiba történt. Próbáld újra."
 
 #: lms/static/js/discovery/form.js
-msgid "Viewing %s course"
-msgid_plural "Viewing %s courses"
-msgstr[0] "%s kurzus megtekintése"
-msgstr[1] "%s kurzus megtekintése"
-
-#: lms/static/js/discovery/form.js
 msgid "We couldn't find any results for \"%s\"."
 msgstr "Nincs találat erre \"%s\"."
 
@@ -3275,29 +3236,13 @@ msgstr "Hiba történt, ismételd meg a keresést."
 msgid "Focus grabber"
 msgstr "Középppont"
 
-#: lms/static/js/edxnotes/views/notes_visibility_factory.js
 #: lms/static/js/edxnotes/views/search_box.js
+#: lms/static/js/edxnotes/views/toggle_notes_factory.js
 msgid ""
 "An error has occurred. Make sure that you are connected to the Internet, and"
 " then try refreshing the page."
 msgstr ""
 "Hiba történt. Ellenőrizd az internetkapcsolatod és frissítsd az oldalt."
-
-#: lms/static/js/edxnotes/views/notes_visibility_factory.js
-msgid "Hide notes"
-msgstr "Megjegyzések elrejtése"
-
-#: lms/static/js/edxnotes/views/notes_visibility_factory.js
-msgid "Notes visible"
-msgstr "Megjegyzések láthatóak"
-
-#: lms/static/js/edxnotes/views/notes_visibility_factory.js
-msgid "Show notes"
-msgstr "Válasz megjegyzések"
-
-#: lms/static/js/edxnotes/views/notes_visibility_factory.js
-msgid "Notes hidden"
-msgstr "Megjegyzések elrejtve"
 
 #: lms/static/js/edxnotes/views/search_box.js
 msgid ""
@@ -3309,6 +3254,22 @@ msgstr ""
 #: lms/static/js/edxnotes/views/tab_item.js
 msgid "Current tab"
 msgstr "Aktuális fül"
+
+#: lms/static/js/edxnotes/views/toggle_notes_factory.js
+msgid "Hide notes"
+msgstr "Megjegyzések elrejtése"
+
+#: lms/static/js/edxnotes/views/toggle_notes_factory.js
+msgid "Notes visible"
+msgstr "Megjegyzések láthatóak"
+
+#: lms/static/js/edxnotes/views/toggle_notes_factory.js
+msgid "Show notes"
+msgstr "Válasz megjegyzések"
+
+#: lms/static/js/edxnotes/views/toggle_notes_factory.js
+msgid "Notes hidden"
+msgstr "Megjegyzések elrejtve"
 
 #: lms/static/js/edxnotes/views/tabs/course_structure.js
 msgid "Location in Course"
@@ -4203,6 +4164,8 @@ msgid ""
 "File format not supported. Please upload a file with a {file_extension} "
 "extension."
 msgstr ""
+"Nem támogatott fájl formátum. Kérlek tölts fel egy {file_extension} "
+"kiterjesztésű fájlt.extension."
 
 #: cms/static/js/factories/manage_users.js
 msgid "Already a course team member"
@@ -4304,6 +4267,8 @@ msgid ""
 "Only <%= fileTypes %> files can be uploaded. Please select a file ending in "
 "<%= fileExtensions %> to upload."
 msgstr ""
+"Kizárólag <%= fileTypes %> típusú fájlok tölthetők fel. Kérlek válassz <%= "
+"fileExtensions %> -ra végződő fájlt a feltöltéshez."
 
 #: cms/static/js/models/uploads.js
 msgid "or"
@@ -4318,17 +4283,11 @@ msgid "The course must have an assigned start date."
 msgstr "A kurzushoz hozzá kell rendelni a kezdés dátumát."
 
 #: cms/static/js/models/settings/course_details.js
-msgid ""
-"The course must have at least one active certificate configuration before it"
-" can be started."
+msgid "The course end date cannot be before the course start date."
 msgstr ""
 
 #: cms/static/js/models/settings/course_details.js
-msgid "The course end date must be later than the course start date."
-msgstr ""
-
-#: cms/static/js/models/settings/course_details.js
-msgid "The course start date must be later than the enrollment start date."
+msgid "The course start date cannot be before the enrollment start date."
 msgstr ""
 
 #: cms/static/js/models/settings/course_details.js
@@ -4403,21 +4362,23 @@ msgstr "Hozzáadás dátuma"
 
 #: cms/static/js/views/assets.js
 msgid "File {filename} exceeds maximum size of {maxFileSizeInMBs} MB"
-msgstr ""
+msgstr "A {filename} túllépte a maximális {maxFileSizeInMBs} MB méretet"
 
 #: cms/static/js/views/assets.js
 msgid ""
 "Please follow the instructions here to upload a file elsewhere and link to "
 "it: {maxFileSizeRedirectUrl}"
 msgstr ""
+"Kérlek kövesd az itt lévő instrukciókat arra vonatkozóan, hogyan tudnád a "
+"fájlt máshová feltölteni és ide linkelni: {maxFileSizeRedirectUrl}"
 
 #: cms/static/js/views/assets.js
 msgid "Your file could not be uploaded"
-msgstr ""
+msgstr "A fájl nem tölthető fel"
 
 #: cms/static/js/views/assets.js
 msgid "Max file size exceeded"
-msgstr ""
+msgstr "Maximális fájlméret elérve"
 
 #: cms/static/js/views/assets.js
 #: cms/templates/js/asset-upload-modal.underscore
@@ -4905,7 +4866,7 @@ msgstr ""
 
 #: cms/static/js/views/pages/course_outline.js
 msgid "Course Index"
-msgstr ""
+msgstr "Kurzus indexelés"
 
 #: cms/static/js/views/pages/course_outline.js
 msgid "There were errors reindexing course."
@@ -4937,11 +4898,11 @@ msgid ""
 msgstr ""
 
 #: cms/static/js/views/settings/main.js
-msgid "Course Credit Requirements"
+msgid "Credit Eligibility Requirements"
 msgstr ""
 
 #: cms/static/js/views/settings/main.js
-msgid "The minimum grade for course credit is not set."
+msgid "Minimum passing grade for credit is not set."
 msgstr ""
 
 #: cms/static/js/views/settings/main.js
@@ -5022,7 +4983,7 @@ msgstr "Fordítás feltöltése"
 
 #: cms/static/js/views/video/transcripts/file_uploader.js
 msgid "Please select a file in .srt format."
-msgstr ""
+msgstr "Válassz egy .srt fomátumú fájlt."
 
 #: cms/static/js/views/video/transcripts/file_uploader.js
 msgid "Error: Uploading failed."
@@ -5066,11 +5027,6 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: cms/templates/js/course-outline.underscore
-#: lms/templates/ccx/schedule.underscore
-msgid "Due Date"
-msgstr "Leadási határidő"
-
 #: cms/templates/js/previous-video-upload-list.underscore
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore
 msgid "Status"
@@ -5085,27 +5041,16 @@ msgid "Start Date"
 msgstr "Kezdő dátum"
 
 #: lms/templates/ccx/schedule.underscore
+msgid "Due Date"
+msgstr "Leadási határidő"
+
+#: lms/templates/ccx/schedule.underscore
 msgid "remove all"
 msgstr "összes eltávolítása"
 
 #: lms/templates/ccx/schedule.underscore
 msgid "remove"
 msgstr "eltávolítás"
-
-#: lms/templates/commerce/provider.underscore
-#: lms/templates/discovery/result_item.underscore
-msgid "gettext("
-msgstr ""
-
-#: lms/templates/commerce/provider.underscore
-msgid "<img src='%s' alt='%s'></image>"
-msgstr ""
-
-#: lms/templates/commerce/provider.underscore
-msgid ""
-"<button data-provider=\"%s\" data-course-key=\"%s\" data-username=\"%s\" "
-"class=\"complete-course\" onClick=completeOrder(this)>%s</button>"
-msgstr ""
 
 #: lms/templates/commerce/receipt.underscore
 msgid "Thank you! We have received your payment."
@@ -5198,6 +5143,10 @@ msgstr ""
 #: lms/templates/discovery/result_item.underscore
 msgid "LEARN MORE"
 msgstr "TUDJ MEG TÖBBET"
+
+#: lms/templates/discovery/result_item.underscore
+msgid "gettext("
+msgstr ""
 
 #: lms/templates/discovery/result_item.underscore
 msgid "Starts"
@@ -5444,11 +5393,11 @@ msgstr[1] ""
 #: lms/templates/search/course_search_results.underscore
 #: lms/templates/search/dashboard_search_results.underscore
 msgid "Sorry, no results were found."
-msgstr ""
+msgstr "Sajnálom, nincs találat."
 
 #: lms/templates/search/dashboard_search_results.underscore
 msgid "Back to Dashboard"
-msgstr ""
+msgstr "Vissza a főoldalra"
 
 #: lms/templates/student_account/account.underscore
 msgid "New Address"
@@ -5468,6 +5417,9 @@ msgid ""
 "specify additional information and see your linked social accounts on this "
 "page."
 msgstr ""
+"Az alábbi oldal a fiókod alapvető beállításait tartalmazza. Emellett további"
+" információkat tudsz megadni és láthatod a hozzákapcsolt közösségi oldal "
+"fiókját is."
 
 #: lms/templates/student_account/account_settings.underscore
 msgid "section.title"
@@ -5537,12 +5489,12 @@ msgid ""
 "We've sent instructions for resetting your password to the email address you"
 " provided."
 msgstr ""
-"A megadott e-mail címedre elküldtük, hogyan tudod beállítani az űj "
+"A megadott e-mail címedre elküldtük, hogyan tudod beállítani az új "
 "jelszavadat"
 
 #: lms/templates/student_account/login.underscore
 msgid "We couldn't sign you in."
-msgstr ""
+msgstr "A bejelentkezés nem sikerült"
 
 #: lms/templates/student_account/login.underscore
 msgid "An error occurred when signing you in to %(platformName)s."
@@ -5577,11 +5529,11 @@ msgstr ""
 
 #: lms/templates/student_account/login.underscore
 msgid "New to %(platformName)s?"
-msgstr ""
+msgstr "Új %(platformName)s fiókot szeretnél létrehozni?"
 
 #: lms/templates/student_account/login.underscore
 msgid "Create an account"
-msgstr ""
+msgstr "Fiók létrehozása"
 
 #: lms/templates/student_account/password_reset.underscore
 #: lms/templates/student_account/register.underscore
@@ -5590,7 +5542,7 @@ msgstr "Valamilyen hiba történt"
 
 #: lms/templates/student_account/password_reset.underscore
 msgid "Password assistance"
-msgstr ""
+msgstr "Jelszó helyreállítás"
 
 #: lms/templates/student_account/password_reset.underscore
 msgid ""
@@ -5606,7 +5558,7 @@ msgstr "Elfelejtett jelszó"
 
 #: lms/templates/student_account/register.underscore
 msgid "We couldn't create your account."
-msgstr ""
+msgstr "Sikertelen fiók létrehozás"
 
 #: lms/templates/student_account/register.underscore
 msgid "You've successfully signed into %(currentProvider)s."
@@ -5632,15 +5584,15 @@ msgstr ""
 
 #: lms/templates/student_account/register.underscore
 msgid "Create a new account"
-msgstr ""
+msgstr "Új fiók létrehozása"
 
 #: lms/templates/student_account/register.underscore
 msgid "Create your account"
-msgstr ""
+msgstr "Fiók létrehozása"
 
 #: lms/templates/student_account/register.underscore
 msgid "Required field"
-msgstr ""
+msgstr "Kötelező mező"
 
 #: lms/templates/student_account/register.underscore
 msgid "Already have an account?"
@@ -5648,7 +5600,7 @@ msgstr "Már létezik egy felhasználói fiókod?"
 
 #: lms/templates/student_profile/learner_profile.underscore
 msgid "You are currently sharing a limited profile."
-msgstr ""
+msgstr "Profilod jelenleg korlátozott információval látható."
 
 #: lms/templates/student_profile/learner_profile.underscore
 msgid "This edX learner is currently sharing a limited profile."
@@ -6086,6 +6038,10 @@ msgstr "állapot"
 msgid "Common Problem Types"
 msgstr "Általános feladattípusok"
 
+#: cms/templates/js/add-xblock-component-menu-problem.underscore
+msgid "Common Problems with Hints and Feedback"
+msgstr ""
+
 #: cms/templates/js/add-xblock-component.underscore
 msgid "Add New Component"
 msgstr "Új komponens hozzáadása"
@@ -6194,12 +6150,8 @@ msgid "Course title"
 msgstr "Kurzus címe"
 
 #: cms/templates/js/certificate-editor.underscore
-msgid ""
-"Specify an alternative to the official course title to display on "
-"certificates. Leave blank to use the official course title."
+msgid "Title of the course"
 msgstr ""
-"Adjon meg egy a hivatalostól eltérő kurzusnevet, ami a bizonyítványon "
-"megjelenik. Üresen hagyva a hivatalos nevet használjuk."
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "Organization Logo"
@@ -6348,14 +6300,6 @@ msgstr "Minősítés:"
 #: cms/templates/js/course-outline.underscore
 msgid "Due:"
 msgstr "Esedékes:"
-
-#: cms/templates/js/course-outline.underscore
-msgid "Proctored Exam"
-msgstr ""
-
-#: cms/templates/js/course-outline.underscore
-msgid "Timed and Proctored Exam"
-msgstr ""
 
 #: cms/templates/js/course-outline.underscore
 #: cms/templates/js/xblock-outline.underscore
@@ -6795,9 +6739,7 @@ msgid "Name of the signatory"
 msgstr ""
 
 #: cms/templates/js/signatory-editor.underscore
-msgid ""
-"The name of this signatory as it should appear on certificates. Maximum 40 "
-"characters."
+msgid "Maximum 40 characters"
 msgstr ""
 
 #: cms/templates/js/signatory-editor.underscore
@@ -6805,19 +6747,11 @@ msgid "Title of the signatory"
 msgstr ""
 
 #: cms/templates/js/signatory-editor.underscore
-msgid ""
-"The title of this signatory as it should appear on certificates. Maximum 2 "
-"lines, 40 characters each."
+msgid "2 Lines, 40 characters each"
 msgstr ""
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Organization of the signatory"
-msgstr ""
-
-#: cms/templates/js/signatory-editor.underscore
-msgid ""
-"The organization that this signatory belongs to, as it should appear on "
-"certificates. Maximum 40 characters."
 msgstr ""
 
 #: cms/templates/js/signatory-editor.underscore
@@ -6889,36 +6823,6 @@ msgstr "{role} jog eltávolítás"
 #: cms/templates/js/team-member.underscore
 msgid "Delete the user, {username}"
 msgstr "{username} felhasználó törlése"
-
-#: cms/templates/js/timed-examination-preference-editor.underscore
-msgid "Timed Exam"
-msgstr ""
-
-#: cms/templates/js/timed-examination-preference-editor.underscore
-msgid "This exam is timed"
-msgstr ""
-
-#: cms/templates/js/timed-examination-preference-editor.underscore
-msgid "Time Allotted (HH:MM):"
-msgstr ""
-
-#: cms/templates/js/timed-examination-preference-editor.underscore
-msgid ""
-"Students see warnings when 20% and 5% of the allotted time remains. In "
-"certain cases, students can be granted allowances that give them extra time "
-"to complete the exam."
-msgstr ""
-
-#: cms/templates/js/timed-examination-preference-editor.underscore
-msgid "This exam is proctored"
-msgstr ""
-
-#: cms/templates/js/timed-examination-preference-editor.underscore
-msgid ""
-"Students can choose to take this exam with or without online proctoring, but"
-" only students who choose the proctored option are eligible for credit. "
-"Proctored exams must also be timed exams."
-msgstr ""
 
 #: cms/templates/js/upload-dialog.underscore
 msgid "File upload succeeded"
@@ -7103,3 +7007,9 @@ msgstr ""
 #: cms/templates/js/video/transcripts/messages/transcripts-use-existing.underscore
 msgid "Use Current Transcript"
 msgstr "Aktuális átirat használata"
+
+msgid "Please enter your %{field}s."
+msgstr "Hiányzó mező: %{field}s."
+
+msgid "The email address you\\'ve provided isn\\'t formatted correctly."
+msgstr "A megadott email cím formátuma helytelen."

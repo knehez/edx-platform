@@ -6,15 +6,19 @@ Note that 'default' is being preserved for user session caching, which we're
 not migrating so as not to inconvenience users by logging them all out.
 """
 import urllib
+import logging
 from functools import wraps
 
 from django.conf import settings
 from django.core import cache
-
+from django.utils import translation
 
 # If we can't find a 'general' CACHE defined in settings.py, we simply fall back
 # to returning the default cache. This will happen with dev machines.
 from django.utils.translation import get_language
+from django_locale.trans_real import LANGUAGE_SESSION_KEY
+
+log = logging.getLogger(__name__)
 
 try:
     cache = cache.get_cache('general')
@@ -49,6 +53,10 @@ def cache_if_anonymous(*get_parameters):
         """The outer wrapper, used to allow the decorator to take optional arguments."""
         @wraps(view_func)
         def wrapper(request, *args, **kwargs):
+	    # we need switching languages from the main page (for anonymous users only), we put two flags into the navigation.html to swith langs.
+            language = request.GET.get('lang')
+            if language is not None:
+    		translation.activate(language)
             """The inner wrapper, which wraps the view function."""
             # Certificate authentication uses anonymous pages,
             # specifically the branding index, to do authentication.
@@ -65,7 +73,7 @@ def cache_if_anonymous(*get_parameters):
 
                 # Include the values of GET parameters in the cache key.
                 for get_parameter in get_parameters:
-                    parameter_value = request.GET.get(get_parameter)
+                    parameter_value = requeAst.GET.get(get_parameter)
                     if parameter_value is not None:
                         # urlencode expects data to be of type str, and doesn't deal well with Unicode data
                         # since it doesn't provide a way to specify an encoding.
@@ -82,6 +90,7 @@ def cache_if_anonymous(*get_parameters):
 
             else:
                 # Don't use the cache.
+		log.info('cache.py cache not used')
                 return view_func(request, *args, **kwargs)
 
         return wrapper

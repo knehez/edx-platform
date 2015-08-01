@@ -359,10 +359,10 @@ FEATURES = {
     'MODE_CREATION_FOR_TESTING': False,
 
     # Courseware search feature
-    'ENABLE_COURSEWARE_SEARCH': False,
+    'ENABLE_COURSEWARE_SEARCH': True,
 
     # Dashboard search feature
-    'ENABLE_DASHBOARD_SEARCH': False,
+    'ENABLE_DASHBOARD_SEARCH': True,
 
     # log all information from cybersource callbacks
     'LOG_POSTPAY_CALLBACKS': True,
@@ -394,7 +394,7 @@ FEATURES = {
     },
 
     # Course discovery feature
-    'ENABLE_COURSE_DISCOVERY': False,
+    'ENABLE_COURSE_DISCOVERY': True,
 
     # Software secure fake page feature flag
     'ENABLE_SOFTWARE_SECURE_FAKE': False,
@@ -848,7 +848,7 @@ LANGUAGES_BIDI = ("he", "ar", "fa", "ur", "fa-ir", "rtl")
 
 # Sourced from http://www.localeplanet.com/icu/ and wikipedia
 LANGUAGES = (
-    ('en', u'English'),
+    ('en', u'english'),
     ('rtl', u'Right-to-Left Test Language'),
     ('eo', u'Dummy Language (Esperanto)'),  # Dummy languaged used for testing
     ('fake2', u'Fake translations'),        # Another dummy language for testing (not pushed to prod)
