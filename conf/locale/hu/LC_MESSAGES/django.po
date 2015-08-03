@@ -7639,7 +7639,7 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"      A jelszavad beállítottuk.  Akár rögtön %(link_start)sbe is jelentkezhetsz(link_end)s.\n"
+"      A jelszavad beállítottuk.  Akár rögtön %(link_start)sbe is jelentkezhetsz%(link_end)s.\n"
 "      "
 
 #: lms/templates/registration/password_reset_confirm.html
@@ -8320,27 +8320,27 @@ msgstr ""
 #. a field on the registration form meant to hold the user's name.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Jane Doe"
-msgstr ""
+msgstr "Példa József"
 
 #. Translators: These instructions appear on the registration form,
 #. immediately
 #. below a field meant to hold the user's full name.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Needed for any certificates you may earn"
-msgstr "Szükséges a megszerzett bizonyítványokhoz"
+msgstr "A teljes név megadása a bizonyítványok kiadásához szükséges"
 
 #. Translators: This label appears above a field on the registration form
 #. meant to hold the user's public username.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Public username"
-msgstr ""
+msgstr "Felhasználói név"
 
 #: openedx/core/djangoapps/user_api/views.py
 msgid ""
 "The name that will identify you in your courses - {bold_start}(cannot be "
 "changed later){bold_end}"
 msgstr ""
-"A név, amely azonosítani fog a kurzusokban - {bold_start}(később már nem "
+"Ez a név fog megjelenni a kurzusokban - {bold_start}(később már nem "
 "változtatható){bold_end}"
 
 #. Translators: This example username is used as a placeholder in
@@ -8385,7 +8385,7 @@ msgstr "Általános szerződési feltételek és becsületkódex"
 
 #: openedx/core/djangoapps/user_api/views.py
 msgid "I agree to the {platform_name} {terms_of_service}."
-msgstr "Elfogadom a {platform_name} {terms_of_service}."
+msgstr "Elfogadom a {platform_name} {terms_of_service} előírásait"
 
 #: openedx/core/djangoapps/user_api/views.py
 msgid "You must agree to the {platform_name} {terms_of_service}."
@@ -8916,7 +8916,7 @@ msgstr "Mégsem"
 #: cms/templates/course-create-rerun.html cms/templates/index.html
 #: cms/templates/settings.html lms/templates/courseware/course_about.html
 msgid "Course Number"
-msgstr "Képzés száma"
+msgstr "Képzés azonosítója"
 
 #: cms/templates/html_error.html lms/templates/module-error.html
 msgid "Error:"
@@ -9551,14 +9551,17 @@ msgstr "Mindenkinek, mindenhol, bármikor"
 #. Translators: 'Open edX' is a brand, please keep this untranslated. See
 #. http://openedx.org for more information.
 #: lms/templates/index.html
-msgid "Welcome to Open edX!"
-msgstr "Üdvözlünk az Open edX rendszerben!"
+msgid "Welcome to MeMooc platform!"
+msgstr "Üdvözlünk az MeMooc rendszerben!"
 
 #. Translators: 'Open edX' is a brand, please keep this untranslated. See
 #. http://openedx.org for more information.
 #: lms/templates/index.html
-msgid "It works! This is the default homepage for this Open edX instance."
-msgstr "Működik! Ez az alapértelmezett oldala az Open edX példányunknak."
+msgid ""
+"This is the first Hungarian Massive Open Online Course - Learning Management"
+" System."
+msgstr ""
+"Csatlakozz Magyarország legnagyobb nyílt online felsőoktatási kurzusaihoz."
 
 #: lms/templates/index.html lms/templates/courseware/courses.html
 msgid "Search for a course"
@@ -11248,6 +11251,8 @@ msgstr ""
 #: lms/templates/courseware/course_about.html
 msgid "I just registered for {number} {title} through {account}: {url}"
 msgstr ""
+"Épp most regisztráltam a {number} - {title} kurzusra a {account} fiókkal: "
+"{url}"
 
 #: lms/templates/courseware/course_about.html
 msgid "Take a course with {platform} online"
@@ -11256,6 +11261,8 @@ msgstr "Végezz el egy online kurzust az {platform} rendszerrel."
 #: lms/templates/courseware/course_about.html
 msgid "I just registered for {number} {title} through {platform} {url}"
 msgstr ""
+"Épp most regisztráltam a {number} - {title} kurzusra az {platform} "
+"rendszerben {url}"
 
 #: lms/templates/courseware/course_about.html
 msgid "Post a Facebook message to say you've registered for this course"
@@ -11263,11 +11270,11 @@ msgstr ""
 
 #: lms/templates/courseware/course_about.html
 msgid "Classes Start"
-msgstr "Az osztály indul"
+msgstr "Kurzus indul"
 
 #: lms/templates/courseware/course_about.html
 msgid "Classes End"
-msgstr "Az osztály végez"
+msgstr "Kurzus befejeződik"
 
 #: lms/templates/courseware/course_about.html
 msgid "Estimated Effort"
@@ -17999,7 +18006,7 @@ msgstr "Jelentkezz be a {studio_name}-ba"
 
 #: cms/templates/login.html
 msgid "Don't have a {studio_name} Account? Sign up!"
-msgstr ""
+msgstr "Ha nincs még {studio_name} fiókod, regisztrálj!"
 
 #: cms/templates/login.html
 msgid "Required Information to Sign In to {studio_name}"

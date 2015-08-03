@@ -50,7 +50,6 @@ def index(request):
     '''
     Redirects to main page -- info page if user authenticated, or marketing if not
     '''
-    log.info("translation.leg_language() -->  %s",translation.get_language())
     if settings.COURSEWARE_ENABLED and request.user.is_authenticated():
         # For microsites, only redirect to dashboard if user has
         # courses in his/her dashboard. Otherwise UX is a bit cryptic.
