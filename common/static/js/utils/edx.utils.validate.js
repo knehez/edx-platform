@@ -18,10 +18,10 @@ var edx = edx || {};
             validate: {
 
                 msg: {
-                    email: '<li><%- gettext("The email address you\'ve provided isn\'t formatted correctly.") %></li>',
+                    email: '<li><%- gettext("The email address you have provided is not formatted correctly.") %></li>',
                     min: '<li><%- _.sprintf( gettext("%(field)s must have at least %(count)d characters."), context ) %></li>',
                     max: '<li><%- _.sprintf( gettext("%(field)s can only contain up to %(count)d characters."), context ) %></li>',
-                    required: '<li><%- _.sprintf( gettext("Please enter your %(field)s."), context ) %></li>',
+                    required: '<li><%- _.sprintf( gettext("Please enter your %(field)s."), context) %></li>',
                     custom: '<li><%= content %></li>'
                 },
 
