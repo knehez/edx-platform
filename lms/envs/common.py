@@ -335,7 +335,7 @@ FEATURES = {
     # Show a section in the membership tab of the instructor dashboard
     # to allow an upload of a CSV file that contains a list of new accounts to create
     # and register for course.
-    'ALLOW_AUTOMATED_SIGNUPS': False,
+    'ALLOW_AUTOMATED_SIGNUPS': True,
 
     # Display demographic data on the analytics tab in the instructor dashboard.
     'DISPLAY_ANALYTICS_DEMOGRAPHICS': True,
@@ -347,7 +347,7 @@ FEATURES = {
     'ENABLE_FOOTER_MOBILE_APP_LINKS': False,
 
     # Let students save and manage their annotations
-    'ENABLE_EDXNOTES': False,
+    'ENABLE_EDXNOTES': True,
 
     # Milestones application flag
     'MILESTONES_APP': False,
@@ -377,7 +377,7 @@ FEATURES = {
     'LICENSING': False,
 
     # Certificates Web/HTML Views
-    'CERTIFICATES_HTML_VIEW': False,
+    'CERTIFICATES_HTML_VIEW': True,
 
     # Batch-Generated Certificates from Instructor Dashboard
     'CERTIFICATES_INSTRUCTOR_GENERATION': False,
@@ -400,7 +400,7 @@ FEATURES = {
     'ENABLE_SOFTWARE_SECURE_FAKE': False,
 
     # Teams feature
-    'ENABLE_TEAMS': False,
+    'ENABLE_TEAMS': True,
 
     # Show video bumper in LMS
     'ENABLE_VIDEO_BUMPER': False,
@@ -409,7 +409,7 @@ FEATURES = {
     'SHOW_BUMPER_PERIODICITY': 7 * 24 * 3600,
 
     # Enable OpenBadge support. See the BADGR_* settings later in this file.
-    'ENABLE_OPENBADGES': False,
+    'ENABLE_OPENBADGES': True,
 
     # Credit course API
     'ENABLE_CREDIT_API': False,
@@ -1923,6 +1923,11 @@ INSTALLED_APPS = (
     'teams',
 
     'xblock_django',
+
+    'social.apps.django_app.default',
+
+    'third_party_auth',
+
 )
 
 ######################### CSRF #########################################
@@ -2114,10 +2119,10 @@ CERTIFICATES_STATIC_VERIFY_URL = "https://verify-test.edx.org/cert/"
 
 #################### Badgr OpenBadges generation #######################
 # Be sure to set up images for course modes using the BadgeImageConfiguration model in the certificates app.
-BADGR_API_TOKEN = None
+BADGR_API_TOKEN = "85b84aeb3bbe949f60dc77b67373fc83c6cdd3ac"
 # Do not add the trailing slash here.
-BADGR_BASE_URL = "http://localhost:8005"
-BADGR_ISSUER_SLUG = "example-issuer"
+BADGR_BASE_URL = "http://localhost:8305"
+BADGR_ISSUER_SLUG = "memooc-online-university"
 
 ###################### Grade Downloads ######################
 GRADES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
@@ -2560,3 +2565,5 @@ CREDIT_PROVIDER_TIMESTAMP_EXPIRATION = 15 * 60
 # not expected to be active; this setting simply allows administrators to
 # route any messages intended for LTI users to a common domain.
 LTI_USER_EMAIL_DOMAIN = 'lti.example.com'
+
+JABBER_DOMAIN = 'localhost'

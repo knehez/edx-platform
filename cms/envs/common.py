@@ -159,7 +159,7 @@ FEATURES = {
     'ALLOW_COURSE_RERUNS': True,
 
     # Certificates Web/HTML Views
-    'CERTIFICATES_HTML_VIEW': False,
+    'CERTIFICATES_HTML_VIEW': True,
 
     # Social Media Sharing on Student Dashboard
     'SOCIAL_SHARING_SETTINGS': {
@@ -179,6 +179,9 @@ FEATURES = {
     # Enable credit eligibility feature
     'ENABLE_CREDIT_ELIGIBILITY': ENABLE_CREDIT_ELIGIBILITY,
 
+	# Enable OpenBadge support.
+    'ENABLE_OPENBADGES': True,
+	
     # Can the visibility of the discussion tab be configured on a per-course basis?
     'ALLOW_HIDING_DISCUSSION_TAB': False,
 }

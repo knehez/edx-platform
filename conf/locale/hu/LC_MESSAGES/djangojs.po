@@ -3356,11 +3356,11 @@ msgstr "A tanulócsoport nevét meg kell adni"
 
 #: lms/static/js/groups/views/cohort_form.js
 msgid "You did not select a content group"
-msgstr "Nincs kiválasztva hallgatói csoport"
+msgstr "Nincs kiválasztva tartalom csoport"
 
 #: lms/static/js/groups/views/cohort_form.js
 msgid "The selected content group does not exist"
-msgstr "A megadott hallgatói csoport nem létezik"
+msgstr "A megadott tartalom csoport nem létezik"
 
 #: lms/static/js/groups/views/cohort_form.js
 msgid "The cohort cannot be saved"
@@ -3385,7 +3385,7 @@ msgid ""
 " to this cohort below."
 msgstr ""
 "A {cohortGroupName} csoport elkészült. Alul hozzáadhatod kézzel a "
-"hallgatókat a korcsoporthoz."
+"hallgatókat."
 
 #: lms/static/js/groups/views/cohorts.js
 msgid "Assign students to cohorts by uploading a CSV file."
@@ -3551,7 +3551,7 @@ msgid ""
 "The name that appears on your certificates. Other learners never see your "
 "full name."
 msgstr ""
-"A név ami a tanúsítványon meg fog jelenni. Más hallgatók nem láthatják a "
+"A név ami a bizonyítványon meg fog jelenni. Más hallgatók nem láthatják a "
 "teljes nevedet"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
@@ -4415,6 +4415,8 @@ msgid ""
 "This content group is not in use. Add a content group to any unit from the "
 "%(outlineAnchor)s."
 msgstr ""
+"A tartalom csoport még nincs használatban. Itt adhatod hozzá bármelyik "
+"leckéhez %(outlineAnchor)s."
 
 #: cms/static/js/views/content_group_details.js
 #: cms/static/js/views/group_configuration_details.js
@@ -4426,11 +4428,11 @@ msgstr "Kurzus vázlat"
 #: cms/static/js/views/content_group_item.js
 #: cms/static/js/views/content_group_list.js
 msgid "content group"
-msgstr ""
+msgstr "tartalom csoport"
 
 #: cms/static/js/views/content_group_list.js
 msgid "You have not created any content groups yet."
-msgstr ""
+msgstr "Még nem hoztál létre tartalom csoportot."
 
 #: cms/static/js/views/course_info_update.js
 msgid "Are you sure you want to delete this update?"
@@ -4556,12 +4558,12 @@ msgstr ""
 #. Translators: "item_display_name" is the name of the item to be deleted.
 #: cms/static/js/views/list_item.js
 msgid "Delete this %(item_display_name)s?"
-msgstr ""
+msgstr "Biztosan törölni akarod a %(item_display_name)s?"
 
 #. Translators: "item_display_name" is the name of the item to be deleted.
 #: cms/static/js/views/list_item.js
 msgid "Deleting this %(item_display_name)s is permanent and cannot be undone."
-msgstr ""
+msgstr "A %(item_display_name)s törlése végleges, nem vonható vissza."
 
 #: cms/static/js/views/manage_users_and_roles.js
 msgid "There was an error changing the user's role"
@@ -5298,19 +5300,19 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Associated Content Group"
-msgstr ""
+msgstr "Tartalom csoport társítása"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "No Content Group"
-msgstr ""
+msgstr "Nincs tartalom csoport"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Select a Content Group"
-msgstr ""
+msgstr "Tartalom csoport kiválasztása"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Choose a content group to associate"
-msgstr ""
+msgstr "Válassz egy tartalom csoportot"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Not selected"
@@ -5318,11 +5320,11 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Deleted Content Group"
-msgstr ""
+msgstr "Tartalom csoport törlése"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Create a content group"
-msgstr ""
+msgstr "Tartalom csoport készítése"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-group-header.underscore
 msgid "(contains %(student_count)s student)"
@@ -5596,7 +5598,7 @@ msgstr "Kötelező mező"
 
 #: lms/templates/student_account/register.underscore
 msgid "Already have an account?"
-msgstr "Már létezik egy felhasználói fiókod?"
+msgstr "Van már felhasználói fiókod?"
 
 #: lms/templates/student_profile/learner_profile.underscore
 msgid "You are currently sharing a limited profile."
@@ -6238,7 +6240,7 @@ msgstr "Ez a csoport neve"
 
 #: cms/templates/js/content-group-editor.underscore
 msgid "This content group is used in one or more units."
-msgstr "Ez a tartalmi csoport már más egységeknél használva van."
+msgstr "Ez a tartalom csoport már más egységeknél használva van."
 
 #: cms/templates/js/course-outline.underscore
 msgid "Contains staff only content"
@@ -6565,7 +6567,7 @@ msgstr "Bizonyos jogok fenntartva"
 
 #: cms/templates/js/list.underscore
 msgid "Add your first %(item_type)s"
-msgstr ""
+msgstr "Adj hozzá egy %(item_type)s-ot"
 
 #: cms/templates/js/list.underscore
 msgid "New %(item_type)s"
@@ -6699,6 +6701,8 @@ msgstr "Közreműködők és tanulók"
 #: cms/templates/js/publish-xblock.underscore
 msgid "Some content in this unit is visible only to particular content groups"
 msgstr ""
+"Bizonyos tartalmak ennél a leckénél csak egy adott tartalom csoport számára "
+"láthatók."
 
 #: cms/templates/js/publish-xblock.underscore
 #: cms/templates/js/staff-lock-editor.underscore

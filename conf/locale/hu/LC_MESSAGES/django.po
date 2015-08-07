@@ -2019,7 +2019,7 @@ msgstr ""
 #: common/lib/xmodule/xmodule/tests/test_course_metadata_utils.py
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py
 msgid "TBD"
-msgstr "TBD"
+msgstr "a közeljövőben"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "LTI Passports"
@@ -2422,16 +2422,20 @@ msgid ""
 "Specify the release dates for each Section in your course. Sections become "
 "visible to students on their release dates."
 msgstr ""
+"Add meg a megjelenési dátumát az egyes fejezeteknek. A fejezetek a megadott "
+"dátumtól kezdődően lesznek láthatók a hallgatók számára"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Designate a Subsection as Graded"
-msgstr ""
+msgstr "Jelölj ki alfejezeteket osztályozásra"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Set a Subsection to be graded as a specific assignment type. Assignments "
 "within graded Subsections count toward a student's final grade."
 msgstr ""
+"Állítsd be az alfejezet osztályozási típusát. Ennek eredménye a tanuló végső"
+" érdemjegyébe beleszámít."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Reordering Course Content"
@@ -2463,7 +2467,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Add an Instructor-Only Section to Your Outline"
-msgstr ""
+msgstr "Készíts olyan fejezeteket, amit csak az oktatók láthatnak"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
@@ -2471,10 +2475,12 @@ msgid ""
 "useful. To do this, create a section and set the release date to the distant"
 " future."
 msgstr ""
+"Ezt úgy teheted meg, hogy a megjelenési dátumot egy távoli jövőre állítod be"
+" (pl. 2099.12.31)."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Explore edX's Support Tools"
-msgstr ""
+msgstr "Használd az edX segítő eszközeit"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Explore the Studio Help Forum"
@@ -2484,7 +2490,7 @@ msgstr "Fedezd fel a Stúdió súgó fórumát"
 msgid ""
 "Access the Studio Help forum from the menu that appears when you click your "
 "user name in the top right corner of Studio."
-msgstr ""
+msgstr "Az oldal jobb felső részénél a segítség menüpontban teheted meg."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Visit Studio Help"
@@ -2497,6 +2503,8 @@ msgstr "Feliratkozás az edX101 kurzusra"
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Register for edX 101, edX's primer for course creation."
 msgstr ""
+"Regisztrálj az edx101-es minta kurzusra (amennyiben létezik), és ebben "
+"sokféle feladattípusra találsz példákat."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Register for edX 101"
@@ -2520,7 +2528,7 @@ msgstr "Tervezd meg a kurzusod információs oldalát"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Draft a Course Description"
-msgstr ""
+msgstr "Add meg ki a kurzus bemutatásához szükséges információt"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
@@ -2528,6 +2536,8 @@ msgid ""
 " and more. Draft the text students will read before deciding to enroll in "
 "your course."
 msgstr ""
+"A beállítások - ütemezés és részletek - menüpontban megadhatod a kurzus "
+"rövid leírását, áttekintését, a kurzus képét és a hozzátartozó videót."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Edit Course Schedule &amp; Details"
@@ -2535,13 +2545,15 @@ msgstr "Kurzus ütemezés &amp; részletek szerkesztése"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Add Staff Bios"
-msgstr ""
+msgstr "Adj rövid leírást a staffról"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Showing prospective students who their instructor will be is helpful. "
 "Include staff bios on the course About page."
 msgstr ""
+"A leendő hallgatóknak hasznos információ, hogy kik lesznek az oktatóik. A "
+"kurzus beállításokban az áttekintés részben írj röviden az oktatókról is."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Add Course FAQs"
@@ -2550,6 +2562,7 @@ msgstr "GyIK kurzushoz adása"
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Include a short list of frequently asked questions about your course."
 msgstr ""
+"Készíts egy rövid listát a kurzusodban leggyakrabban felmerülő kérdésekről."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Add Course Prerequisites"
@@ -2560,6 +2573,8 @@ msgid ""
 "Let students know what knowledge and/or skills they should have before they "
 "enroll in your course."
 msgstr ""
+"Mutasd meg a hallgatóknak milyen meglévő tudásra van szükségük, ahhoz "
+"beiratkozzanak a kurzusodra."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Course Info Sidebar Name"
@@ -2653,7 +2668,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Certificate Name (Short)"
-msgstr "Tanúsítvány neve (rövid név)"
+msgstr "Bizonyítvány elnevezése (rövid név)"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
@@ -2664,7 +2679,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Certificate Name (Long)"
-msgstr "Tanúsítvány neve (hosszú név)"
+msgstr "Bizonyítvány elnevezése (hosszú név)"
 
 #. Translators: This field is the container for course-specific certifcate
 #. configuration values
@@ -3618,6 +3633,7 @@ msgstr ""
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid "Enter the ids for the content groups this problem belongs to."
 msgstr ""
+"Add meg annak a tartalom csoport azonosítóját, amelyhez a feladat tartozik"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
@@ -4749,7 +4765,7 @@ msgstr "Kurzus oldal automatikusan létrehozva."
 
 #: lms/djangoapps/course_wiki/views.py
 msgid "Welcome to the {platform_name} Wiki"
-msgstr ""
+msgstr "Üdvözlünk a {platform_name} Wiki-ben"
 
 #: lms/djangoapps/course_wiki/views.py
 msgid "Visit a course wiki to add an article."
@@ -5683,7 +5699,7 @@ msgstr "E-kereskedelem"
 #: cms/templates/certificates.html cms/templates/export.html
 #: cms/templates/widgets/header.html
 msgid "Certificates"
-msgstr "Tanúsítványok"
+msgstr "Bizonyítványok"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py
 msgid "Please Enter the numeric value for the course price"
@@ -6268,10 +6284,11 @@ msgstr ""
 msgid ""
 "This component refers to deleted or invalid content group configurations."
 msgstr ""
+"A komponens egy törölt vagy hibás tartalom csoport konfigurációra mutat."
 
 #: lms/djangoapps/lms_xblock/mixin.py
 msgid "This component refers to deleted or invalid content groups."
-msgstr ""
+msgstr "A komponens egy törölt vagy hibás tartalom csoportra mutat."
 
 #: lms/templates/notes.html
 msgid "My Notes"
@@ -7639,7 +7656,7 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"      A jelszavad beállítottuk.  Akár rögtön %(link_start)sbe is jelentkezhetsz%(link_end)s.\n"
+"      A jelszavad beállítottuk.  Akár rögtön %(link_start)sbe is jelentkezhetsz(link_end)s.\n"
 "      "
 
 #: lms/templates/registration/password_reset_confirm.html
@@ -8371,7 +8388,7 @@ msgstr "Levelezési cím"
 
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Tell us why you're interested in {platform_name}"
-msgstr "Mond el miért érdeklődsz a {platform_name} iránt"
+msgstr "Mondd el miért érdeklődsz a {platform_name} iránt"
 
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Please select your Country."
@@ -8916,7 +8933,7 @@ msgstr "Mégsem"
 #: cms/templates/course-create-rerun.html cms/templates/index.html
 #: cms/templates/settings.html lms/templates/courseware/course_about.html
 msgid "Course Number"
-msgstr "Képzés azonosítója"
+msgstr "Azonosító"
 
 #: cms/templates/html_error.html lms/templates/module-error.html
 msgid "Error:"
@@ -8930,7 +8947,7 @@ msgstr "Szervezet:"
 #: cms/templates/index.html
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
 msgid "Course Number:"
-msgstr "Képzés száma:"
+msgstr "Azonosító:"
 
 #: cms/templates/index.html lms/templates/navigation.html
 #: lms/templates/sysadmin_dashboard.html
@@ -9150,7 +9167,7 @@ msgid ""
 msgstr ""
 "Auditáld a kurzust ingyen és teljes hozzáférést kapsz a kurzus anyagához, "
 "tevékenységekhez, tesztekhez és a fórumhoz. Ha a munkád kielégítő és "
-"betartod a vizsgaszabályzatot, akkor személyre szabott Tanúsítványt kapsz."
+"betartod a vizsgaszabályzatot, akkor személyre szabott Bizonyítványt kapsz."
 
 #: lms/templates/admin_dashboard.html
 msgid "{platform_name}-wide Summary"
@@ -9551,17 +9568,14 @@ msgstr "Mindenkinek, mindenhol, bármikor"
 #. Translators: 'Open edX' is a brand, please keep this untranslated. See
 #. http://openedx.org for more information.
 #: lms/templates/index.html
-msgid "Welcome to MeMooc platform!"
-msgstr "Üdvözlünk az MeMooc rendszerben!"
+msgid "Welcome to Open edX!"
+msgstr "Üdvözlünk az Open edX rendszerben!"
 
 #. Translators: 'Open edX' is a brand, please keep this untranslated. See
 #. http://openedx.org for more information.
 #: lms/templates/index.html
-msgid ""
-"This is the first Hungarian Massive Open Online Course - Learning Management"
-" System."
-msgstr ""
-"Csatlakozz Magyarország legnagyobb nyílt online felsőoktatási kurzusaihoz."
+msgid "It works! This is the default homepage for this Open edX instance."
+msgstr "Működik! Ez az alapértelmezett oldala az Open edX példányunknak."
 
 #: lms/templates/index.html lms/templates/courseware/courses.html
 msgid "Search for a course"
@@ -10170,7 +10184,7 @@ msgstr "pl.: yourname (fórumban lesz látható)"
 
 #: lms/templates/signup_modal.html
 msgid "e.g. Your Name (for certificates)"
-msgstr "pl.: Kis Zsuzsa (tanúsítványon lesz látható)"
+msgstr "pl.: Kis Zsuzsa (Bizonyítványon lesz látható)"
 
 #: lms/templates/signup_modal.html
 msgid "<i>Welcome</i> {name}"
@@ -10190,7 +10204,7 @@ msgstr "{platform_name} rendszerbe történő regisztrálás okai"
 
 #: lms/templates/signup_modal.html
 msgid "Already have an account?"
-msgstr "Már létezik egy felhasználói fiókod?"
+msgstr "Van már felhasználói fiókod?"
 
 #: lms/templates/signup_modal.html
 msgid "Login."
@@ -10916,7 +10930,7 @@ msgstr "Tanulók jegyeinek letöltése"
 
 #: lms/templates/certificates/_accomplishment-banner.html
 msgid "Print or share your certificate:"
-msgstr "Tanúsítvány nyomtatása vagy megosztás"
+msgstr "Bizonyítvány nyomtatása vagy megosztása"
 
 #: lms/templates/certificates/_accomplishment-banner.html
 msgid "I completed the {course_title} course on {platform_name}."
@@ -10940,7 +10954,7 @@ msgstr "Mozilla Backpackhez adás"
 
 #: lms/templates/certificates/_accomplishment-banner.html
 msgid "Print Certificate"
-msgstr "Tanúsítvány Nyomtatása"
+msgstr "Bizonyítvány Nyomtatása"
 
 #: lms/templates/certificates/_accomplishment-header.html
 msgid "{platform_name} Home"
@@ -11251,8 +11265,6 @@ msgstr ""
 #: lms/templates/courseware/course_about.html
 msgid "I just registered for {number} {title} through {account}: {url}"
 msgstr ""
-"Épp most regisztráltam a {number} - {title} kurzusra a {account} fiókkal: "
-"{url}"
 
 #: lms/templates/courseware/course_about.html
 msgid "Take a course with {platform} online"
@@ -11261,8 +11273,6 @@ msgstr "Végezz el egy online kurzust az {platform} rendszerrel."
 #: lms/templates/courseware/course_about.html
 msgid "I just registered for {number} {title} through {platform} {url}"
 msgstr ""
-"Épp most regisztráltam a {number} - {title} kurzusra az {platform} "
-"rendszerben {url}"
 
 #: lms/templates/courseware/course_about.html
 msgid "Post a Facebook message to say you've registered for this course"
@@ -11274,7 +11284,7 @@ msgstr "Kurzus indul"
 
 #: lms/templates/courseware/course_about.html
 msgid "Classes End"
-msgstr "Kurzus befejeződik"
+msgstr "Az osztály végez"
 
 #: lms/templates/courseware/course_about.html
 msgid "Estimated Effort"
@@ -15221,7 +15231,7 @@ msgstr "A felhasználói fiók már aktív."
 
 #: lms/templates/registration/activation_complete.html
 msgid "You can now {link_start}log in{link_end}."
-msgstr ""
+msgstr "Most már {link_start}bejelentkezhetsz{link_end}."
 
 #: lms/templates/registration/activation_invalid.html
 msgid "Activation Invalid"
@@ -16236,7 +16246,7 @@ msgid ""
 "Course checklists are tools to help you understand and keep track of all the"
 " steps necessary to get your course ready for students."
 msgstr ""
-"A képzés ellenőrzőlistája egy olyan eszköz, ami végigvezet az összes "
+"A kurzus ellenőrzőlistája egy olyan eszköz, ami végigvezet az összes "
 "szükséges lépésen, hogy a kurzusod sikeresen elkészüljön."
 
 #: cms/templates/checklists.html
@@ -16854,6 +16864,10 @@ msgid ""
 " exported files, you may also be sharing sensitive or license-specific "
 "information."
 msgstr ""
+"{em_start}Figyelem:{em_end} Kurzus exportálás esetlénolyan bizalmas "
+"információk, mint kódok, kulcsok, MATLAP API kulcsok is mentésre kerülnek. A"
+" mentett kurzus mással való megosztása esetén ez biztonsági problémákat "
+"okozhat."
 
 #: cms/templates/export.html
 msgid "Export My Library Content"
@@ -16879,6 +16893,8 @@ msgstr "A kurzus {em_start}exportált{em_end} adatai:"
 msgid ""
 "Values from Advanced Settings, including MATLAB API keys and LTI passports"
 msgstr ""
+"Speciális beállítások a MATLAB API kulcsokkal és LTI bizonyítványokkal "
+"együtt"
 
 #: cms/templates/export.html
 msgid "Course Content (all Sections, Sub-sections, and Units)"
@@ -16958,6 +16974,10 @@ msgid ""
 "may want to create a copy of your course that you can later import into "
 "another course instance and customize."
 msgstr ""
+"Így lehetőséged nyílik a {studio_name}-n kívül is szerkeszteni a kurzus "
+"tartalmát XML fájlok formájában. Ezen felül hasznos, mert készíthetsz "
+"biztonsági másolatot, vagy esetleg a későbbiekben egy másik kurzus keretében"
+" beimportálhatod és testre szabhatod."
 
 #: cms/templates/export.html
 msgid "What content is exported?"
@@ -17034,7 +17054,7 @@ msgstr "Exportálás sikeres"
 
 #: cms/templates/export_git.html
 msgid "Your course:"
-msgstr "Képzésed:"
+msgstr "Kurzusod:"
 
 #: cms/templates/export_git.html
 msgid "Course git url:"
@@ -17043,7 +17063,7 @@ msgstr "A kurzus git url-je:"
 #: cms/templates/group_configurations.html
 #: cms/templates/visibility_editor.html
 msgid "Content Groups"
-msgstr ""
+msgstr "Tartalom csoportok"
 
 #: cms/templates/group_configurations.html
 msgid "Experiment Group Configurations"
@@ -17106,7 +17126,7 @@ msgstr "Üdvözlünk"
 
 #: cms/templates/howitworks.html
 msgid "Welcome to {studio_name}"
-msgstr ""
+msgstr "Üdvözlünk a {studio_name}-ban"
 
 #: cms/templates/howitworks.html
 msgid ""
@@ -17767,7 +17787,7 @@ msgstr "Kurzus újbóli elindítása"
 
 #: cms/templates/index.html
 msgid "Are you staff on an existing {studio_name} course?"
-msgstr ""
+msgstr "Benne vagy a kurzus oktatói között? {studio_name} "
 
 #: cms/templates/index.html
 msgid ""
@@ -18051,6 +18071,8 @@ msgid ""
 "Please provide the email address of the course staff member you'd like to "
 "add"
 msgstr ""
+"Add meg az email címét annak az oktatónak, akit hozzá akarsz adni a "
+"kurzushoz"
 
 #: cms/templates/manage_users.html cms/templates/manage_users_lib.html
 msgid "Add User"
@@ -18422,13 +18444,15 @@ msgstr "Kurzus adatai"
 
 #: cms/templates/settings.html
 msgid "Provide useful information about your course"
-msgstr ""
+msgstr "Adj meg információkat a kurzusodról"
 
 #: cms/templates/settings.html
 msgid ""
 "Identify the course language here. This is used to assist users find courses"
 " that are taught in a specific language."
 msgstr ""
+"Határozd meg a kurzus nyelvét itt. A hallgatók ez alapján fogják tudni "
+"megtalálni a számukra megfelelőt."
 
 #: cms/templates/settings.html
 msgid "Introducing Your Course"
@@ -18447,6 +18471,8 @@ msgid ""
 "Appears on the course catalog page when students roll over the course name. "
 "Limit to ~150 characters"
 msgstr ""
+"A rövid összefoglaló a kurzus listázásánál jelenik meg a kurzus nevén állva."
+" Maximális mérete 150 karakter."
 
 #: cms/templates/settings.html
 msgid "Course Overview"
@@ -18454,7 +18480,7 @@ msgstr "Áttekintés"
 
 #: cms/templates/settings.html
 msgid "your course summary page"
-msgstr "képzés áttekintő lap"
+msgstr "kurzus áttekintő lap"
 
 #: cms/templates/settings.html
 msgid ""
@@ -18493,7 +18519,7 @@ msgid ""
 "Please provide a valid path and name to your course image (Note: only JPEG "
 "or PNG format supported)"
 msgstr ""
-"Érvényes útvonalat és nevet adj meg a képzés képéhez (Figyelem: csak JPEG, "
+"Érvényes útvonalat és nevet adj meg a kurzus képéhez (Figyelem: csak JPEG, "
 "vagy PNG formátum támogatott)"
 
 #: cms/templates/settings.html
@@ -18502,7 +18528,7 @@ msgstr "Kurzus kép feltöltése"
 
 #: cms/templates/settings.html
 msgid "Course Introduction Video"
-msgstr "Képzés bemutató videó"
+msgstr "Kurzus bemutató videó"
 
 #: cms/templates/settings.html
 msgid "Delete Current Video"
@@ -18529,7 +18555,7 @@ msgstr "Hetente tanulásra fordítandó óra"
 
 #: cms/templates/settings.html
 msgid "Time spent on all course work"
-msgstr "A képzésre fordítandó összes idő"
+msgstr "A kurzusra fordítandó összes idő"
 
 #: cms/templates/settings.html
 msgid "Prerequisite Course"
@@ -18591,7 +18617,7 @@ msgid ""
 "course."
 msgstr ""
 "A kurzus ütemezése meghatározza, hogy a tanulók mikor tudnak feliratkozni és"
-" elkezdeni a képzést."
+" elkezdeni a kurzust."
 
 #: cms/templates/settings.html
 msgid ""
@@ -18602,7 +18628,7 @@ msgid ""
 msgstr ""
 "További információkat a Kurzusról oldalon találsz. Ezek az információk: "
 "kurzus áttekintése, kurzus képe, bevezető videó és a kurzus elvégzéséhez "
-"szükséges idő. A tanulók a Kurzusról lapot látják, amikor képzést "
+"szükséges idő. A tanulók a Kurzusról lapot látják, amikor kurzust "
 "választanak."
 
 #: cms/templates/settings_advanced.html
@@ -18622,6 +18648,8 @@ msgid ""
 "<strong>Warning</strong>: Do not modify these policies unless you are "
 "familiar with their purpose."
 msgstr ""
+"<strong>Figyelem</strong>: ezeket a szabályok csak saját felelősségedre "
+"módosítsd."
 
 #: cms/templates/settings_advanced.html
 msgid "Show Deprecated Settings"
@@ -18637,6 +18665,9 @@ msgid ""
 "can edit manual policies, which are JSON-based key and value pairs that "
 "control specific course settings."
 msgstr ""
+"A speciális beállítások segítségével testre szabhatod a kurzusodat. Ezen az "
+"oldalon ezt kézzel megteheted. Kérlek olvasd el a megjegyzésekben "
+"foglaltakat alább."
 
 #: cms/templates/settings_advanced.html
 msgid ""
@@ -18644,6 +18675,8 @@ msgid ""
 "elsewhere in {studio_name}. Do not edit policies unless you are familiar "
 "with both their purpose and syntax."
 msgstr ""
+"Ezek a beállítások a kurzuson belül globálisan értendőek, csak akkor "
+"módosítsd ha biztosan érted a beállítás használatának szabályait."
 
 #: cms/templates/settings_advanced.html
 msgid ""
@@ -18651,6 +18684,8 @@ msgid ""
 " you use double quotation marks (&quot;) around the string. Do not use "
 "single quotation marks (&apos;)."
 msgstr ""
+"{em_start}Megjegyzés:{em_end} Szöveges értékek megadásakor akkor idézőjelek "
+"(&quot;) add meg a beállítást. Ne használj aposztrófot!"
 
 #: cms/templates/settings_graders.html
 msgid "Grading Settings"
@@ -18658,11 +18693,13 @@ msgstr "Értékelés beálltásai"
 
 #: cms/templates/settings_graders.html
 msgid "Overall Grade Range"
-msgstr ""
+msgstr "Teljes osztályozási tartomány"
 
 #: cms/templates/settings_graders.html
 msgid "Your overall grading scale for student final grades"
 msgstr ""
+"A végleges osztályozás módjának beállítása. Megj: F=elégtelen, D=elégséges, "
+"C=közepes, B=jó, A=jeles"
 
 #: cms/templates/settings_graders.html
 msgid "Credit Grade &amp; Eligibility"
@@ -18686,15 +18723,17 @@ msgstr "Értékelési szabályok &amp; irányelvek"
 
 #: cms/templates/settings_graders.html
 msgid "Deadlines, requirements, and logistics around grading student work"
-msgstr ""
+msgstr "Határidők, követelmények és az osztályozás finombeállításai"
 
 #: cms/templates/settings_graders.html
 msgid "Grace Period on Deadline:"
-msgstr ""
+msgstr "A megengedett határidő túllépés:"
 
 #: cms/templates/settings_graders.html
 msgid "Leeway on due dates"
 msgstr ""
+"A hallgatók a határidőn túl ennyi idővel később még teljesíthetik a "
+"feladatot"
 
 #: cms/templates/settings_graders.html
 msgid "Assignment Types"
@@ -18718,12 +18757,14 @@ msgid ""
 "course is pass/fail or graded by letter, and to establish the thresholds for"
 " each grade."
 msgstr ""
+"A teljes értékelési tartomány alatti csúszkával beállíthatod a jegyekhez "
+"tartozó osztályozási tartományokat."
 
 #: cms/templates/settings_graders.html
 msgid ""
 "You can specify whether your course offers students a grace period for late "
 "assignments."
-msgstr ""
+msgstr "Adhatsz haladékot a tanulóknak a teljesítésre."
 
 #: cms/templates/settings_graders.html
 msgid ""
@@ -18808,6 +18849,10 @@ msgid ""
 "format on this page, an automated process creates those additional formats "
 "and stores them for you."
 msgstr ""
+"Ahhoz hogy a videó több eszközön is megtekinthető legyen, többféle formában "
+"is rendelkezésre kell állnia. Miután feltöltötted az eredeti videót .mp4 "
+"vagy .mov formátumban, a weboldal automatikusan elkészíti a további "
+"szükséges változatokat."
 
 #: cms/templates/videos_index.html
 msgid "Monitoring files as they upload"
@@ -18857,7 +18902,7 @@ msgstr ""
 
 #: cms/templates/visibility_editor.html
 msgid "No content groups exist"
-msgstr ""
+msgstr "Még nincs tartalom csoport létrehozva"
 
 #: cms/templates/visibility_editor.html
 msgid ""
@@ -18868,7 +18913,7 @@ msgstr ""
 
 #: cms/templates/visibility_editor.html
 msgid "Manage content groups"
-msgstr ""
+msgstr "Tartalmi csoport menedzselése"
 
 #. Translators: Any text between {screen_reader_start} and {screen_reader_end}
 #. is only read by screen readers and never shown in the browser.
@@ -18889,17 +18934,19 @@ msgstr ""
 
 #: cms/templates/visibility_editor.html
 msgid "Specific Content Groups"
-msgstr ""
+msgstr "Specifikus tartalom csoportok"
 
 #: cms/templates/visibility_editor.html
 msgid "Deleted Content Group"
-msgstr ""
+msgstr "Törölt tartalmi csoport"
 
 #: cms/templates/visibility_editor.html
 msgid ""
 "Content group no longer exists. Please choose another or allow access to All"
 " Students and staff"
 msgstr ""
+"A tartalom csoport már nem létezik. Kérlek válassz másikat vagy engedélyezd "
+"a hozzáférést minden hallgatónak és staffnak"
 
 #: cms/templates/emails/activation_email.txt
 msgid ""
@@ -19055,7 +19102,7 @@ msgstr "Címke"
 
 #: cms/templates/widgets/sock.html
 msgid "Looking for help with {studio_name}?"
-msgstr "Segítségre van szükséged az {studio_name} kapcsolatban?"
+msgstr "Segítségre van szükséged a {studio_name}-val kapcsolatban?"
 
 #: cms/templates/widgets/sock.html
 msgid "Hide {studio_name} Help"
@@ -21498,3 +21545,12 @@ msgstr "Hiányzó mező: %{field}s."
 
 msgid "The email address you\\'ve provided isn\\'t formatted correctly."
 msgstr "A megadott email cím formátuma helytelen."
+
+msgid ""
+"This is the first Hungarian Massive Open Online Course - Learning Management"
+" System."
+msgstr ""
+"Csatlakozz Magyarország legnagyobb nyílt online tanulmányi rendszeréhez."
+
+msgid "Welcome to MeMooc platform!"
+msgstr "Üdvözlünk a MeMooc rendszerben!"
