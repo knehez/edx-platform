@@ -16,7 +16,6 @@ from django.utils import translation
 # If we can't find a 'general' CACHE defined in settings.py, we simply fall back
 # to returning the default cache. This will happen with dev machines.
 from django.utils.translation import get_language
-from django_locale.trans_real import LANGUAGE_SESSION_KEY
 
 log = logging.getLogger(__name__)
 
@@ -53,10 +52,14 @@ def cache_if_anonymous(*get_parameters):
         """The outer wrapper, used to allow the decorator to take optional arguments."""
         @wraps(view_func)
         def wrapper(request, *args, **kwargs):
-	    # we need switching languages from the main page (for anonymous users only), we put two flags into the navigation.html to swith langs.
+            # we need switching languages from the main page (for anonymous users only),
+            # we put two flags into the navigation.html to swith langs.
             language = request.GET.get('lang')
             if language is not None:
-    		translation.activate(language)
+                translation.activate(language)
+            else:
+                language = get_language()
+
             """The inner wrapper, which wraps the view function."""
             # Certificate authentication uses anonymous pages,
             # specifically the branding index, to do authentication.
@@ -85,6 +88,8 @@ def cache_if_anonymous(*get_parameters):
                 if not response:
                     response = view_func(request, *args, **kwargs)
                     cache.set(cache_key, response, 60 * 3)  # pylint: disable=maybe-no-member
+
+                response.set_cookie('django_language', language)
 
                 return response
 

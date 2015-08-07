@@ -17,6 +17,7 @@ from django.core.urlresolvers import reverse, resolve
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods
+from django.utils import translation
 
 from lang_pref.api import released_languages
 from edxmako.shortcuts import render_to_response
