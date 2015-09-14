@@ -125,6 +125,8 @@ from notification_prefs.views import enable_notifications
 # Note that this lives in openedx, so this dependency should be refactored.
 from openedx.core.djangoapps.user_api.preferences import api as preferences_api
 
+from itertools import islice
+import re
 
 log = logging.getLogger("edx.student")
 AUDIT_LOG = logging.getLogger("audit")
@@ -161,17 +163,34 @@ def index(request, extra_context=None, user=AnonymousUser()):
         domain = request.META.get('HTTP_HOST')
 
     courses = get_courses(user, domain=domain)
-    if microsite.get_value("ENABLE_COURSE_SORTING_BY_START_DATE",
-                           settings.FEATURES["ENABLE_COURSE_SORTING_BY_START_DATE"]):
-        courses = sort_by_start_date(courses)
-    else:
-        courses = sort_by_announcement(courses)
+    # if microsite.get_value("ENABLE_COURSE_SORTING_BY_START_DATE",
+    #                        settings.FEATURES["ENABLE_COURSE_SORTING_BY_START_DATE"]):
+    #     courses = sort_by_start_date(courses)
+    # else:
+    #     courses = sort_by_announcement(courses)
+
+    lang = request.GET.get('lang') if request.GET.get('lang') else request.COOKIES.get('django_language') if request.COOKIES.get('django_language') else 'hu'
+    courses = sort_by_main_modules(courses, lang, limit=12)
 
     context = {'courses': courses}
 
     context.update(extra_context)
     return render_to_response('index.html', context)
 
+def sort_by_main_modules(courses, lang, limit=12):
+    """
+    Returns a list of courses sorted by main modules latest first.
+    """
+    for c in courses:
+        c_dnwd = c.display_number_with_default
+        c.priority = 1 if '.MODUL.' in c_dnwd and re.search(r"\.MODUL\.0\.H$", c_dnwd) else 10
+
+    courses = filter(lambda c: lang == c.language, courses)
+    courses = list(islice(courses, limit))
+    # courses = list(courses[0:5])
+    courses = sorted(courses, key=lambda course: (course.has_started(), course.priority, course.start))
+
+    return courses
 
 def process_survey_link(survey_link, user):
     """

@@ -116,6 +116,32 @@ def user_groups(user):
 
     return group_names
 
+filter_conf = {
+    "lang": {
+        "title": "Language",
+        "show_list": {
+            "all": "All",
+            "hu": "Hungarian",
+            "en": "English",
+        },
+        "list_def_conf": "fix",
+        "type": "simple",
+        "key_elem": "language",
+        "selected": "all",
+        "cleaning_filter_list": "org"
+    },
+    "org": {
+        "title": "Organization",
+        "show_list": {
+            "all": "All"
+        },
+        "list_def_conf": "clean",
+        "type": "simple",
+        "key_elem": "org",
+        "selected": "all",
+        "cleaning_filter_list": ""
+    }
+}
 
 @ensure_csrf_cookie
 @cache_if_anonymous()
@@ -134,11 +160,104 @@ def courses(request):
         else:
             courses_list = sort_by_announcement(courses_list)
 
+    courses_list = filtered_courses_list(request, courses_list)
+
+    set_filtered_config_list(courses_list)
+
     return render_to_response(
         "courseware/courses.html",
-        {'courses': courses_list, 'course_discovery_meanings': course_discovery_meanings}
+        {
+            'courses': courses_list,
+            'course_discovery_meanings': course_discovery_meanings,
+            'filter_conf': filter_conf,
+            'req_POST': request.POST
+        }
     )
 
+
+def filtered_courses_list(request, courses_list):
+    get_request(request)
+    v = get_request().POST
+
+    if not get_request().session.get('filter_courses', False):
+        get_request().session['filter_courses'] = {}
+
+    if v.get('key'):
+        get_request().session['filter_courses'][v.get('key')] = v
+
+    data = get_request().session['filter_courses']
+
+    courses_list = filter_cl(courses_list, data)
+
+    return courses_list
+
+
+def filter_cl(courses_list, data):
+    for d_key in data.keys():
+        d = data[d_key]
+        if not d:
+            continue
+
+        conf = filter_conf[d['key']]
+
+        if conf['type'] == 'simple':
+            if d['list_key'] != 'all':
+                courses_list = filter(lambda x: getattr(x, conf['key_elem']) == d['list_key'], courses_list)
+                conf["selected"] = d['list_key']
+
+            elif d['list_key'] == 'all':
+                conf["selected"] = 'all'
+
+            # fuggosegek kitakaritasa
+            cleaning_filter_list(conf=conf)
+
+    return courses_list
+
+
+def set_filtered_config_list(courses_list):
+    # cleaning
+    # cleaning_filter_list(key='org')
+    # set
+    def set_filter_conf(x):
+        global filter_conf
+        new_org = getattr(x, 'org')
+        filter_conf['org']['show_list'][new_org] = new_org
+
+    map(lambda x: set_filter_conf(x), courses_list)
+
+
+def cleaning_filter_list(conf=None, key=None):
+
+    if conf is not None and conf["cleaning_filter_list"]:
+        for cleaning_key in conf["cleaning_filter_list"].split(','):
+            if get_request().method == "POST" and get_request().POST["key"] == cleaning_key:
+                continue
+            elif get_request().method == "POST":
+                filter_conf_reset_default(cleaning_key)
+
+    if key is not None:
+        filter_conf_reset_default(key)
+
+
+def filter_conf_reset_default(key):
+    global filter_conf
+    # for k in filter_conf.keys():
+    #     if k == key:
+    if filter_conf[key]["list_def_conf"] == "clean":
+        filter_conf[key]['show_list'] = {}
+        filter_conf[key]['show_list']['all'] = 'All'
+        filter_conf[key]["selected"] = 'all'
+        get_request().session['filter_courses'][key] = {}
+
+
+view_request = {}
+
+
+def get_request(request=None):
+    global view_request
+    if request is not None:
+        view_request = request
+    return view_request
 
 def render_accordion(request, course, chapter, section, field_data_cache):
     """
