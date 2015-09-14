@@ -181,15 +181,14 @@ def sort_by_main_modules(courses, lang, limit=12):
     """
     Returns a list of courses sorted by main modules latest first.
     """
-    for c in courses:
-        c_dnwd = c.display_number_with_default
-        c.priority = 1 if '.MODUL.' in c_dnwd and re.search(r"\.MODUL\.0\.H$", c_dnwd) else 10
-
     courses = filter(lambda c: lang == c.language, courses)
-    courses = list(islice(courses, limit))
-    # courses = list(courses[0:5])
-    courses = sorted(courses, key=lambda course: (course.has_started(), course.priority, course.start))
 
+    for c in courses:
+        module_code = c.display_number_with_default
+        c.priority = 10 if re.search(r"\.MODUL\.0\.[H|E]$", module_code) else 1
+
+    courses = sorted(courses, key=lambda course: (-course.priority, course.has_started(), course.start))
+    courses = list(courses[0:limit])
     return courses
 
 def process_survey_link(survey_link, user):
