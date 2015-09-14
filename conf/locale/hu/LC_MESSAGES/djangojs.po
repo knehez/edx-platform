@@ -33,7 +33,7 @@ msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
 "POT-Creation-Date: 2015-07-29 22:08+0200\n"
-"PO-Revision-Date: 2015-08-03 14:10+0200\n"
+"PO-Revision-Date: 2015-08-14 16:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr ""
 "Generated-By: Babel 1.3\n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.8.4\n"
 
 #: cms/static/coffee/src/views/tabs.js
 #: cms/static/coffee/src/xblock/cms.runtime.v1.js
@@ -1638,9 +1638,9 @@ msgid ""
 "\n"
 "Proceed to the Advanced Editor and convert this problem to XML?"
 msgstr ""
-"Ha a haladó szerkesztőt használod, a feladatot XML formátumba konvertáljuk és au egysezerű szerkesztőbe nem tudsz visszatérni.\n"
+"Ha a haladó szerkesztőt használod, a feladatot XML formátumba konvertáljuk és az egyszerű szerkesztőbe nem tudsz visszatérni.\n"
 "\n"
-"Folytatpd a haladó szerkesztővel és XML formátumba konvertálsz ?"
+"Folytatod a haladó szerkesztővel és XML formátumba konvertálsz ?"
 
 #: common/lib/xmodule/xmodule/js/src/sequence/display.js
 msgid ""
@@ -1648,7 +1648,7 @@ msgid ""
 "SequenceModule. Please contact the course staff."
 msgstr ""
 "Sorrend hiba! A jelenlegi molekulában nem lehet a %(tab_name)s navigálni. "
-"Lépj kapcsolatba a kurzus szerzőjévek."
+"Lépj kapcsolatba a kurzus szerzőjével."
 
 #: common/lib/xmodule/xmodule/js/src/video/00_i18n.js
 #: common/lib/xmodule/xmodule/js/src/video/09_play_pause_control.js
@@ -2026,7 +2026,7 @@ msgstr "Minden válasz mutatása"
 msgid "Showing first response"
 msgid_plural "Showing first %(numResponses)s responses"
 msgstr[0] "Az első válasz megjelenítve"
-msgstr[1] "Az elős %(numResponses)s válasz megjelenítve"
+msgstr[1] "Az első %(numResponses)s válasz megjelenítve"
 
 #: common/static/coffee/src/discussion/views/discussion_thread_view.js
 msgid "Load all responses"
@@ -2518,7 +2518,7 @@ msgstr "Hiba történt a felhasználó le-/feliratkozásakor."
 
 #: lms/static/coffee/src/instructor_dashboard/membership.js
 msgid "The following email addresses and/or usernames are invalid:"
-msgstr "A következő email címek és/vagy felhasználónevek érvénytelenek:"
+msgstr "A következő e-mail címek és/vagy felhasználónevek érvénytelenek:"
 
 #: lms/static/coffee/src/instructor_dashboard/membership.js
 msgid "Successfully enrolled and sent email to the following users:"
@@ -2537,7 +2537,7 @@ msgid ""
 "Successfully sent enrollment emails to the following users. They will be "
 "allowed to enroll once they register:"
 msgstr ""
-"Sikeresen elküldtük a feliratkozási emaileket következő felhasználóknak. "
+"Sikeresen elküldtük a feliratkozási e-maileket következő felhasználóknak. "
 "Regisztrálás után feliratkozhatnak:"
 
 #. Translators: A list of users appears after this sentence;
@@ -2551,7 +2551,7 @@ msgid ""
 "Successfully sent enrollment emails to the following users. They will be "
 "enrolled once they register:"
 msgstr ""
-"Sikeresen elküldtük a feliratkozási emaileket következő felhasználóknak. "
+"Sikeresen elküldtük a feliratkozási e-maileket következő felhasználóknak. "
 "Regisztrálás után feliratkoztak:"
 
 #. Translators: A list of users appears after this sentence;
@@ -2596,18 +2596,18 @@ msgid ""
 "There are invalid keywords in your email. Please check the following "
 "keywords and try again:"
 msgstr ""
-"Az emailedben érvénytelen kulcsszavak vannak. Ellenőrizd a következő "
+"Az e-mailedben érvénytelen kulcsszavak vannak. Ellenőrizd a következő "
 "kulcsszavakat:"
 
 #: lms/static/coffee/src/instructor_dashboard/send_email.js
 msgid "Your email was successfully queued for sending."
-msgstr "Az emailedet betettük a küldési sorba."
+msgstr "Az e-mailedet betettük a küldési sorba."
 
 #: lms/static/coffee/src/instructor_dashboard/send_email.js
 msgid ""
 "You are about to send an email titled '<%= subject %>' to yourself. Is this "
 "OK?"
-msgstr "Egy emailt küldesz magadnak '<%= subject %>' tárggyal. OK ?"
+msgstr "Egy e-mailt küldesz magadnak '<%= subject %>' tárggyal. OK ?"
 
 #: lms/static/coffee/src/instructor_dashboard/send_email.js
 msgid ""
@@ -2632,9 +2632,9 @@ msgid ""
 "classes, it may take up to an hour (or more, if other courses are "
 "simultaneously sending email) to send all emails."
 msgstr ""
-"Az emailedet betettük a küldési sorba. Nagy létszámú osztályoknál akár több,"
-" mint egy óráig is tarthat az összes email elküldése (különösen, ha más "
-"kurzusok is küldenek emailt párhuzamosan)"
+"Az e-mailedet betettük a küldési sorba. Nagy létszámú osztályoknál akár "
+"több, mint egy óráig is tarthat az összes email elküldése (különösen, ha más"
+" kurzusok is küldenek emailt párhuzamosan)"
 
 #: lms/static/coffee/src/instructor_dashboard/send_email.js
 msgid "Error sending email."
@@ -2750,8 +2750,8 @@ msgid ""
 "Error resetting entrance exam attempts for student '{student_id}'. Make sure"
 " student identifier is correct."
 msgstr ""
-"Hiba történet a felvételi vizsga kísérletek számának törlésekor "
-"'{student_id}' hallgatónák. Ellenőrizd a hallgató azonosítóját"
+"Hiba történt a felvételi vizsga kísérletek számának törlésekor "
+"a'{student_id}' hallgatónál. Ellenőrizd a hallgató azonosítóját"
 
 #: lms/static/coffee/src/instructor_dashboard/student_admin.js
 msgid ""
@@ -2759,7 +2759,7 @@ msgid ""
 "'Show Background Task History for Student' button to see the status of the "
 "task."
 msgstr ""
-"Elkezdődött '{student_id}' hallgató felvételi vizsgájának az ujrapontozása. "
+"Elkezdődött '{student_id}' hallgató felvételi vizsgájának az újrapontozása. "
 "Nyomd meg a Hallgatói háttérfolyamatok előzményeinek megjelenítése gombot a "
 "folyamat státuszának megtekintéséhez"
 
@@ -2776,7 +2776,7 @@ msgstr ""
 #: lms/static/coffee/src/instructor_dashboard/student_admin.js
 #: lms/static/js/spec/instructor_dashboard/student_admin_spec.js
 msgid "Enter a student's username or email address."
-msgstr "Írd be egy tanuló email címét, vagy felhasználói nevét."
+msgstr "Írd be egy tanuló e-mail címét, vagy felhasználói nevét."
 
 #: lms/static/coffee/src/instructor_dashboard/student_admin.js
 msgid ""
@@ -2928,7 +2928,7 @@ msgid ""
 " technical support if the problem persists."
 msgstr ""
 "Hiba történt az e-mail lekérése közben. Próbáld kicsit később újra és lépj "
-"kapcsolatba a te4chnikai személyzettel, ha a hiba továbbra is fennáll."
+"kapcsolatba a technikai személyzettel, ha a hiba továbbra is fennáll."
 
 #: lms/static/coffee/src/instructor_dashboard/util.js
 msgid "Subject"
@@ -3065,7 +3065,7 @@ msgstr "Kép beszúrása (töltsd fel, vagy írd be az url-t)"
 
 #: lms/static/js/Markdown.Editor.js
 msgid "Markdown Editing Help"
-msgstr "Leárazás szerkesztő sugó"
+msgstr "Leárazás szerkesztő súgó"
 
 #: lms/static/js/Markdown.Editor.js
 msgid "Bold (Ctrl+B)"
@@ -3235,7 +3235,7 @@ msgstr "Hiba történt, ismételd meg a keresést."
 
 #: lms/static/js/edxnotes/plugins/accessibility.js
 msgid "Focus grabber"
-msgstr "Középppont"
+msgstr "Középpont"
 
 #: lms/static/js/edxnotes/views/search_box.js
 #: lms/static/js/edxnotes/views/toggle_notes_factory.js
@@ -3282,7 +3282,7 @@ msgstr "Legutóbbi tevékenységek"
 
 #: lms/static/js/edxnotes/views/tabs/search_results.js
 msgid "No results found for \"%(query_string)s\". Please try searching again."
-msgstr "Ar \"%(query_string)s\" keresésre nincs találat. Próbáld újra a keresést"
+msgstr "A \"%(query_string)s\" keresésre nincs találat. Próbáld újra a keresést"
 
 #. Translators: this is a title shown before all Notes that have no associated
 #. tags. It is put within
@@ -3365,11 +3365,11 @@ msgstr "A megadott tartalom csoport nem létezik"
 
 #: lms/static/js/groups/views/cohort_form.js
 msgid "The cohort cannot be saved"
-msgstr "A tanulócsoport nem menhető"
+msgstr "A tanulócsoport nem menthető"
 
 #: lms/static/js/groups/views/cohort_form.js
 msgid "The cohort cannot be added"
-msgstr "Tanulócsoport hozzáadása sikertlelen"
+msgstr "Tanulócsoport hozzáadása sikertelen"
 
 #: lms/static/js/groups/views/cohorts.js
 msgid "You currently have no cohorts configured"
@@ -3390,7 +3390,7 @@ msgstr ""
 
 #: lms/static/js/groups/views/cohorts.js
 msgid "Assign students to cohorts by uploading a CSV file."
-msgstr "Rendeld a halgatókat korcsoporthoz egy CSV fájl feltöltésével"
+msgstr "Rendeld a hallgatókat korcsoporthoz egy CSV fájl feltöltésével"
 
 #: lms/static/js/groups/views/cohorts.js
 msgid "Choose a .csv file"
@@ -3666,7 +3666,7 @@ msgstr "Csatlakozás"
 
 #: lms/static/js/student_account/views/account_settings_fields.js
 msgid "Successfully unlinked."
-msgstr "Skeresen szétkapcsolva"
+msgstr "Sikeresen szétkapcsolva"
 
 #: lms/static/js/student_profile/views/learner_profile_factory.js
 msgid "{platform_name} learners can see my:"
@@ -3701,7 +3701,7 @@ msgid ""
 "Tell other learners a little about yourself: where you live, what your "
 "interests are, why you're taking courses, or what you hope to learn."
 msgstr ""
-"Mesélj a tanulótársaidnak magadról_ hol élsz, mi az érdeklődési köröd, miért"
+"Mesélj a tanulótársaidnak magadról, hol élsz, mi az érdeklődési köröd, miért"
 " jelentkeztél a kurzusra, mit szeretnél tanulni."
 
 #: lms/static/js/student_profile/views/learner_profile_fields.js
@@ -3738,12 +3738,12 @@ msgstr "Képfeltöltési hiba"
 
 #: lms/static/js/verify_student/views/image_input_view.js
 msgid "Please verify that you have uploaded a valid image (PNG and JPEG)."
-msgstr "Ellenőrizd, hogy megfelelő képet töltöttél fel (PNG vagyJPEG)."
+msgstr "Ellenőrizd, hogy megfelelő képet töltöttél fel (PNG vagy JPEG)."
 
 #: lms/static/js/verify_student/views/incourse_reverify_view.js
 #: lms/static/js/verify_student/views/review_photos_step_view.js
 msgid "An error has occurred. Please try again later."
-msgstr "Hia történt. Próbáld meg később."
+msgstr "Hiba történt. Próbáld meg később."
 
 #: lms/static/js/verify_student/views/incourse_reverify_view.js
 #: lms/static/js/verify_student/views/review_photos_step_view.js
@@ -3782,7 +3782,7 @@ msgstr "Fizetés ezzel {processor}"
 
 #: lms/static/js/verify_student/views/make_payment_step_view.js
 msgid "An error has occurred. Please try again."
-msgstr "Hia történt. Próbáld meg újra."
+msgstr "Hiba történt. Próbáld meg újra."
 
 #: lms/static/js/verify_student/views/make_payment_step_view.js
 msgid "Could not submit order"
@@ -3841,14 +3841,14 @@ msgstr "A fotó rögzítése sikeres"
 
 #: lms/static/js/verify_student/views/webcam_photo_view.js
 msgid "No Flash Detected"
-msgstr "Nem találok Flasht"
+msgstr "Nem találom a Flash kiegészítőt"
 
 #: lms/static/js/verify_student/views/webcam_photo_view.js
 msgid ""
 "You don't seem to have Flash installed. Get Flash to continue your "
 "verification."
 msgstr ""
-"Flash installáció nem található. Telepítsd a Flasht az ellenőrzés "
+"Flash installáció nem található. Telepítsd a Flash-t az ellenőrzés "
 "folytatásához"
 
 #: lms/static/js/views/fields.js
@@ -3898,7 +3898,7 @@ msgstr "A fájl mérete legalább {size} kell legyen"
 
 #: lms/static/js/views/fields.js
 msgid "The file must be smaller than {size} in size."
-msgstr "A fálj mérete legyen kisebb, mint {size} "
+msgstr "A fájl mérete legyen kisebb, mint {size} "
 
 #: lms/static/js/views/fields.js
 msgid ""
@@ -3943,8 +3943,8 @@ msgstr "Nem sikerült lekérni az adatokat próbáld kicsit később újra."
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js
 msgid "%(num_students)s student opened Subsection"
 msgid_plural "%(num_students)s students opened Subsection"
-msgstr[0] "%(num_students)s tanuló nyitott alszakaszt"
-msgstr[1] "%(num_students)s tanuló nyitott alszakaszt"
+msgstr[0] "%(num_students)s tanuló nyitott alfejezetet"
+msgstr[1] "%(num_students)s tanuló nyitott alfejezetet"
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js
 msgid "%(num_students)s student"
@@ -3995,11 +3995,11 @@ msgstr "Törlés"
 
 #: cms/static/coffee/src/xblock/cms.runtime.v1.js
 msgid "OpenAssessment Save Error"
-msgstr ""
+msgstr "Hiba a nyílt kiértékelés elmentése közben"
 
-#: cms/templates/js/checklist.underscore
+#: cms/static/js/base.js cms/templates/js/checklist.underscore
 msgid "This link will open in a new browser window/tab"
-msgstr "Ez a link egy új böngésző ablakban/fülön nyílik meg"
+msgstr "A link új fülön/ablakban nyílik meg"
 
 #: cms/static/js/base.js
 msgid "This link will open in a modal window"
@@ -4011,27 +4011,27 @@ msgstr "Nem értelmezhető a bizonyítvány JSON formája. %(message)s"
 
 #: cms/static/js/certificates/models/certificate.js
 msgid "Certificate name is required."
-msgstr ""
+msgstr "A bizonyítvány neve kötelező"
 
 #: cms/static/js/certificates/models/certificate.js
 msgid "Signatory field(s) has invalid data."
-msgstr ""
+msgstr "Az aláírás mezők adata hibás"
 
 #: cms/static/js/certificates/models/signatory.js
 msgid "Signatory name should not be more than 40 characters long."
-msgstr ""
+msgstr "Az aláíró neve nem lehet 40 karakternél hosszabb."
 
 #: cms/static/js/certificates/models/signatory.js
 msgid "Signatory title should span over maximum of 2 lines."
-msgstr ""
+msgstr "Az aláíró titulusa legfeljebb 2 sor lehet"
 
 #: cms/static/js/certificates/models/signatory.js
 msgid "Signatory title should have maximum of 40 characters per line."
-msgstr ""
+msgstr "Az aláíró titulusa nem lehet 40 karakternél hosszabb."
 
 #: cms/static/js/certificates/models/signatory.js
 msgid "Signatory organization should not be more than 40 characters long."
-msgstr ""
+msgstr "Az aláíró szervezetének neve nem lehet 40 karakternél hosszabb."
 
 #: cms/static/js/certificates/views/certificate_editor.js
 msgid "Upload organization logo."
@@ -4039,7 +4039,7 @@ msgstr "Szervezeti logo feltöltése"
 
 #: cms/static/js/certificates/views/certificate_editor.js
 msgid "Maximum logo height should be 125px."
-msgstr ""
+msgstr "A maximális logó magassága 125px."
 
 #. Translators: This field pertains to the custom label for a certificate.
 #. Translators: this refers to a collection of certificates.
@@ -4052,11 +4052,11 @@ msgstr "bizonyítvány"
 #. has been inserted
 #: cms/static/js/certificates/views/certificates_list.js
 msgid "You have not created any certificates yet."
-msgstr ""
+msgstr "Még nem készítettél bizonyítványt"
 
 #: cms/static/js/certificates/views/signatory_editor.js
 msgid "Delete \"<%= signatoryName %>\" from the list of signatories?"
-msgstr ""
+msgstr "Töröljem \"<%= signatoryName %>\" az aláírások listájáról?"
 
 #: cms/static/js/certificates/views/signatory_editor.js
 #: cms/static/js/views/course_info_update.js
@@ -4065,11 +4065,11 @@ msgstr "A művelet nem vonható vissza."
 
 #: cms/static/js/certificates/views/signatory_editor.js
 msgid "Upload signature image."
-msgstr ""
+msgstr "Aláírás kép feltöltése"
 
 #: cms/static/js/certificates/views/signatory_editor.js
 msgid "Image must be 450px X 150px transparent PNG."
-msgstr ""
+msgstr "A kép 450px X 150px átlátszó PNG legyen."
 
 #: cms/static/js/collections/group.js
 msgid "Group %s"
@@ -4093,6 +4093,9 @@ msgid ""
 "attempting another export. Please check that all components on the page are "
 "valid and do not display any error messages."
 msgstr ""
+"Az XML exportálás során legalább egy komponens hibás volt. Kérjük, javítsd "
+"kia hibát, és exportáld ki újra. ELlenőrizd az oldalon lévő komponenseket, "
+"hogy azok helyesek legyenek és ne jelezzenek hibát."
 
 #: cms/static/js/factories/export.js
 msgid "Correct failed component"
@@ -4108,10 +4111,13 @@ msgid ""
 "to identify the failed component. Inspect your library to identify any "
 "problematic components and try again."
 msgstr ""
+"A könyvtárat nem tudtuk XML formátumba exportálni. Nincs elég információ, "
+"hogy megmutassuk, melyik a hibás komponens. Próbáld megviszgálni a "
+"könyvtárat , hogy megtaláld a hibás komponenst. Javítás után próbáld újra. "
 
 #: cms/static/js/factories/export.js
 msgid "Take me to the main library page"
-msgstr ""
+msgstr "Könyvár főoldal"
 
 #: cms/static/js/factories/export.js
 msgid ""
@@ -4119,6 +4125,9 @@ msgid ""
 " identify the failed component. Inspect your course to identify any "
 "problematic components and try again."
 msgstr ""
+"A kurzust nem tudtuk XML formátumba exportálni. Nincs elég információ, hogy "
+"megmutassuk, melyik a hibás komponens. Próbáld megviszgálni a kurzusodat, "
+"hogy megtaláld a hibás komponenst. Javítás után próbáld újra. "
 
 #: cms/static/js/factories/export.js
 msgid "Take me to the main course page"
@@ -4134,7 +4143,7 @@ msgstr "Hiba történt az exportálás közben."
 
 #: cms/static/js/factories/import.js
 msgid "There was an error while importing the new library to our database."
-msgstr ""
+msgstr "A könyvtár importálása során hiba történt."
 
 #: cms/static/js/factories/import.js
 msgid "There was an error while importing the new course to our database."
@@ -4166,7 +4175,7 @@ msgid ""
 "extension."
 msgstr ""
 "Nem támogatott fájl formátum. Kérlek tölts fel egy {file_extension} "
-"kiterjesztésű fájlt.extension."
+"kiterjesztésű fájlt."
 
 #: cms/static/js/factories/manage_users.js
 msgid "Already a course team member"
@@ -4177,6 +4186,8 @@ msgid ""
 "Are you sure you want to delete {email} from the course team for "
 "“{container}”?"
 msgstr ""
+"Biztos vagy benne, hogy törlöd a(z) {email} e-mail címet a \"{container}\" "
+"kurzus csapatából?"
 
 #: cms/static/js/factories/manage_users.js
 #: cms/static/js/factories/manage_users_lib.js
@@ -4190,16 +4201,18 @@ msgstr "Rendszergazda"
 
 #: cms/static/js/factories/manage_users_lib.js
 msgid "Already a library team member"
-msgstr ""
+msgstr "Már tagja a könyvtár csapatnak"
 
 #: cms/static/js/factories/manage_users_lib.js
 msgid ""
 "Are you sure you want to delete {email} from the library “{container}”?"
 msgstr ""
+"Biztos vagy benne, hogy törlöd a(z) {email} e-mail címet a \"{container}\" "
+"könyvtárból?"
 
 #: cms/static/js/factories/manage_users_lib.js
 msgid "Library User"
-msgstr ""
+msgstr "Könyvtár felhasználó"
 
 #: cms/static/js/factories/settings_advanced.js
 msgid "Hide Deprecated Settings"
@@ -4212,13 +4225,13 @@ msgstr "Hibás beállítások megjelenítése"
 #: cms/static/js/factories/textbooks.js
 #: cms/static/js/views/pages/group_configurations.js
 msgid "You have unsaved changes. Do you really want to leave this page?"
-msgstr ""
+msgstr "Elmentetlen módosításaid vannak. Biztosan elhagyod az oldalt ?"
 
 #. Translators: This is the status of a video upload that is queued
 #. waiting for other uploads to complete
 #: cms/static/js/models/active_video_upload.js
 msgid "Queued"
-msgstr ""
+msgstr "Sorban áll"
 
 #. Translators: This is the status of a video upload that has
 #. completed successfully
@@ -4272,12 +4285,15 @@ msgstr ""
 "fileExtensions %> -ra végződő fájlt a feltöltéshez."
 
 #: cms/static/js/models/uploads.js
+#: lms/templates/student_account/hinted_login.underscore
+#: lms/templates/student_account/institution_login.underscore
+#: lms/templates/student_account/institution_register.underscore
 msgid "or"
 msgstr "vagy"
 
 #: cms/static/js/models/xblock_validation.js
 msgid "This component has validation issues."
-msgstr ""
+msgstr "A komponens ellenőrzése hibát jelez."
 
 #: cms/static/js/models/settings/course_details.js
 msgid "The course must have an assigned start date."
@@ -4286,10 +4302,12 @@ msgstr "A kurzushoz hozzá kell rendelni a kezdés dátumát."
 #: cms/static/js/models/settings/course_details.js
 msgid "The course end date cannot be before the course start date."
 msgstr ""
+"A kurzus befejezésének dátuma nem lehet korábbi, mint a kezdetének a dátuma."
 
 #: cms/static/js/models/settings/course_details.js
 msgid "The course start date cannot be before the enrollment start date."
 msgstr ""
+"A kurzus kezdetének a dátuma nem lehet korábbi, mint a jelentkezés dátuma."
 
 #: cms/static/js/models/settings/course_details.js
 msgid "The enrollment start date cannot be after the enrollment end date."
@@ -4306,11 +4324,11 @@ msgstr "A kulcs csak betűket, számokat, _, vagy - tartalmazhat"
 
 #: cms/static/js/models/settings/course_details.js
 msgid "Please enter an integer between %(min)s and %(max)s."
-msgstr ""
+msgstr "Adj meg egy egész számot %(min)s és %(max)s között."
 
 #: cms/static/js/models/settings/course_grader.js
 msgid "There's already another assignment type with this name."
-msgstr ""
+msgstr "Már van egy összerendelés ezzel a névvel."
 
 #: cms/static/js/models/settings/course_grader.js
 msgid "Please enter an integer between 0 and 100."
@@ -4326,15 +4344,17 @@ msgstr "Írj be egy nem negatív egész számot."
 
 #: cms/static/js/models/settings/course_grader.js
 msgid "Cannot drop more <% attrs.types %> than will assigned."
-msgstr ""
+msgstr "Nem törölhetsz többet <% attrs.types %> mint amennyit hozzárendelsz."
 
 #: cms/static/js/models/settings/course_grading_policy.js
 msgid "Grace period must be specified in HH:MM format."
-msgstr ""
+msgstr "Az pótlás időszakát HH:MM (óra:perc) formában kell megadni."
 
 #: cms/static/js/models/settings/course_grading_policy.js
 msgid "Not able to set passing grade to less than %(minimum_grade_cutoff)s%."
 msgstr ""
+"A teljesítéshez szükséges követelmények nem állíthatók kisebbre, mint "
+"%(minimum_grade_cutoff)s%."
 
 #: cms/static/js/spec/views/assets_spec.js cms/static/js/views/assets.js
 #: cms/templates/js/asset-library.underscore
@@ -4351,6 +4371,9 @@ msgid ""
 "\n"
 "Also any content that links/refers to this item will no longer work (e.g. broken images and/or links)"
 msgstr ""
+"Biztosan törlöd ezt az elemet? A törlés nem visszafordítható.\n"
+"\n"
+"Bármilyen link/hivatkozás a tartalomra hibásan fog működni!"
 
 #: cms/static/js/views/asset.js
 msgid "Your file has been deleted."
@@ -4470,20 +4493,23 @@ msgid ""
 "This Group Configuration is not in use. Start by adding a content experiment"
 " to any Unit via the %(outlineAnchor)s."
 msgstr ""
+"Ez a csoport nincs használatban. Adj a leckékhez tartalmat a linkre "
+"kattintva %(outlineAnchor)s."
 
 #. Translators: this refers to a collection of groups.
 #: cms/static/js/views/group_configuration_item.js
 #: cms/static/js/views/group_configurations_list.js
 msgid "group configuration"
-msgstr ""
+msgstr "Csoportok beállítása"
 
 #: cms/static/js/views/group_configurations_list.js
 msgid "You have not created any group configurations yet."
-msgstr ""
+msgstr "Még nem készítettél el egy csoport konfigurációt sem "
 
 #: cms/static/js/views/import.js
 msgid "Your import is in progress; navigating away will abort it."
 msgstr ""
+"Az imortálás folyamatban van. Ha elhagyod az oldalt, megszakad a folyamat."
 
 #: cms/static/js/views/import.js
 msgid "Error importing course"
@@ -4499,19 +4525,19 @@ msgstr "Minden jog fenntartva."
 
 #: cms/static/js/views/license.js
 msgid "You reserve all rights for your work"
-msgstr ""
+msgstr "Minden jogot fenntartasz"
 
 #: cms/static/js/views/license.js
 msgid "Creative Commons"
-msgstr ""
+msgstr "Creative Commons"
 
 #: cms/static/js/views/license.js
 msgid "You waive some rights for your work, such that others can use it too"
-msgstr ""
+msgstr "Bizonyos jogok fenntartva. Másik is használhatják a munkádat"
 
 #: cms/static/js/views/license.js
 msgid "Version"
-msgstr ""
+msgstr "Verzió"
 
 #: cms/static/js/views/license.js
 msgid "Attribution"
@@ -4523,6 +4549,9 @@ msgid ""
 "but only if they give credit the way you request. Currently, this option is "
 "required."
 msgstr ""
+"Engedélyezed másoknak, hogy másolják, terjesszék, bemutassák a jogvédett "
+"munkádat, de csak akkor, ha  a kérésednek megfelelő copyright szöveget is "
+"megmutatják. Jelenleg ez az opció szükséges."
 
 #: cms/static/js/views/license.js
 msgid "Noncommercial"
@@ -4533,10 +4562,13 @@ msgid ""
 "Allow others to copy, distribute, display and perform your work - and "
 "derivative works based upon it - but for noncommercial purposes only."
 msgstr ""
+"Engedélyezed másoknak, hogy másolják, terjesszék, bemutassák a munkádat, "
+"hozzájárulsz, hogy a munkád alapján saját változat készüljön, de csak nem "
+"kereskedelmi célokból."
 
 #: cms/static/js/views/license.js
 msgid "No Derivatives"
-msgstr "Nincsenek származékok"
+msgstr "Származtatás Tilos"
 
 #: cms/static/js/views/license.js
 msgid ""
@@ -4544,10 +4576,14 @@ msgid ""
 "of your work, not derivative works based upon it. This option is "
 "incompatible with \"Share Alike\"."
 msgstr ""
+"Engedélyezed másoknak, hogy másolják, terjesszék, bemutassák a munkádat, de "
+"csak szó szerinti másolatban. A másolaton alapuló módisításokat nem "
+"engedélyezed. Ez nem kompatibilis a \"Megosztás változatlan formában\" "
+"opcióval."
 
 #: cms/static/js/views/license.js
 msgid "Share Alike"
-msgstr "ugyanúgy részesedik"
+msgstr "Megosztás válotzatlan formában"
 
 #: cms/static/js/views/license.js
 msgid ""
@@ -4555,6 +4591,9 @@ msgid ""
 "to the license that governs your work. This option is incompatible with \"No"
 " Derivatives\"."
 msgstr ""
+"Hozzájárulsz, hogy mások módosítsák a munkádat, de csak olyan licensszel, "
+"mint az eredeti. Ez az opció nem kompatibilis a \"Származtatás Tilos\" "
+"beállítással."
 
 #. Translators: "item_display_name" is the name of the item to be deleted.
 #: cms/static/js/views/list_item.js
@@ -4593,13 +4632,15 @@ msgstr "Lépj vissza és adj meg e-mail címet"
 
 #: cms/static/js/views/manage_users_and_roles.js
 msgid "Already a member"
-msgstr ""
+msgstr "Már tag"
 
 #: cms/static/js/views/manage_users_and_roles.js
 msgid ""
 "{email} is already on the {container} team. Recheck the email address if you"
 " want to add a new member."
 msgstr ""
+"{email} már a {container} csapat tagja. Írj be egy egyedi e-mail címet ha "
+"egy új tagot szeretnél hozzáadni."
 
 #: cms/static/js/views/manage_users_and_roles.js
 msgid "Return to team listing"
@@ -4612,6 +4653,8 @@ msgstr "Biztos vagy benne?"
 #: cms/static/js/views/manage_users_and_roles.js
 msgid "Are you sure you want to restrict {email} access to “{container}”?"
 msgstr ""
+"Biztos vagy benne, hogy korlátozod a(z) {email} e-mail címet hozzáférését a "
+"\"{container}\" objektumhpz?"
 
 #: cms/static/js/views/overview.js
 msgid "Collapse All Sections"
@@ -4637,11 +4680,11 @@ msgstr "A fejezet kiadás dátumának szerkesztése"
 #: cms/templates/js/course-outline.underscore
 #: cms/templates/js/grading-editor.underscore
 msgid "Not Graded"
-msgstr "Nem minősített"
+msgstr "Nem osztályozott"
 
 #: cms/static/js/views/paged_container.js
 msgid "Date added"
-msgstr ""
+msgstr "Hozzáadás dátuma"
 
 #. Translators: sample result:
 #. "Showing 0-9 out of 25 total, filtered by Images, sorted by Date Added
@@ -4735,7 +4778,7 @@ msgstr "Végeztél néhány változtatást, de vannak benne hibák"
 #: cms/static/js/views/validation.js
 msgid ""
 "Please address the errors on this page first, and then save your progress."
-msgstr ""
+msgstr "Javítsd ki a hibát ezen az oldalon aztán mentsd el a munkádat."
 
 #: cms/static/js/views/validation.js
 msgid "Save Changes"
@@ -4764,7 +4807,7 @@ msgstr "Figyelmeztetés"
 #: cms/static/js/views/components/add_xblock.js
 #: cms/static/js/views/utils/xblock_utils.js
 msgid "Adding"
-msgstr ""
+msgstr "Hozzáadás"
 
 #: cms/static/js/views/modals/course_outline_modals.js
 msgid "%(display_name)s Settings"
@@ -4813,15 +4856,15 @@ msgstr "Változtasd meg manuálisan"
 #. Translators: "title" is the name of the current component being edited.
 #: cms/static/js/views/pages/container.js
 msgid "Editing visibility for: %(title)s"
-msgstr ""
+msgstr "Láthatóság szerkesztése: %(title)s"
 
 #: cms/static/js/views/pages/container.js
 msgid "Duplicating"
-msgstr ""
+msgstr "Másolás"
 
 #: cms/static/js/views/pages/container_subviews.js
 msgid "Publishing"
-msgstr ""
+msgstr "Közzététel"
 
 #: cms/static/js/views/pages/container_subviews.js
 #: cms/templates/js/publish-xblock.underscore
@@ -4838,19 +4881,19 @@ msgstr ""
 
 #: cms/static/js/views/pages/container_subviews.js
 msgid "Discarding Changes"
-msgstr ""
+msgstr "Változtatások visszavonása"
 
 #: cms/static/js/views/pages/container_subviews.js
 msgid "Hiding from Students"
-msgstr ""
+msgstr "Elrejtés a hallgatók elől"
 
 #: cms/static/js/views/pages/container_subviews.js
 msgid "Explicitly Hiding from Students"
-msgstr ""
+msgstr "Halgatók elől szándékosan elrejt"
 
 #: cms/static/js/views/pages/container_subviews.js
 msgid "Inheriting Student Visibility"
-msgstr ""
+msgstr "Láthatóság öröklése"
 
 #: cms/static/js/views/pages/container_subviews.js
 msgid "Make Visible to Students"
@@ -4862,10 +4905,13 @@ msgid ""
 "you made to the unit when it was hidden will now be visible to students. Do "
 "you want to proceed?"
 msgstr ""
+"Ha a leckét korábban közzétetted a hallgatóidnak, akkor minden változtatás, "
+"amit az alatt végeztél, amíg rejtett volt a lecke, most láthatóvá válik. "
+"Folytatod ?"
 
 #: cms/static/js/views/pages/container_subviews.js
 msgid "Making Visible to Students"
-msgstr ""
+msgstr "Hallgatók számára láthatóvá tétel"
 
 #: cms/static/js/views/pages/course_outline.js
 msgid "Course Index"
@@ -4873,21 +4919,23 @@ msgstr "Kurzus indexelés"
 
 #: cms/static/js/views/pages/course_outline.js
 msgid "There were errors reindexing course."
-msgstr ""
+msgstr "A kurzus újraindexálásakor hiba történt."
 
 #: cms/static/js/views/pages/paged_container.js
 msgid "Hide Previews"
-msgstr ""
+msgstr "Előnézet elrejtése"
 
 #: cms/static/js/views/pages/paged_container.js
 msgid "Show Previews"
-msgstr ""
+msgstr "Előnézet megmutatása"
 
 #: cms/static/js/views/settings/advanced.js
 msgid ""
 "Your changes will not take effect until you save your progress. Take care "
 "with key and value formatting, as validation is not implemented."
 msgstr ""
+"A változások nem lépnek érvénybe amíg el nem mented a munkádat. Légy óvatos "
+"a kulcs és érték szerkesztésekor, mert nincs validáció."
 
 #: cms/static/js/views/settings/advanced.js
 msgid "Your policy changes have been saved."
@@ -4899,14 +4947,17 @@ msgid ""
 "currently in place yet. If you are having difficulties, please review your "
 "policy pairs."
 msgstr ""
+"A kulcs és érték párok ellenörzése nincs implementáva. Ha hibás működést "
+"tapasztalsz, ellenőrizd a beállításokat."
 
 #: cms/static/js/views/settings/main.js
 msgid "Credit Eligibility Requirements"
-msgstr ""
+msgstr "Kredit megszerzésének feltételei"
 
 #: cms/static/js/views/settings/main.js
 msgid "Minimum passing grade for credit is not set."
 msgstr ""
+"A kreditek megszerzéséhez szükséges követelmények nicsennek beállítva."
 
 #: cms/static/js/views/settings/main.js
 msgid "%(hours)s:%(minutes)s (current UTC time)"
@@ -4925,12 +4976,16 @@ msgid ""
 "The combined length of the organization, course number, and course run "
 "fields cannot be more than <%=limit%> characters."
 msgstr ""
+"A szervezet és kurzus azonosítója együtt nem lehet több, mint <%=limit%> "
+"karakter."
 
 #: cms/static/js/views/utils/create_library_utils.js
 msgid ""
 "The combined length of the organization and library code fields cannot be "
 "more than <%=limit%> characters."
 msgstr ""
+"A szervezet és könyvtár azonosítója együtt nem lehet több, mint <%=limit%> "
+"karakter."
 
 #: cms/static/js/views/utils/view_utils.js
 msgid "Required field."
@@ -4990,39 +5045,39 @@ msgstr "Válassz egy .srt fomátumú fájlt."
 
 #: cms/static/js/views/video/transcripts/file_uploader.js
 msgid "Error: Uploading failed."
-msgstr ""
+msgstr "Hiba: feltöltés sikertelen."
 
 #: cms/static/js/views/video/transcripts/message_manager.js
 msgid "Error: Import failed."
-msgstr ""
+msgstr "Hiba: Az importálás sikertelen"
 
 #: cms/static/js/views/video/transcripts/message_manager.js
 msgid "Error: Replacing failed."
-msgstr ""
+msgstr "Hiba: helyettesítés sikertelen."
 
 #: cms/static/js/views/video/transcripts/message_manager.js
 msgid "Error: Choosing failed."
-msgstr ""
+msgstr "Hiba: kiválasztás sikertelen."
 
 #: cms/static/js/views/video/transcripts/metadata_videolist.js
 msgid "Error: Connection with server failed."
-msgstr ""
+msgstr "Hiba: a szerverhez való kapcsolódás sikertelen."
 
 #: cms/static/js/views/video/transcripts/metadata_videolist.js
 msgid "No sources"
-msgstr ""
+msgstr "Nincs forrás"
 
 #: cms/static/js/views/video/transcripts/metadata_videolist.js
 msgid "Link types should be unique."
-msgstr ""
+msgstr "A link típusa legyen egyedi."
 
 #: cms/static/js/views/video/transcripts/metadata_videolist.js
 msgid "Links should be unique."
-msgstr ""
+msgstr "A linkek legyenek egyediek."
 
 #: cms/static/js/views/video/transcripts/metadata_videolist.js
 msgid "Incorrect url format."
-msgstr ""
+msgstr "Helytelen URL formátum"
 
 #: cms/templates/js/asset-library.underscore
 #: cms/templates/js/basic-modal.underscore
@@ -5288,11 +5343,11 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Automatic"
-msgstr ""
+msgstr "Automatikus"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Manual"
-msgstr ""
+msgstr "Manuális"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid ""
@@ -5380,7 +5435,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/enrollment-code-lookup-links.underscore
 msgid "Used"
-msgstr "Hsznált"
+msgstr "Használt"
 
 #: lms/templates/instructor/instructor_dashboard_2/enrollment-code-lookup-links.underscore
 msgid "Valid"
@@ -5466,7 +5521,7 @@ msgstr ""
 
 #: lms/templates/student_account/institution_login.underscore
 msgid "Back to sign in"
-msgstr ""
+msgstr "Vissza a bejelentkezéshez"
 
 #: lms/templates/student_account/institution_register.underscore
 msgid "Register with Institution/Campus Credentials"
@@ -5631,7 +5686,7 @@ msgstr ""
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore
 msgid "Explore your course!"
-msgstr ""
+msgstr "Fedezd fel a kurzusod!"
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore
 msgid "Go to your Dashboard"
@@ -6043,7 +6098,7 @@ msgstr "Általános feladattípusok"
 
 #: cms/templates/js/add-xblock-component-menu-problem.underscore
 msgid "Common Problems with Hints and Feedback"
-msgstr ""
+msgstr "Általános feladatok sugóval és visszajelzéssel"
 
 #: cms/templates/js/add-xblock-component.underscore
 msgid "Add New Component"
@@ -6067,11 +6122,11 @@ msgstr "URL"
 
 #: cms/templates/js/asset-library.underscore
 msgid "You haven't added any assets to this course yet."
-msgstr "Még nem adtál eszközt a kurzushoz."
+msgstr "Még nem adtál fájlt  a kurzushoz."
 
 #: cms/templates/js/asset-library.underscore
 msgid "Upload your first asset"
-msgstr "Töltsd fel az első eszközt"
+msgstr "Töltsd fel az első fájlt"
 
 #: cms/templates/js/asset-upload-modal.underscore
 msgid "close"
@@ -6095,15 +6150,15 @@ msgstr "Web:"
 
 #: cms/templates/js/asset.underscore
 msgid "Delete this asset"
-msgstr "Eszköz törlése"
+msgstr "Fájl törlése"
 
 #: cms/templates/js/asset.underscore
 msgid "Lock this asset"
-msgstr "Eszköz zárolása"
+msgstr "Fájl zárolása"
 
 #: cms/templates/js/asset.underscore
 msgid "Lock/unlock file"
-msgstr "Fájl zárolás feloldás/zárolás"
+msgstr "Fájl zárolás/feloldás"
 
 #: cms/templates/js/certificate-details.underscore
 #: cms/templates/js/content-group-details.underscore
@@ -6118,7 +6173,7 @@ msgstr "Bizonyítvány részletei"
 #: cms/templates/js/certificate-details.underscore
 #: cms/templates/js/certificate-editor.underscore
 msgid "Course Title Override"
-msgstr "Kurzus cím áttekintés"
+msgstr "Kurzus cím felülírás"
 
 #: cms/templates/js/certificate-details.underscore
 #: cms/templates/js/certificate-editor.underscore
@@ -6154,7 +6209,7 @@ msgstr "Kurzus címe"
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "Title of the course"
-msgstr ""
+msgstr "Kurzus címe"
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "Organization Logo"
@@ -6162,11 +6217,11 @@ msgstr "Szervezeti Logo"
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "Path to organization logo"
-msgstr "Szervezeti Logo elérési útja"
+msgstr "Szervezeti logo elérési útja"
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "Maximum logo height 125px, width variable"
-msgstr "Minimális logo méret 125 pixel széles"
+msgstr "Maximális logo méret 125 pixel magas, a szélesség változhat"
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "Add Signatory"
@@ -6174,7 +6229,7 @@ msgstr "Aláírás hozzáadása"
 
 #: cms/templates/js/certificate-editor.underscore
 msgid "(Up to 4 signatories are allowed for a certificate)"
-msgstr ""
+msgstr "Egy bizonyítványhoz legfeljebb 4 aláírás engedélyezett"
 
 #: cms/templates/js/certificate-editor.underscore
 #: cms/templates/js/content-group-editor.underscore
@@ -6200,7 +6255,7 @@ msgstr "Deaktivál"
 
 #: cms/templates/js/checklist.underscore
 msgid "{number}{pct_sign} of checklists completed"
-msgstr "Az ellenőrző lista {number}{pct_sign} -ban kész"
+msgstr "Az ellenőrző lista {number}{pct_sign} készültségű"
 
 #: cms/templates/js/checklist.underscore
 msgid "%"
@@ -6221,7 +6276,7 @@ msgstr ""
 #: cms/templates/js/content-group-details.underscore
 #: cms/templates/js/content-group-editor.underscore
 msgid "Cannot delete when in use by a unit"
-msgstr "Nem törölheted mert használatban van egy feladatban"
+msgstr "Nem törölheted mert használatban van egy leckében"
 
 #: cms/templates/js/content-group-details.underscore
 msgid "This content group is used in:"
@@ -6262,7 +6317,7 @@ msgstr "Nem publikált változások, melyek a jövőben kerülnek kiadásra"
 #: cms/templates/js/course-outline.underscore
 #: cms/templates/js/xblock-outline.underscore
 msgid "Collapse/Expand this %(xblock_type)s"
-msgstr ""
+msgstr "Összecsuk/Kinyit %(xblock_type)s"
 
 #: cms/templates/js/course-outline.underscore
 msgid "Display Name"
@@ -6298,7 +6353,7 @@ msgstr "Nem közzétett"
 
 #: cms/templates/js/course-outline.underscore
 msgid "Graded as:"
-msgstr "Minősítés:"
+msgstr "Értékelés:"
 
 #: cms/templates/js/course-outline.underscore
 msgid "Due:"
@@ -6312,7 +6367,7 @@ msgstr "Még nem adtál semmilyen tartalmat a kurzushoz."
 #: cms/templates/js/course-outline.underscore
 #: cms/templates/js/xblock-outline.underscore
 msgid "Click to add a new %(xblock_type)s"
-msgstr "Kattints a %(xblock_type)s hozzáadásához"
+msgstr "Kattints a(z) %(xblock_type)s hozzáadásához"
 
 #: cms/templates/js/course_grade_policy.underscore
 msgid "Assignment Type Name"
@@ -6340,7 +6395,7 @@ msgstr "mint százalék. pl.: 40"
 
 #: cms/templates/js/course_grade_policy.underscore
 msgid "Total Number"
-msgstr "Teljes száma"
+msgstr "Összesen"
 
 #: cms/templates/js/course_grade_policy.underscore
 msgid "total exercises assigned"
@@ -6360,7 +6415,7 @@ msgstr "Kurzus emlékeztető"
 
 #: cms/templates/js/course_info_handouts.underscore
 msgid "You have no handouts defined"
-msgstr ""
+msgstr "Nem adtál meg kurzus emlékeztetőt"
 
 #: cms/templates/js/course_info_handouts.underscore
 msgid ""
@@ -6379,7 +6434,7 @@ msgstr "Jezés küldése a mobile alkalmazásokhoz"
 
 #: cms/templates/js/course_info_update.underscore
 msgid "Post"
-msgstr ""
+msgstr "Elküld"
 
 #: cms/templates/js/due-date-editor.underscore
 msgid "Due Date:"
@@ -6391,7 +6446,7 @@ msgstr "Esedékesség ideje UTC szerint:"
 
 #: cms/templates/js/due-date-editor.underscore
 msgid "Clear Grading Due Date"
-msgstr "Értékelés esedékesség dátumának törlése"
+msgstr "Értékelés határidejének törlése"
 
 #: cms/templates/js/edit-chapter.underscore
 msgid "Chapter Name"
@@ -6404,12 +6459,12 @@ msgstr "%s Fejezet"
 #: cms/templates/js/edit-chapter.underscore
 msgid "provide the title/name of the chapter that will be used in navigating"
 msgstr ""
-"Add meg úgy a fejezet címét/nevét, ahogy a navigációnál szeretnéd "
+"Add meg a fejezet címét/nevét úgy, ahogy a navigációnál szeretnéd "
 "megjelentetni"
 
 #: cms/templates/js/edit-chapter.underscore
 msgid "Chapter Asset"
-msgstr "Fejezethez tartozó eszközök"
+msgstr "Fejezethez tartozó fájlok"
 
 #: cms/templates/js/edit-chapter.underscore
 msgid "path/to/introductionToCookieBaking-CH%d.pdf"
@@ -6417,7 +6472,7 @@ msgstr "könyvtár/alkönyvtár/BevezetesASutemenySutesRejtelmeibe-Fejezet%d.pdf
 
 #: cms/templates/js/edit-chapter.underscore
 msgid "upload a PDF file or provide the path to a Studio asset file"
-msgstr "PDF fájl feltöltése, vagy a Stúdióban megadott eszköz fájl linkje"
+msgstr "Tölts fel egy PDF fájlt, vagy add meg a fájl Studio linkjét"
 
 #: cms/templates/js/edit-chapter.underscore
 msgid "Upload PDF"
@@ -6444,7 +6499,7 @@ msgid ""
 "provide the title/name of the text book as you would like your students to "
 "see it"
 msgstr ""
-"Add meg úgy a tankönyv címét/nevét, ahogy a tanulók számára szeretnéd "
+"Add meg a tankönyv címét/nevét úgy, ahogy a tanulók számára szeretnéd "
 "megjelentetni"
 
 #: cms/templates/js/edit-textbook.underscore
@@ -6461,7 +6516,7 @@ msgstr "Értékelés"
 
 #: cms/templates/js/grading-editor.underscore
 msgid "Grade as:"
-msgstr "Minősítés:"
+msgstr "Értékelés:"
 
 #: cms/templates/js/group-configuration-details.underscore
 #: cms/templates/js/group-configuration-editor.underscore
@@ -6482,7 +6537,7 @@ msgstr "Csoport beállítás neve"
 
 #: cms/templates/js/group-configuration-editor.underscore
 msgid "Group Configuration ID"
-msgstr "Csoport beállítás azonosítója"
+msgstr "Csoport azonosítója"
 
 #: cms/templates/js/group-configuration-editor.underscore
 msgid "This is the Name of the Group Configuration"
@@ -6490,7 +6545,7 @@ msgstr "Ez a csoport beállításának neve"
 
 #: cms/templates/js/group-configuration-editor.underscore
 msgid "Name or short description of the configuration"
-msgstr "Neve, vagy rövid leírása a beállításnak"
+msgstr "A beállítás neve vagy rövid leírása"
 
 #: cms/templates/js/group-configuration-editor.underscore
 msgid "This is the Description of the Group Configuration"
@@ -6513,8 +6568,8 @@ msgid ""
 "Name of the groups that students will be assigned to, for example, Control, "
 "Video, Problems. You must have two or more groups."
 msgstr ""
-"A csoportok nevei melyekhez a tanulók hozzá lettek rendelve, pl.: Irányítás,"
-" Videó, Feladatok. Legalább két csoportnak lennie kell."
+"A csoportok neve, amelyekhez a tanulók hozzá lettek rendelve, pl.: "
+"Irányítás, Videó, Feladatok. Legalább két csoportnak lennie kell."
 
 #: cms/templates/js/group-configuration-editor.underscore
 msgid "Add another group"
@@ -6538,7 +6593,7 @@ msgstr "Licenc típus"
 
 #: cms/templates/js/license-selector.underscore
 msgid "Learn more about {license_name}"
-msgstr "Tudj meg többet róla: {license_name} "
+msgstr "Tudj meg többet: {license_name} "
 
 #: cms/templates/js/license-selector.underscore
 msgid "Options for {license_name}"
@@ -6547,16 +6602,17 @@ msgstr "{license_name} beállításai"
 #: cms/templates/js/license-selector.underscore
 msgid "The following options are available for the {license_name} license."
 msgstr ""
+"A következő lehetőségek állnak rendelkezésre a  {license_name} licenchez."
 
 #: cms/templates/js/license-selector.underscore
 msgid "License Display"
-msgstr ""
+msgstr "Licenc megjelenítés"
 
 #: cms/templates/js/license-selector.underscore
 msgid ""
 "The following message will be displayed at the bottom of the courseware "
 "pages within your course:"
-msgstr ""
+msgstr "A következő üzenetet jelenítjük meg a kurzus oldalak alján:"
 
 #: cms/templates/js/license-selector.underscore
 msgid "Creative Commons licensed content, with terms as follow:"
@@ -6568,7 +6624,7 @@ msgstr "Bizonyos jogok fenntartva"
 
 #: cms/templates/js/list.underscore
 msgid "Add your first %(item_type)s"
-msgstr "Adj hozzá egy %(item_type)s-ot"
+msgstr "Az első %(item_type)s hozzáadása"
 
 #: cms/templates/js/list.underscore
 msgid "New %(item_type)s"
@@ -6605,23 +6661,23 @@ msgstr "Első tankönyv hozzáadása"
 
 #: cms/templates/js/paging-header.underscore
 msgid "Previous"
-msgstr "Elózó"
+msgstr "Előző"
 
 #: cms/templates/js/previous-video-upload-list.underscore
 msgid "Previous Uploads"
-msgstr ""
+msgstr "Előző feltöltések"
 
 #: cms/templates/js/previous-video-upload-list.underscore
 msgid "Download available encodings (.csv)"
-msgstr ""
+msgstr "A rendelkezésre álló kódok letöltése (.csv)"
 
 #: cms/templates/js/previous-video-upload-list.underscore
 msgid "Duration"
-msgstr ""
+msgstr "Időtartam"
 
 #: cms/templates/js/previous-video-upload-list.underscore
 msgid "Video ID"
-msgstr "Video azonosító"
+msgstr "Videó azonosító"
 
 #: cms/templates/js/publish-history.underscore
 msgid "Never published"
@@ -6661,7 +6717,7 @@ msgstr "Publikált (még nem jelent meg)"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "Draft (Unpublished changes)"
-msgstr "Vázlat (Nem publikált változtatások)"
+msgstr "Vázlat (nem publikált változtatások)"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "Release:"
@@ -6673,11 +6729,11 @@ msgstr "Publikálás státusza"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "Draft saved on %(last_saved_date)s by %(edit_username)s"
-msgstr " %(last_saved_date)s -ko r a vázlat mentve %(edit_username)s által"
+msgstr "%(edit_username)s a vázlatot mentette %(last_saved_date)s időpontban"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "with %(release_date_from)s"
-msgstr ""
+msgstr "%(release_date_from)s dátummal"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "Is Visible To:"
@@ -6693,7 +6749,7 @@ msgstr "Csak a közreműködők részére"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "with %(section_or_subsection)s"
-msgstr ""
+msgstr "%(section_or_subsection)s -al"
 
 #: cms/templates/js/publish-xblock.underscore
 msgid "Staff and Students"
@@ -6708,11 +6764,11 @@ msgstr ""
 #: cms/templates/js/publish-xblock.underscore
 #: cms/templates/js/staff-lock-editor.underscore
 msgid "Hide from students"
-msgstr "Elrejtés a tanulók elöl"
+msgstr "Elrejtés a tanulók elől"
 
 #: cms/templates/js/release-date-editor.underscore
 msgid "Release Date and Time"
-msgstr "Nyilvánosságra hozás dátuma és ideje"
+msgstr "Nyilvánosságra hozatal dátuma és ideje"
 
 #: cms/templates/js/release-date-editor.underscore
 msgid "Release Date:"
@@ -6737,27 +6793,27 @@ msgstr "Szervezet"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Certificate Signatory Configuration"
-msgstr ""
+msgstr "Bizonyítvány aláírásainak beállításai"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Name of the signatory"
-msgstr ""
+msgstr "Aláíró neve"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Maximum 40 characters"
-msgstr ""
+msgstr "Legfeljebb 40 karakter"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Title of the signatory"
-msgstr ""
+msgstr "Aláíró titulusa"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "2 Lines, 40 characters each"
-msgstr ""
+msgstr "2 sor mindegyik 40 karakter"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Organization of the signatory"
-msgstr ""
+msgstr "Az aláíró munkahelye"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Signature Image"
@@ -6765,7 +6821,7 @@ msgstr "Aláírás fájl"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Path to Signature Image"
-msgstr ""
+msgstr "Aláírás kép útvonala"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid "Image must be 450px X 150px transparent PNG"
@@ -6780,6 +6836,8 @@ msgid ""
 "If the unit was previously published and released to students, any changes "
 "you made to the unit when it was hidden will now be visible to students."
 msgstr ""
+"Ha a lecke korábban a hallgatók elé  került, akkor minden változtatás, amit "
+"azalatt végeztél, amíg rejtett volt, most látható lesz a hallgatóknak."
 
 #: cms/templates/js/staff-lock-editor.underscore
 msgid ""
@@ -6787,18 +6845,24 @@ msgid ""
 "to see its content after the release date has passed and you have published "
 "the unit."
 msgstr ""
+"Ha a %(xblockType)s objektumokat a hallgatók számára láthatóvá teszed, akkor"
+" a tartalom a kibocsájtás napja után megjelenik. "
 
 #: cms/templates/js/staff-lock-editor.underscore
 msgid ""
 "Any subsections or units that are explicitly hidden from students will "
 "remain hidden after you clear this option for the section."
 msgstr ""
+"Minden alfejezet és lecke a hallgatók elől rejtve marad, amíg nem törlöd ezt"
+" a beállítást a fejezetnél"
 
 #: cms/templates/js/staff-lock-editor.underscore
 msgid ""
 "Any units that are explicitly hidden from students will remain hidden after "
 "you clear this option for the subsection."
 msgstr ""
+"Minden lecke rejtve marad a hallgatók elől, amíg ezt a beállítást nem törlöd"
+" az alfejezetnél"
 
 #: cms/templates/js/team-member.underscore
 msgid "Current Role:"
@@ -6838,6 +6902,8 @@ msgid ""
 "Please check the following validation feedbacks and reflect them in your "
 "course settings:"
 msgstr ""
+"Tekintsd át az alábbi visszajelzéseket, és módosítsd a kurzus beállításokat,"
+" ha szükséges:"
 
 #: cms/templates/js/xblock-string-field-editor.underscore
 msgid "Edit the name"
@@ -6862,11 +6928,11 @@ msgid ""
 "another version. These URLs cannot be YouTube URLs. The first listed video "
 "that's compatible with the student's computer will play."
 msgstr ""
-"Azért, hogy biztos lehess benne, hogy minden tanuló eléri a videót, mi azt "
-"javasoljuk, hogy a videó .mp4 és a .webm verzióját is tedd elérhetővé. "
-"Kattints lentebb a további verziókhoz URL hozzáadására. Ezek az URL-ek nem "
-"lehetnek YouTube URL-ek. A listában szereplő videók közül az kerül a tanuló "
-"számára lejátszásra, amelyik kompatibilis a számítógépével."
+"Hogy biztos lehess benne, minden tanuló eléri a videót, mi azt javasoljuk, "
+"hogy a videó .mp4 és a .webm verzióját is tedd elérhetővé. Kattints lentebb "
+"és add hozzá a további verziók URL-jeit. Ezek az URL-ek nem lehetnek YouTube"
+" URL-ek. A listában szereplő videók közül az kerül a tanuló számára "
+"lejátszásra, amelyik kompatibilis a számítógépével."
 
 #: cms/templates/js/video/transcripts/metadata-videolist-entry.underscore
 msgid "Default Timed Transcript"
@@ -6901,7 +6967,7 @@ msgstr "Hiba."
 
 #: cms/templates/js/video/transcripts/messages/transcripts-choose.underscore
 msgid "Timed Transcript from %(filename)s"
-msgstr "Időzített felirat a %(filename)s-tól"
+msgstr "Időzített felirat a %(filename)s fájlból"
 
 #: cms/templates/js/video/transcripts/messages/transcripts-found.underscore
 msgid "Timed Transcript Found"
@@ -6913,7 +6979,7 @@ msgid ""
 "transcript, you can download, edit, and re-upload the existing transcript. "
 "If you want to replace this transcript, upload a new .srt transcript file."
 msgstr ""
-"Az EdX-en van időzített felirat ehhez a videóhoz. Ha szerkeszteni szeretnéd,"
+"Az edX-en van időzített felirat ehhez a videóhoz. Ha szerkeszteni szeretnéd,"
 " akkor letöltheted, megszerkeszted és visszatöltheted. Ha le akarod "
 "cserélni, akkor tölts fel egy új .srt feliratfájlt."
 
@@ -6923,22 +6989,22 @@ msgstr ""
 #: cms/templates/js/video/transcripts/messages/transcripts-uploaded.underscore
 #: cms/templates/js/video/transcripts/messages/transcripts-use-existing.underscore
 msgid "Upload New Transcript"
-msgstr "Új átirat feltöltése"
+msgstr "Új felirat feltöltése"
 
 #: cms/templates/js/video/transcripts/messages/transcripts-found.underscore
 #: cms/templates/js/video/transcripts/messages/transcripts-import.underscore
 msgid "Upload New .srt Transcript"
-msgstr "Új .srt átirat feltöltése"
+msgstr "Új .srt felirat feltöltése"
 
 #: cms/templates/js/video/transcripts/messages/transcripts-found.underscore
 #: cms/templates/js/video/transcripts/messages/transcripts-not-found.underscore
 #: cms/templates/js/video/transcripts/messages/transcripts-uploaded.underscore
 msgid "Download Transcript for Editing"
-msgstr "Átirat letöltése szerkesztéshez"
+msgstr "Felirat letöltése szerkesztéshez"
 
 #: cms/templates/js/video/transcripts/messages/transcripts-import.underscore
 msgid "No EdX Timed Transcript"
-msgstr "Nincs EdX időzített felirat"
+msgstr "Nincs edX időzített felirat"
 
 #: cms/templates/js/video/transcripts/messages/transcripts-import.underscore
 msgid ""
@@ -6946,9 +7012,9 @@ msgid ""
 " transcript on YouTube. You can import the YouTube transcript or upload your"
 " own .srt transcript file."
 msgstr ""
-"A rendszernek időzített felirata a videóhoz a Stúdióban, de találtunk "
-"YouTube-on. Importálhatod a YouTube feliratot, vagy tölthetsz fel egy saját "
-".srt fájlt."
+"A rendszernek nincs időzített felirata a videóhoz a Studióban, de a YouTube-"
+"on megtalálható. Importálhatod a YouTube feliratot, vagy tölthetsz fel egy "
+"saját .srt felirat fájlt."
 
 #: cms/templates/js/video/transcripts/messages/transcripts-import.underscore
 msgid "Import YouTube Transcript"
@@ -6963,23 +7029,23 @@ msgid ""
 "EdX doesn\\'t have a timed transcript for this video. Please upload an .srt "
 "file."
 msgstr ""
-"Az EdX-nek nincs időzített felirata a videóhoz. Tölts fel egy .srt fájlt."
+"Az edX-nek nincs időzített felirata a videóhoz. Tölts fel egy .srt fájlt."
 
 #: cms/templates/js/video/transcripts/messages/transcripts-replace.underscore
 msgid ""
 "The timed transcript for this video on edX is out of date, but YouTube has a"
 " current timed transcript for this video."
 msgstr ""
-"Az EdX felirata ehhez a videóhoz elavult, de a YouTube-on van naprakész "
+"Az edX felirata ehhez a videóhoz elavult, de a YouTube-on van naprakész "
 "változat."
 
 #: cms/templates/js/video/transcripts/messages/transcripts-replace.underscore
 msgid "Do you want to replace the edX transcript with the YouTube transcript?"
-msgstr "Szeretnéd lecserélni az EdX feliratot a YouTube felirattal?"
+msgstr "Szeretnéd lecserélni az edX feliratot a YouTube feliratra?"
 
 #: cms/templates/js/video/transcripts/messages/transcripts-replace.underscore
 msgid "Yes, replace the edX transcript with the YouTube transcript"
-msgstr "Igen, cseréld le az edX átiratot a YouTube átirattal."
+msgstr "Igen, cseréld le az edX feliratot a YouTube feiratra"
 
 #: cms/templates/js/video/transcripts/messages/transcripts-uploaded.underscore
 msgid "Timed Transcript Uploaded Successfully"
@@ -6991,7 +7057,7 @@ msgid ""
 "transcript, upload a new .srt transcript file. If you want to edit this "
 "transcript, you can download, edit, and re-upload the existing transcript."
 msgstr ""
-"Az EdX-nek van időzített felirata a videóhoz. Ha akarod, akkor lecserélheted"
+"Az edX-nek van időzített felirata a videóhoz. Ha akarod, akkor lecserélheted"
 " a feliratot, tölts fel egy új .srt feliratfájlt. Ha szerkeszteni szeretnéd,"
 " akkor letöltheted, szerkesztheted és visszatöltheted a kész feliratot."
 
@@ -7005,19 +7071,19 @@ msgid ""
 "you want to use the current timed transcript or upload a new .srt transcript"
 " file?"
 msgstr ""
-"Megváltoztathatod a videó URL-jét, de ez nem változtatja meg az időzített "
+"Megváltoztattad a videó URL-jét, de ez nem változtattad meg az időzített "
 "felirat fájlt. Akarod használni a jelenlegi időzített feliratot, vagy "
 "feltöltenél egy új .srt felirat fájlt?"
 
 #: cms/templates/js/video/transcripts/messages/transcripts-use-existing.underscore
 msgid "Use Current Transcript"
-msgstr "Aktuális átirat használata"
+msgstr "Aktuális felirat használata"
 
 msgid "Please enter your %(field)s."
 msgstr "Hiányzó mező: %(field)s."
 
 msgid "The email address you have provided is not formatted correctly."
-msgstr "A megadott email cím formátuma helytelen."
+msgstr "A megadott e-mail cím formátuma helytelen."
 
 msgid "Male"
 msgstr "Férfi"
