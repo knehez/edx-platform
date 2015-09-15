@@ -75,7 +75,9 @@ def cache_if_anonymous(*get_parameters):
                 cache_key = domain + "cache_if_anonymous." + get_language() + '.' + request.path
 
                 # Include the values of GET parameters in the cache key.
-                for get_parameter in get_parameters:
+                for get_parameter in request.GET.keys():
+                    if get_parameter == 'csrfmiddlewaretoken':
+                        continue
                     parameter_value = request.GET.get(get_parameter)
                     if parameter_value is not None:
                         # urlencode expects data to be of type str, and doesn't deal well with Unicode data
@@ -95,7 +97,6 @@ def cache_if_anonymous(*get_parameters):
 
             else:
                 # Don't use the cache.
-		log.info('cache.py cache not used')
                 return view_func(request, *args, **kwargs)
 
         return wrapper

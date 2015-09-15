@@ -207,14 +207,14 @@ def courses(request):
             'courses': courses_list,
             'course_discovery_meanings': course_discovery_meanings,
             'filter_conf': sorted(filter_conf.items(), key=lambda x: x[1].get("order")),
-            'req_POST': request.POST
+            'req_POST': request.GET
         }
     )
 
 
 def filtered_courses_list(request, courses_list):
     get_request(request)
-    v = get_request().POST
+    v = get_request().GET
 
     if not get_request().session.get('filter_courses', False):
         get_request().session['filter_courses'] = {}
@@ -278,9 +278,6 @@ def filter_func_type(element):
 
 def filter_func_starting(element):
     now = datetime.now(UTC())
-    next_time = now + timedelta(days=10)
-    # print(getattr(element, 'start') < now)
-    #print("%s %s" %(getattr(element, 'end'), now))
 
     if filter_tmp['d']['list_key'] == 'started':
         if getattr(element, 'start') < now:
@@ -320,9 +317,9 @@ def cleaning_filter_list(conf=None, key=None):
 
     if conf is not None and conf["cleaning_filter_list"]:
         for cleaning_key in conf["cleaning_filter_list"].split(','):
-            if get_request().method == "POST" and get_request().POST["key"] == cleaning_key:
+            if get_request().method == "GET" and hasattr(get_request().GET, 'key') and get_request().GET["key"] == cleaning_key:
                 continue
-            elif get_request().method == "POST":
+            elif get_request().method == "GET":
                 filter_conf_reset_default(cleaning_key)
 
     if key is not None:
