@@ -86,6 +86,7 @@ from util.views import ensure_valid_course_key
 from eventtracking import tracker
 import analytics
 from courseware.url_helpers import get_redirect_url
+from collections import OrderedDict
 
 log = logging.getLogger("edx.courseware")
 
@@ -118,23 +119,55 @@ def user_groups(user):
 
 filter_conf = {
     "lang": {
+        "order": 1,
         "title": "Language",
-        "show_list": {
-            "all": "All",
-            "hu": "Hungarian",
-            "en": "English",
-        },
+        "show_list": OrderedDict([
+            ("all", "All"),
+            ("hu", "Hungarian"),
+            ("en", "English"),
+        ]),
         "list_def_conf": "fix",
         "type": "simple",
         "key_elem": "language",
         "selected": "all",
         "cleaning_filter_list": "org"
     },
+    "type": {
+        "order": 2,
+        "title": "Type",
+        "show_list": OrderedDict([
+            ("all", "All"),
+            ("fosz", "Higher vocational training"),
+            ("teasers", "Teasers"),
+            ("bsc","BSc")
+        ]),
+        "list_def_conf": "clean",
+        "type": "simple",
+        "key_elem": "org",
+        "selected": "all",
+        "cleaning_filter_list": ""
+    },
+    "starting": {
+        "order": 3,
+        "title": "Starting",
+        "show_list": OrderedDict([
+            ("all", "All"),
+            ("started", "Started"),
+            ("not_started", "Not started"),
+            ("ended", "Ended")
+        ]),
+        "list_def_conf": "clean",
+        "type": "simple",
+        "key_elem": "org",
+        "selected": "all",
+        "cleaning_filter_list": ""
+    },
     "org": {
+        "order": 4,
         "title": "Organization",
-        "show_list": {
-            "all": "All"
-        },
+        "show_list": OrderedDict([
+            ("all", "All")
+        ]),
         "list_def_conf": "clean",
         "type": "simple",
         "key_elem": "org",
@@ -169,7 +202,7 @@ def courses(request):
         {
             'courses': courses_list,
             'course_discovery_meanings': course_discovery_meanings,
-            'filter_conf': filter_conf,
+            'filter_conf': sorted(filter_conf.items(), key=lambda x: x[1].get("order")),
             'req_POST': request.POST
         }
     )
@@ -240,6 +273,7 @@ def cleaning_filter_list(conf=None, key=None):
 
 
 def filter_conf_reset_default(key):
+    return
     global filter_conf
     # for k in filter_conf.keys():
     #     if k == key:
