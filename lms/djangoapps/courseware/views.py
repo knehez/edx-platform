@@ -88,6 +88,9 @@ import analytics
 from courseware.url_helpers import get_redirect_url
 from collections import OrderedDict
 
+import re
+from datetime import timedelta
+
 log = logging.getLogger("edx.courseware")
 
 template_imports = {'urllib': urllib}
@@ -139,11 +142,11 @@ filter_conf = {
             ("all", "All"),
             ("fosz", "Higher vocational training"),
             ("teasers", "Teasers"),
-            ("bsc","BSc")
+            ("bsc", "BSc")
         ]),
         "list_def_conf": "clean",
-        "type": "simple",
-        "key_elem": "org",
+        "type": "function",
+        "key_elem": "filter_func_type",
         "selected": "all",
         "cleaning_filter_list": ""
     },
@@ -157,8 +160,8 @@ filter_conf = {
             ("ended", "Ended")
         ]),
         "list_def_conf": "clean",
-        "type": "simple",
-        "key_elem": "org",
+        "type": "function",
+        "key_elem": "filter_func_starting",
         "selected": "all",
         "cleaning_filter_list": ""
     },
@@ -175,6 +178,7 @@ filter_conf = {
         "cleaning_filter_list": ""
     }
 }
+filter_tmp = {}
 
 @ensure_csrf_cookie
 @cache_if_anonymous()
@@ -226,12 +230,17 @@ def filtered_courses_list(request, courses_list):
 
 
 def filter_cl(courses_list, data):
+    global filter_tmp
     for d_key in data.keys():
         d = data[d_key]
         if not d:
             continue
 
         conf = filter_conf[d['key']]
+        filter_tmp = {
+            "conf": conf,
+            "d": d
+        }
 
         if conf['type'] == 'simple':
             if d['list_key'] != 'all':
@@ -244,8 +253,56 @@ def filter_cl(courses_list, data):
             # fuggosegek kitakaritasa
             cleaning_filter_list(conf=conf)
 
+        if conf['type'] == 'function':
+            filter_function = globals()[conf['key_elem']]
+            courses_list = filter(filter_function, courses_list)
+            conf["selected"] = d['list_key']
+
     return courses_list
 
+
+def filter_func_type(element):
+    module_code = element.display_number_with_default
+
+    if filter_tmp['d']['list_key'] == 'fosz':
+        return re.search(r"\.MODUL\.0\.[H|E]$", module_code)
+
+    elif filter_tmp['d']['list_key'] == 'teasers':
+        return re.search(r"\.MODUL\.0\.[H|E]x$", module_code)
+
+    elif filter_tmp['d']['list_key'] == 'bsc':
+        return not re.search(r"\.MODUL\.0\.[H|E]", module_code)
+
+    return True
+
+
+def filter_func_starting(element):
+    now = datetime.now(UTC())
+    next_time = now + timedelta(days=10)
+    # print(getattr(element, 'start') < now)
+    #print("%s %s" %(getattr(element, 'end'), now))
+
+    if filter_tmp['d']['list_key'] == 'started':
+        if getattr(element, 'start') < now:
+            if getattr(element, 'end') is None:
+                return True
+            elif now <= getattr(element, 'end'):
+                return True
+        else:
+            return False
+
+    elif filter_tmp['d']['list_key'] == 'not_started':
+        return getattr(element, 'start') > now
+
+    elif filter_tmp['d']['list_key'] == 'ended':
+        if getattr(element, 'end') is None:
+            return False
+        elif getattr(element, 'end') < now:
+            return True
+        else:
+            return False
+
+    return True
 
 def set_filtered_config_list(courses_list):
     # cleaning
