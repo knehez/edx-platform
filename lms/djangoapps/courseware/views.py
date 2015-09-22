@@ -201,13 +201,15 @@ def courses(request):
 
     set_filtered_config_list(courses_list)
 
+    req_data = {'search_text': '' if not request.GET.get('search_text') else str(request.GET.get('search_text'))}
+
     return render_to_response(
         "courseware/courses.html",
         {
             'courses': courses_list,
             'course_discovery_meanings': course_discovery_meanings,
             'filter_conf': sorted(filter_conf.items(), key=lambda x: x[1].get("order")),
-            'req_POST': request.GET
+            'req_data': req_data
         }
     )
 
