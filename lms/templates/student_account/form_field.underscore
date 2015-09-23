@@ -21,6 +21,7 @@
             <option value="<%= el.value%>"<% if ( el.default ) { %> data-isdefault="true"<% } %>><%= gettext(el.name) %></option>
         <% }); %>
         </select>
+        <span class="tip tip-input" id="<%= form %>-<%= name %>-desc" style="display: none;"> </span>
     <% } else if ( type === 'textarea' ) { %>
         <textarea id="<%= form %>-<%= name %>"
             type="<%= type %>"
@@ -35,6 +36,7 @@
             <%  });
             } %>
             <% if ( required ) { %> aria-required="true" required<% } %> ></textarea>
+            <span class="tip tip-input" id="<%= form %>-<%= name %>-desc" style="display: none;"></span>
     <% } else { %>
         <input id="<%= form %>-<%= name %>"
            type="<%= type %>"
@@ -43,7 +45,7 @@
             <% if ( type !== 'password' ) { %> aria-describedby="<%= form %>-<%= name %>-desc" <% } %>
             <% if ( restrictions.min_length ) { %> minlength="<%= restrictions.min_length %>"<% } %>
             <% if ( restrictions.max_length ) { %> maxlength="<%= restrictions.max_length %>"<% } %>
-            <% if ( required ) { %> aria-required="true" required<% } %>
+            <% if ( required && type !== 'checkbox') { %> aria-required="true" required<% } %>
             <% if ( typeof errorMessages !== 'undefined' ) {
                 _.each(errorMessages, function( msg, type ) {%>
                     data-errormsg-<%= type %>="<%= msg %>"
@@ -52,7 +54,10 @@
             <% if ( placeholder ) { %> placeholder="<%= placeholder %>"<% } %>
             value="<%- defaultValue %>"
         />
-        <% if ( instructions ) { %> <span class="tip tip-input" id="<%= form %>-<%= name %>-desc"><%= instructions %></span><% } %>
+        <% if ( instructions ) { %> <span class="tip tip-input" id="<%= form %>-<%= name %>-desc"><%= instructions %></span>
+    	<% } else if (type !== 'checkbox') {%>
+    	   	<span class="tip tip-input" id="<%= form %>-<%= name %>-desc" style="display: none;">  </span>
+    	<% } %>
     <% } %>
 
     <% if ( type === 'checkbox' ) { %>
@@ -60,6 +65,7 @@
             <%= label %>
             <% if ( required && requiredStr ) { %> <%= requiredStr %><% } %>
         </label>
+        <span class="tip tip-input" id="<%= form %>-<%= name %>-desc" style="display: none;"><%= instructions %></span><!-- kk audits -->
     <% } %>
 
     <% if( form === 'login' && name === 'password' ) { %>
