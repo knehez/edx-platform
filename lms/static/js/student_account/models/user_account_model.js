@@ -30,6 +30,9 @@
                 if (_.isNull(response)) {
                     return {};
                 }
+                if (typeof response == "undefined") {
+                    return {};
+                }
 
                 // Currently when a non-staff user A access user B's profile, the only way to tell whether user B's
                 // profile is public is to check if the api has returned fields other than the default public fields

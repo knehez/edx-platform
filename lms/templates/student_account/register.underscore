@@ -49,6 +49,38 @@
             </h2>
         </div>
     <% } else { %>
+    	<div class="login-register">
+			<div class="login-providers">
+				<!--div class="section-title lines">
+					<h2>
+						<span class="text">Create an account using</span>
+					</h2>
+				</div-->
+				<br />
+				<button class="formFillIn_btn button button-primary button-oa2-facebook login-provider register-oa2-facebook"
+					type="button" onclick="mmFormFillIn.fb_loginSimpleBtn()">
+					<span aria-hidden="true" class="icon fa fa-facebook"></span>
+					<span aria-hidden="true">Facebook</span>
+					<span class="sr">Create account using Facebook.</span>
+				</button>
+
+				<button
+					class="g-signin formFillIn_btn button button-primary button-oa2-google-oauth2 login-provider register-oa2-google-oauth2"
+					type="button"
+					data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
+					data-requestvisibleactions="http://schemas.google.com/AddActivity"
+					data-clientId="187794626373-t6q2apvunthdljmdqhpb0jkr61tac9mk.apps.googleusercontent.com"
+					data-accesstype="offline"
+					data-callback="g__mycoddeSignIn"
+					data-theme="dark"
+					data-cookiepolicy="single_host_origin">
+
+					<span aria-hidden="true" class="icon fa fa-google-plus"></span>
+					<span aria-hidden="true">Google</span>
+					<span class="sr">Create account using Google.</span>
+				</button>
+			</div>
+    	</div>
         <div class="section-title lines">
             <h2>
                 <span class="text"><%- gettext("Create a new account") %></span>
