@@ -4,7 +4,8 @@ from django.conf.urls import patterns, include, url
 # There is a course creators admin table.
 from ratelimitbackend import admin
 admin.autodiscover()
-
+from djangoapps.contentstore.views.course import settings_handler0
+from djangoapps.contentstore.views.course import course_index0, get_json_html, courses_json0
 # pylint: disable=bad-continuation
 
 # Pattern to match a course key or a library key
@@ -103,6 +104,10 @@ urlpatterns += patterns(
     url(r'^xblock/{}?$'.format(settings.USAGE_KEY_PATTERN), 'xblock_handler'),
     url(r'^tabs/{}$'.format(settings.COURSE_KEY_PATTERN), 'tabs_handler'),
     url(r'^settings/details/{}$'.format(settings.COURSE_KEY_PATTERN), 'settings_handler'),
+    url(r'^settings/details0/(?P<course_key_string>[^/]+)$', settings_handler0),
+    url(r'^settings/querycoursestructure0/(?P<course_key>[^/]+)$', course_index0),
+    url(r'^settings/courses_json0/$', courses_json0),
+    url(r'^settings/get_json_html/$', get_json_html),
     url(r'^settings/grading/{}(/)?(?P<grader_index>\d+)?$'.format(settings.COURSE_KEY_PATTERN), 'grading_handler'),
     url(r'^settings/advanced/{}$'.format(settings.COURSE_KEY_PATTERN), 'advanced_settings_handler'),
     url(r'^textbooks/{}$'.format(settings.COURSE_KEY_PATTERN), 'textbooks_list_handler'),

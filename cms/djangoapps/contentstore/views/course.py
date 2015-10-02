@@ -90,6 +90,10 @@ from util.milestones_helpers import (
     is_valid_course_key
 )
 
+from opaque_keys.edx.locations import CourseLocator
+
+from django.views.decorators.csrf import csrf_exempt
+
 log = logging.getLogger(__name__)
 
 __all__ = ['course_info_handler', 'course_handler', 'course_listing',
@@ -567,6 +571,84 @@ def course_index(request, course_key):
         })
 
 
+def course_index0(request, course_key):
+    """
+    Display an editable course overview.
+
+    org, course, name: Attributes of the Location for the item to edit
+    """
+    course_id = 'course-v1:Uni-Miskolc+IT.I1.MODUL.0.Hx+2015_T1' if not course_key else course_key
+    if course_id:
+        course_key = CourseLocator.from_string(course_id)
+
+    # A depth of None implies the whole course. The course outline needs this in order to compute has_changes.
+    # A unit may not have a draft version, but one of its components could, and hence the unit itself has changes.
+    with modulestore().bulk_operations(course_key):
+        course_module = get_course_and_check_access(course_key, request.user, depth=None)
+
+        course_structure = _course_outline_json(request, course_module)
+
+        simplified_structure = course_index0_get_simplified_structure(course_structure) \
+            if not request.GET.get('json') == 'full' else course_structure
+
+        return JsonResponse(simplified_structure)
+
+
+def course_index0_get_simplified_structure(course_structure):
+
+    e = {}
+    e["display_name"] = course_structure["display_name"]
+    e["child_info"] = {
+        "display_name": course_structure["child_info"]["display_name"],
+        "children": list()
+    }
+    e1 = list()
+    for c1 in course_structure["child_info"]["children"]:
+        ve1 = {}
+        e2 = list()
+        for c2 in c1["child_info"]["children"]:
+            ve2 = {}
+            e3 = list()
+            for c3 in c2["child_info"]["children"]:
+                e3.append({"display_name": c3["display_name"]})
+
+            ve2["display_name"] = c2["display_name"]
+            ve2["child_info"] = {
+                "display_name": c2["child_info"]["display_name"],
+                "children": e3
+            }
+            e2.append(ve2)
+
+        ve1["display_name"] = c1["display_name"]
+        ve1["child_info"] = {
+            "display_name": c1["child_info"]["display_name"],
+            "children": e2
+        }
+        e1.append(ve1)
+
+    e["child_info"]["children"] = e1
+
+    return e
+
+
+def courses_json0(request):
+    courses, in_process_course_actions = get_courses_accessible_to_user(request)
+    c_json = {}
+    c_list = list()
+    for c in courses:
+        c_list.append({
+            "id": str(c.id),
+            "display_name": c.display_name
+        })
+    c_json["courses"] = c_list
+
+    return JsonResponse(c_json)
+
+
+def get_json_html(request):
+    return render_to_response('json_html.html', {})
+
+
 def get_courses_accessible_to_user(request):
     """
     Try to get all courses by first reversing django groups and fallback to old method if it fails
@@ -1009,6 +1091,139 @@ def settings_handler(request, course_key_string):
                 )
 
 
+@csrf_exempt
+@require_http_methods(("GET", "POST"))
+@expect_json
+def settings_handler0(request, course_key_string):
+    """
+    Course settings for dates and about pages
+    GET
+        html: get the page
+        json: get the CourseDetails model                        encoder=CourseSettingsEncoder
+    PUT
+        json: update the Course and About xblocks through the CourseDetails model
+    """
+    course_key_string = 'course-v1:edX+DemoX+Demo_Course' if not course_key_string else course_key_string
+    course_key = CourseKey.from_string(course_key_string)
+    prerequisite_course_enabled = settings.FEATURES.get('ENABLE_PREREQUISITE_COURSES', False)
+    credit_eligibility_enabled = settings.FEATURES.get('ENABLE_CREDIT_ELIGIBILITY', False)
+    with modulestore().bulk_operations(course_key):
+        course_module = modulestore().get_course(course_key)
+        ## get_course_and_check_access(course_key, request.user)
+        if 'text/html' in request.META.get('HTTP_ACCEPT', '') and request.method == 'GET':
+            upload_asset_url = reverse_course_url('assets_handler', course_key)
+
+            # see if the ORG of this course can be attributed to a 'Microsite'. In that case, the
+            # course about page should be editable in Studio
+            about_page_editable = not microsite.get_value_for_org(
+                course_module.location.org,
+                'ENABLE_MKTG_SITE',
+                settings.FEATURES.get('ENABLE_MKTG_SITE', False)
+            )
+
+            short_description_editable = settings.FEATURES.get('EDITABLE_SHORT_DESCRIPTION', True)
+            settings_context = {
+                'context_course': course_module,
+                'course_locator': course_key,
+                'lms_link_for_about_page': utils.get_lms_link_for_about_page(course_key),
+                'course_image_url': utils.course_image_url(course_module),
+                'details_url': reverse_course_url('settings_handler', course_key),
+                'about_page_editable': about_page_editable,
+                'short_description_editable': short_description_editable,
+                'upload_asset_url': upload_asset_url,
+                'course_handler_url': reverse_course_url('course_handler', course_key),
+                'language_options': settings.ALL_LANGUAGES,
+                'credit_eligibility_enabled': credit_eligibility_enabled,
+                'is_credit_course': False,
+                'show_min_grade_warning': False,
+            }
+            if prerequisite_course_enabled:
+                courses, in_process_course_actions = get_courses_accessible_to_user(request)
+                # exclude current course from the list of available courses
+                courses = [course for course in courses if course.id != course_key]
+                if courses:
+                    courses = _remove_in_process_courses(courses, in_process_course_actions)
+                settings_context.update({'possible_pre_requisite_courses': courses})
+
+            if credit_eligibility_enabled:
+                if is_credit_course(course_key):
+                    # get and all credit eligibility requirements
+                    credit_requirements = get_credit_requirements(course_key)
+                    # pair together requirements with same 'namespace' values
+                    paired_requirements = {}
+                    for requirement in credit_requirements:
+                        namespace = requirement.pop("namespace")
+                        paired_requirements.setdefault(namespace, []).append(requirement)
+
+                    # if 'minimum_grade_credit' of a course is not set or 0 then
+                    # show warning message to course author.
+                    show_min_grade_warning = False if course_module.minimum_grade_credit > 0 else True
+                    settings_context.update(
+                        {
+                            'is_credit_course': True,
+                            'credit_requirements': paired_requirements,
+                            'show_min_grade_warning': show_min_grade_warning,
+                        }
+                    )
+
+            return render_to_response('settings.html', settings_context)
+        elif 'application/json' in request.META.get('HTTP_ACCEPT', ''):
+            if request.method == 'GET':
+                course_details = CourseDetails.fetch(course_key)
+                return JsonResponse(
+                    course_details,
+                    # encoder serializes dates, old locations, and instances
+                    encoder=CourseSettingsEncoder
+                )
+            # For every other possible method type submitted by the caller...
+            else:
+                # if pre-requisite course feature is enabled set pre-requisite course
+                if prerequisite_course_enabled:
+                    prerequisite_course_keys = request.json.get('pre_requisite_courses', [])
+                    if prerequisite_course_keys:
+                        if not all(is_valid_course_key(course_key) for course_key in prerequisite_course_keys):
+                            return JsonResponseBadRequest({"error": _("Invalid prerequisite course key")})
+                        set_prerequisite_courses(course_key, prerequisite_course_keys)
+
+                # If the entrance exams feature has been enabled, we'll need to check for some
+                # feature-specific settings and handle them accordingly
+                # We have to be careful that we're only executing the following logic if we actually
+                # need to create or delete an entrance exam from the specified course
+                if settings.FEATURES.get('ENTRANCE_EXAMS', False):
+                    course_entrance_exam_present = course_module.entrance_exam_enabled
+                    entrance_exam_enabled = request.json.get('entrance_exam_enabled', '') == 'true'
+                    ee_min_score_pct = request.json.get('entrance_exam_minimum_score_pct', None)
+                    # If the entrance exam box on the settings screen has been checked...
+                    if entrance_exam_enabled:
+                        # Load the default minimum score threshold from settings, then try to override it
+                        entrance_exam_minimum_score_pct = float(settings.ENTRANCE_EXAM_MIN_SCORE_PCT)
+                        if ee_min_score_pct:
+                            entrance_exam_minimum_score_pct = float(ee_min_score_pct)
+                        if entrance_exam_minimum_score_pct.is_integer():
+                            entrance_exam_minimum_score_pct = entrance_exam_minimum_score_pct / 100
+                        entrance_exam_minimum_score_pct = unicode(entrance_exam_minimum_score_pct)
+                        # If there's already an entrance exam defined, we'll update the existing one
+                        if course_entrance_exam_present:
+                            exam_data = {
+                                'entrance_exam_minimum_score_pct': entrance_exam_minimum_score_pct
+                            }
+                            update_entrance_exam(request, course_key, exam_data)
+                        # If there's no entrance exam defined, we'll create a new one
+                        else:
+                            create_entrance_exam(request, course_key, entrance_exam_minimum_score_pct)
+
+                    # If the entrance exam box on the settings screen has been unchecked,
+                    # and the course has an entrance exam attached...
+                    elif not entrance_exam_enabled and course_entrance_exam_present:
+                        delete_entrance_exam(request, course_key)
+
+                # Perform the normal update workflow for the CourseDetails model
+                return JsonResponse(
+                    CourseDetails.update_from_json(course_key, request.json, request.user),
+                    encoder=CourseSettingsEncoder
+                )
+
+
 @login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "POST", "PUT", "DELETE"))
@@ -1044,7 +1259,7 @@ def grading_handler(request, course_key_string, grader_index=None):
                     return JsonResponse(
                         CourseGradingModel.fetch(course_key),
                         # encoder serializes dates, old locations, and instances
-                        encoder=CourseSettingsEncoder
+
                     )
                 else:
                     return JsonResponse(CourseGradingModel.fetch_grader(course_key, grader_index))

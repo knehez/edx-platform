@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>interface</title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+
+</head>
+<body>
+
+<style>
+	.kurzus_box {clear: both;margin: 0 0 1em 1em;display: none;}
+	ul li ul { display: none; }
+	a {text-decoration: none;}
+	#foo {position: fixed;top: 50%;left: 50%;}
+</style>
+<nav>
+	<a href="#" onclick="kurzusok();return false;">kurzusok</a>
+</nav>
+<h1></h1>
+<div id="h1_content"></div>
+
+
+<div id="foo"></div>
+<script>
+	function loadingSpinner() {
+		return $('#foo');
+	}
+	var http_domain = 'http://edxteszt.iit.uni-miskolc.hu:8088/';
+	function kurzusok() {
+		$.ajax({
+			beforeSend: function () {
+				//loadingSpinner().show();
+			},
+			headers: {
+				Accept: "tapplication/json",
+				"Content-Type": "application/json"
+			},
+			type: "GET",
+			// url: http_domain + "settings/querycoursestructure0/course-v1:Uni-Miskolc+IT.I1.MODUL.0.Hx+2015_T1",
+			url: http_domain + "settings/courses_json0/",
+			// data: "data",
+			success: function (response) {
+				$('h1').html('Kurzusok');
+				var courses = response["courses"];
+				for (i in courses) {
+					var c = courses[i];
+					$('#h1_content').append(
+							'<a href="#" onclick="kurzus(\'' + c.id + '\', ' + i + ');return false;">' +
+							c.display_name + ' <small>(' + c.id + ')</small>' +
+							'</a><br /><div id="kurzus_' + i + '" class="kurzus_box"></div>'
+					);
+				}
+				//kurzus('course-v1:Uni-Miskolc+IT.S3.UNIX.0.Hx+2015_T1', 24);
+			}
+		})
+	}
+	var htmlBuffer = [];
+	var $c_box;
+	function kurzus(id, i) {
+		console.log('kurzus', id, i);
+		$.ajax({
+			headers: {
+				Accept: "tapplication/json",
+				"Content-Type": "application/json"
+			},
+			type: "GET",
+			url: http_domain + "settings/querycoursestructure0/" + id,
+			// data: "data",
+			success: function (response) {
+				$c_box = $('#kurzus_' + i);
+				$c_box.html('');
+				htmlBuffer = [];
+				$c_box.append(
+						'<button onclick="$(\'#kurzus_' + i + ' ul li ul\').show();">összes kinyit</button>' +
+						'<button onclick="$(\'#kurzus_' + i + ' ul li ul\').hide();">összes becsuk</button>' +
+						'<div class="counter_box"></div>'
+				);
+
+				html_append(response);
+				$c_box.append('<div data-role="main" class="ui-content"><ul data-role="listview">' +
+				htmlBuffer.join('\n') + '</ul></div>');
+				$c_box.show();
+
+				$('#kurzus_' + i + ' .counter_box').html(
+						'Fejezet: ' + $("#kurzus_" + i + " div > ul > li > ul > li").length + ', ' +
+						'Alfejezet: ' + $("#kurzus_" + i + " div > ul > li > ul > li > ul > li").length + ', ' +
+						'Lecke: ' + $("#kurzus_" + i + " div > ul > li > ul > li > ul > li > ul > li").length
+				);
+
+				$(function () {
+					$('#kurzus_' + i + ' li').click(function (e) {
+						$(this).children('ul').slideToggle();
+						e.stopPropagation();
+					});
+				});
+			}
+		})
+	}
+	function html_append(resp) {
+		if (resp.display_name)
+			htmlBuffer.push('<li>' + resp.display_name);
+		if (resp.child_info) {
+			if (resp.child_info.display_name) {
+				//htmlBuffer.push('<h3>' + resp.child_info.display_name + '</h3>');
+				htmlBuffer.push('<ul data-role="listview">');
+			}
+			if (resp.child_info.children.length > 0) {
+				for (i in resp.child_info.children) {
+					html_append(resp.child_info.children[i]);
+				}
+			}
+			if (resp.child_info.display_name) {
+				htmlBuffer.push('</ul><br />');
+			}
+			if (resp.display_name)
+				htmlBuffer.push('</li>');
+		}
+	}
+
+
+	var opts = {
+		lines: 13 // The number of lines to draw
+		, length: 31 // The length of each line
+		, width: 14 // The line thickness
+		, radius: 42 // The radius of the inner circle
+		, scale: 1 // Scales overall size of the spinner
+		, corners: 1 // Corner roundness (0..1)
+		, color: '#000' // #rgb or #rrggbb or array of colors
+		, opacity: 0.25 // Opacity of the lines
+		, rotate: 0 // The rotation offset
+		, direction: 1 // 1: clockwise, -1: counterclockwise
+		, speed: 1 // Rounds per second
+		, trail: 60 // Afterglow percentage
+		, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+		, zIndex: 2e9 // The z-index (defaults to 2000000000)
+		, className: 'spinner' // The CSS class to assign to the spinner
+		, top: '50%' // Top position relative to parent
+		, left: '50%' // Left position relative to parent
+		, shadow: false // Whether to render a shadow
+		, hwaccel: false // Whether to use hardware acceleration
+		, position: 'absolute' // Element positioning
+	};
+	var target = document.getElementById('foo');
+	var spinner = new Spinner(opts).spin(target);
+	loadingSpinner().hide();
+
+	$(document).ajaxSend(function () {
+		console.log("Triggered ajaxSend handler.");
+		loadingSpinner().show();
+	});
+	$(document).ajaxComplete(function () {
+		console.log("Triggered ajaxComplete handler.");
+		loadingSpinner().hide();
+	});
+
+
+
+	kurzusok();
+</script>
+</body>
+</html>
