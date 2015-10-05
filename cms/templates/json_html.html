@@ -31,18 +31,17 @@
 	function loadingSpinner() {
 		return $('#foo');
 	}
-	var http_domain = 'http://edxteszt.iit.uni-miskolc.hu:8088/';
+	var http_domain = '/';
 	function kurzusok() {
 		$.ajax({
 			beforeSend: function () {
 				//loadingSpinner().show();
 			},
 			headers: {
-				Accept: "tapplication/json",
+				Accept: "application/json",
 				"Content-Type": "application/json"
 			},
 			type: "GET",
-			// url: http_domain + "settings/querycoursestructure0/course-v1:Uni-Miskolc+IT.I1.MODUL.0.Hx+2015_T1",
 			url: http_domain + "settings/courses_json0/",
 			// data: "data",
 			success: function (response) {
@@ -66,7 +65,7 @@
 		console.log('kurzus', id, i);
 		$.ajax({
 			headers: {
-				Accept: "tapplication/json",
+				Accept: "application/json",
 				"Content-Type": "application/json"
 			},
 			type: "GET",
@@ -103,11 +102,16 @@
 		})
 	}
 	function html_append(resp) {
-		if (resp.display_name)
-			htmlBuffer.push('<li>' + resp.display_name);
+		if (resp.display_name){
+			var a = resp.studio_url ?
+						'<a href="'+ resp.studio_url +'" target="_blank">'+ resp.display_name +'</a>' :
+						resp.display_name;
+			htmlBuffer.push('<li>' + a);
+		}
+
 		if (resp.child_info) {
 			if (resp.child_info.display_name) {
-				//htmlBuffer.push('<h3>' + resp.child_info.display_name + '</h3>');
+				// htmlBuffer.push('<h3>' + resp.child_info.display_name + '</h3>');
 				htmlBuffer.push('<ul data-role="listview">');
 			}
 			if (resp.child_info.children.length > 0) {

@@ -610,7 +610,10 @@ def course_index0_get_simplified_structure(course_structure):
             ve2 = {}
             e3 = list()
             for c3 in c2["child_info"]["children"]:
-                e3.append({"display_name": c3["display_name"]})
+                e3.append({
+                    "display_name": c3["display_name"],
+                    "studio_url": c3["studio_url"]
+                })
 
             ve2["display_name"] = c2["display_name"]
             ve2["child_info"] = {
