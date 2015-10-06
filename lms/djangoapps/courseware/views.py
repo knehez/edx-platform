@@ -201,7 +201,7 @@ def courses(request):
 
     set_filtered_config_list(courses_list)
 
-    req_data = {'search_text': '' if not request.GET.get('search_text') else str(request.GET.get('search_text'))}
+    req_data = {'search_text': '' if not request.GET.get('search_text') else unicode(request.GET.get('search_text'))}
 
     return render_to_response(
         "courseware/courses.html",
