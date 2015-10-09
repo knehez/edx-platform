@@ -2100,8 +2100,8 @@ XDOMAIN_PROXY_CACHE_TIMEOUT = 60 * 15
 
 REGISTRATION_EXTRA_FIELDS = {
     'level_of_education': 'optional',
-    'gender': 'optional',
-    'year_of_birth': 'optional',
+    'gender': 'required',
+    'year_of_birth': 'required',
     'mailing_address': 'optional',
     'goals': 'optional',
     'honor_code': 'required',

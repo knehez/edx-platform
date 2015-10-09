@@ -38,6 +38,12 @@ from .accounts import (
 from .accounts.api import check_account_exists
 from .serializers import UserSerializer, UserPreferenceSerializer
 
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_names, set_has_profile_image
+from openedx.core.djangoapps.profile_images.images import validate_uploaded_image, create_profile_images, remove_profile_images, ImageValidationError
+import datetime
+from django.utils.timezone import utc
+import random
+
 
 class LoginSessionView(APIView):
     """HTTP end-points for logging in users. """
@@ -306,9 +312,32 @@ class RegistrationView(APIView):
             }
             return JsonResponse(errors, status=400)
 
+        self.add_default_profile_image(data["username"], data["gender"], data["year_of_birth"])
+
         response = JsonResponse({"success": True})
         set_logged_in_cookies(request, response, user)
         return response
+
+    def add_default_profile_image(self, username, gender, year_of_birth):
+        if (year_of_birth == ''):
+            return
+
+        g = ['male', 'female']
+        r_int = random.randint(1, 7)
+        file_prefix = random.choice(g) if gender == '' else g[0] if gender == 'm' else g[1]
+
+        file_path = '/edx/app/edxapp/themes/memooc/static/images/avatars/%s_%s.jpg' % (file_prefix, r_int)
+        uploaded_file = open(file_path, 'r+')
+        profile_image_names = get_profile_image_names(username)
+        create_profile_images(uploaded_file, profile_image_names)
+        set_has_profile_image(username, True, self._make_upload_dt())
+
+    def _make_upload_dt(self):
+        """
+        Generate a server-side timestamp for the upload.  This is in a separate
+        function so its behavior can be overridden in tests.
+        """
+        return datetime.datetime.utcnow().replace(tzinfo=utc)
 
     def _add_email_field(self, form_desc, required=True):
         """Add an email field to a form description.
