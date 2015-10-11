@@ -327,7 +327,7 @@ class RegistrationView(APIView):
         file_prefix = random.choice(g) if gender == '' else g[0] if gender == 'm' else g[1]
 
         file_path = '/edx/app/edxapp/themes/memooc/static/images/avatars/%s_%s.jpg' % (file_prefix, r_int)
-        uploaded_file = open(file_path, 'r+')
+        uploaded_file = open(file_path, 'r')
         profile_image_names = get_profile_image_names(username)
         create_profile_images(uploaded_file, profile_image_names)
         set_has_profile_image(username, True, self._make_upload_dt())
