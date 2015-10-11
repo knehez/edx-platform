@@ -387,8 +387,8 @@ FEATURES = {
         # Note: Ensure 'CUSTOM_COURSE_URLS' has a matching value in cms/envs/common.py
         'CUSTOM_COURSE_URLS': False,
         'DASHBOARD_FACEBOOK': True,
-        'CERTIFICATE_FACEBOOK': False,
-        'CERTIFICATE_FACEBOOK_TEXT': None,
+        'CERTIFICATE_FACEBOOK': True,
+        'CERTIFICATE_FACEBOOK_TEXT': True,
         'DASHBOARD_TWITTER': True,
         'DASHBOARD_TWITTER_TEXT': "Twitter"
     },
