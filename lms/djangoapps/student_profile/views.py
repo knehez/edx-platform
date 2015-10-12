@@ -7,7 +7,7 @@ from django_countries import countries
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, HttpResponse
 
 from edxmako.shortcuts import render_to_response
 from openedx.core.djangoapps.user_api.accounts.api import get_account_settings
@@ -17,8 +17,40 @@ from openedx.core.djangoapps.user_api.preferences.api import get_user_preference
 from student.models import User
 from microsite_configuration import microsite
 
-from django.utils.translation import ugettext as _
 
+
+@login_required
+@require_http_methods(['GET'])
+def learner_image(request, username):
+    """Get the user image for the specified username.
+
+    Args:
+        request (HttpRequest)
+        username (str): username of user whose image is requested.
+
+    Returns:
+        HttpResponse: 200 if the page was sent successfully
+        HttpResponse: 302 if not logged in (redirect to login page)
+        HttpResponse: 405 if using an unsupported HTTP method
+    Raises:
+        Http404: 404 if the specified user is not authorized or does not exist
+
+    """
+
+    try:
+        account_settings_data = get_account_settings(request.user, username)
+        full_path = '/edx/var/edxapp' + account_settings_data['profile_image']['image_url_medium'].split('?')[0]
+        with open(full_path, "rb") as f:
+            return HttpResponse(f.read(), mimetype="image/jpeg")
+    except IOError:
+        try:
+            full_path = '/edx/var/edxapp/staticfiles/images/default-theme/default-profile_50.png'
+            with open(full_path, "rb") as f:
+                return HttpResponse(f.read(), mimetype="image/png")
+        except:
+            raise Http404
+    except:
+        raise Http404
 
 @login_required
 @require_http_methods(['GET'])

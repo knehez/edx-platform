@@ -439,6 +439,7 @@ if settings.COURSEWARE_ENABLED:
 
         # Student profile
         url(r'^u/(?P<username>[\w.@+-]+)$', 'student_profile.views.learner_profile', name='learner_profile'),
+        url(r'^uimg/(?P<username>[\w.@+-]+)$', 'student_profile.views.learner_image', name='learner_image'),
 
         # Student Notes
         url(r'^courses/{}/edxnotes'.format(settings.COURSE_ID_PATTERN),

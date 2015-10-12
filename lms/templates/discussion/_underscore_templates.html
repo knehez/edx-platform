@@ -129,7 +129,7 @@ from django_comment_client.permissions import has_permission
           <div class="post-labels">
               <span class="post-label-reported"><i class="icon fa fa-flag"></i>${_("Reported")}</span>
           </div>
-          </div>
+      </div>
           <div class="response-header-actions">
             ${"""<%=
                 _.template(
@@ -596,6 +596,7 @@ ${secondaryAction("delete", "remove", _("Delete"))}
 
 <script aria-hidden="true" type="text/template" id="post-user-display-template">
     ${"<% if (username) { %>"}
+	<img class="post_user_profile_img" alt="profile_img" src="/uimg/${'<%- username %>'}">
     <a href="${'<%- user_url %>'}" class="username">${'<%- username %>'}</a>
         ${"<% if (is_community_ta) { %>"}
         <span class="user-label-community-ta">${_("Community TA")}</span>
