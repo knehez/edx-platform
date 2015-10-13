@@ -796,8 +796,8 @@ CMS_BASE = 'localhost:8001'
 
 # Site info
 SITE_ID = 1
-SITE_NAME = "example.com"
-HTTPS = 'on'
+SITE_NAME = "memooc.hu"
+HTTPS = 'off'
 ROOT_URLCONF = 'lms.urls'
 # NOTE: Please set ALLOWED_HOSTS to some sane value, as we do not allow the default '*'
 
