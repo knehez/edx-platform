@@ -18,13 +18,13 @@ class DataDownload
     #  this object to call event handlers like 'onClickTitle'
     @$section.data 'wrapper', @
     # gather elements
-    @$list_studs_btn = @$section.find("input[name='list-profiles']'")
-    @$list_studs_csv_btn = @$section.find("input[name='list-profiles-csv']'")
+    @$list_studs_btn = @$section.find("input[name='list-profiles']")
+    @$list_studs_csv_btn = @$section.find("input[name='list-profiles-csv']")
     @$list_may_enroll_csv_btn = @$section.find("input[name='list-may-enroll-csv']")
-    @$list_anon_btn = @$section.find("input[name='list-anon-ids']'")
-    @$grade_config_btn = @$section.find("input[name='dump-gradeconf']'")
-    @$calculate_grades_csv_btn = @$section.find("input[name='calculate-grades-csv']'")
-    @$problem_grade_report_csv_btn = @$section.find("input[name='problem-grade-report']'")
+    @$list_anon_btn = @$section.find("input[name='list-anon-ids']")
+    @$grade_config_btn = @$section.find("input[name='dump-gradeconf']")
+    @$calculate_grades_csv_btn = @$section.find("input[name='calculate-grades-csv']")
+    @$problem_grade_report_csv_btn = @$section.find("input[name='problem-grade-report']")
 
     # response areas
     @$download                        = @$section.find '.data-download-container'

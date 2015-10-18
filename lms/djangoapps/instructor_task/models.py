@@ -374,7 +374,7 @@ class LocalFSReportStore(ReportStore):
 
     def path_to(self, course_id, filename):
         """Return the full path to a given file for a given course."""
-        return os.path.join(self.root_path, urllib.quote(course_id.to_deprecated_string(), safe=''), filename)
+        return os.path.join(self.root_path, course_id.to_deprecated_string(), filename)
 
     def store(self, course_id, filename, buff, config=None):  # pylint: disable=unused-argument
         """
@@ -397,6 +397,7 @@ class LocalFSReportStore(ReportStore):
         write this data out.
         """
         output_buffer = StringIO()
+        output_buffer.writelines("sep=,\n")
         csvwriter = csv.writer(output_buffer)
         csvwriter.writerows(self._get_utf8_encoded_rows(rows))
 
@@ -417,6 +418,6 @@ class LocalFSReportStore(ReportStore):
         files.sort(key=lambda (filename, full_path): os.path.getmtime(full_path), reverse=True)
 
         return [
-            (filename, ("file://" + urllib.quote(full_path)))
+            (filename, ("/" + full_path.split('/edx/var/edxapp/')[1]))
             for filename, full_path in files
         ]
