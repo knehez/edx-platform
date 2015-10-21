@@ -8,7 +8,6 @@ course_mode_class = course_mode if course_mode else ''
 %>
 
 <main class="accomplishment accomplishment-main">
-
     <div class="wrapper-accomplishment-rendering">
         <div class="accomplishment-rendering">
             <span class="deco-corner deco-corner-tl"></span>
@@ -20,13 +19,13 @@ course_mode_class = course_mode if course_mode else ''
                 <span class="accomplishment-type-symbol">
                     <img class="src" src="/static/certificates/images/ico-${course_mode_class}.png" alt="">
                 </span>
-				<img alt="uni-miskolc" src="/static/themes/memooc/images/MeMOOC/logo_memooc-min.png" style="width: 200px" />
+				<img class="uni-miskolc_img" alt="uni-miskolc" src="/static/themes/memooc/images/MeMOOC/logo_memooc-min.png" />
                 <span class="accomplishment-type-label hd-4">${document_title}</span>
             </div>
 
-            <div class="wrapper-statement-and-signatories">
-                <div class="accomplishment-statement">
-                    <p class="accomplishment-statement-lead">
+            <div class="wrapper-statement-and-signatories0">
+                <div class="accomplishment-statement__print">
+                    <p class="accomplishment-statement-lead0">
                         <strong class="accomplishment-recipient hd-1 emphasized">${accomplishment_copy_name}</strong>
                         <span class="accomplishment-summary copy copy-lead">${accomplishment_copy_description_full}</span>
 
@@ -65,8 +64,8 @@ course_mode_class = course_mode if course_mode else ''
                 % endif
             </div>
 
-            <div class="accomplishment-orgs">
-                <h3 class="accomplishment-orgs-title sr-only">${_("Supported by the following organizations")}</h3>
+            <div class="accomplishment-orgs0">
+                <h3 class="accomplishment-orgs-title sr-only0">${_("Supported by the following organizations")}</h3>
 
                 <ul class="wrapper-orgs list-orgs">
                     <!--<li class="wrapper-organization">-->
@@ -74,9 +73,9 @@ course_mode_class = course_mode if course_mode else ''
                             <!--<img class="organization-logo" src="${static.url('/static/certificates/images/logo-edx.png')}" alt="${platform_name}">-->
                         <!--</div>-->
                     <!--</li>-->
- 					<li class="wrapper-organization uni_miskolc">
+ 					<li class="wrapper-organization0 uni_miskolc">
                         <div class="organization organization-edX">
-                            <img class="organization-logo" src="/static/themes/memooc/images/MeMOOC/UoM_500.png" alt="uni-miskolc">
+                            <img class="organization-logo0 uni-miskolc_img500" src="/static/themes/memooc/images/MeMOOC/UoM_500.png" alt="uni-miskolc">
                         </div>
                     </li>
 

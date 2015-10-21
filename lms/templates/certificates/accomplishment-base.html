@@ -25,6 +25,21 @@ course_mode_class = course_mode if course_mode else ''
 		.layout-accomplishment .accomplishment-rendering {border-radius: 2em;border: gray solid 0.1em;}
 		.certificate .accomplishment-rendering .deco-corner {display: none;}
 		.layout-accomplishment .accomplishment-orgs .wrapper-organization.uni_miskolc {width: 30%;}
+		.accomplishment-rendering .accomplishment-orgs-title {display: none;}
+		.accomplishment-rendering .accomplishment-orgs-title {border-bottom: 0;}
+
+		.accomplishment-statement__print p {text-align: center;}
+		.uni-miskolc_img {width: 200px;}
+		.uni_miskolc {list-style: none;text-align: center;}
+		.uni_miskolc img {height: 4em;}
+
+		@media print {
+			html, body {height: auto;}
+			.accomplishment-rendering .accomplishment-orgs-title {font-size: .8em;color: gray;display: none;}
+			.uni-miskolc_img {width: 130px;}
+			.uni_miskolc img {height: 2em;}
+			.accomplishment-date .label {display: inline !important;}
+		}
 	</style>
 </head>
 
