@@ -20,7 +20,7 @@ course_mode_class = course_mode if course_mode else ''
                 <span class="accomplishment-type-symbol">
                     <img class="src" src="/static/certificates/images/ico-${course_mode_class}.png" alt="">
                 </span>
-
+				<img alt="uni-miskolc" src="/static/themes/memooc/images/MeMOOC/logo_memooc-min.png" style="width: 200px" />
                 <span class="accomplishment-type-label hd-4">${document_title}</span>
             </div>
 
@@ -31,8 +31,8 @@ course_mode_class = course_mode if course_mode else ''
                         <span class="accomplishment-summary copy copy-lead">${accomplishment_copy_description_full}</span>
 
                         <span class="accomplishment-course hd-1 emphasized">
-                            <span class="accomplishment-course-org">${accomplishment_copy_course_org}  </span>
-                            <span class="accomplishment-course-number"></span>:
+                            <!--<span class="accomplishment-course-org">${accomplishment_copy_course_org}  </span>-->
+                            <!--<span class="accomplishment-course-number"></span>:-->
                             <span class="accomplishment-course-name">${accomplishment_course_title}</span>
                         </span>
                     </p>
@@ -69,19 +69,24 @@ course_mode_class = course_mode if course_mode else ''
                 <h3 class="accomplishment-orgs-title sr-only">${_("Supported by the following organizations")}</h3>
 
                 <ul class="wrapper-orgs list-orgs">
-                    <li class="wrapper-organization">
+                    <!--<li class="wrapper-organization">-->
+                        <!--<div class="organization organization-edX">-->
+                            <!--<img class="organization-logo" src="${static.url('/static/certificates/images/logo-edx.png')}" alt="${platform_name}">-->
+                        <!--</div>-->
+                    <!--</li>-->
+ 					<li class="wrapper-organization uni_miskolc">
                         <div class="organization organization-edX">
-                            <img class="organization-logo" src="${static.url('/static/certificates/images/logo-edx.png')}" alt="${platform_name}">
+                            <img class="organization-logo" src="/static/themes/memooc/images/MeMOOC/UoM_500.png" alt="uni-miskolc">
                         </div>
                     </li>
 
-                    % if certificate_data and certificate_data.get('org_logo_path', ''):
-                    <li class="wrapper-organization">
-                        <div class="organization">
-                            <img class="organization-logo" src="${static.url(certificate_data['org_logo_path'])}" alt="${platform_name}">
-                        </div>
-                    </li>
-                    % endif
+                    <!--% if certificate_data and certificate_data.get('org_logo_path', ''):-->
+                    <!--<li class="wrapper-organization">-->
+                        <!--<div class="organization">-->
+                            <!--<img class="organization-logo" src="${static.url(certificate_data['org_logo_path'])}" alt="${platform_name}">-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--% endif-->
                 </ul>
             </div>
         </div>
@@ -96,7 +101,8 @@ course_mode_class = course_mode if course_mode else ''
                     <dt class="label sr-only">Awarded to:</dt>
                     <dd class="value copy copy-meta">
                         <span class="recipient-img">
-                            <img class="src" src="/static/certificates/images/demo-user-profile.png" alt="">
+                            <!--<img class="src" src="/static/certificates/images/demo-user-profile.png" alt="">-->
+                            <img class="src" src="/uimg/${accomplishment_copy_username}" alt="">
                         </span>
                         <div class="recipient-details">
                             <h3 class="recipient-name">${accomplishment_copy_name}</h3>

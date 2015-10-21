@@ -19,6 +19,13 @@ course_mode_class = course_mode if course_mode else ''
     <title>${document_title}</title>
 
     <%static:css group='style-certificates'/>
+
+	<style>
+		.layout-accomplishment.certificate-honor .accomplishment-rendering .accomplishment-signatories .signatory .signatory-signature {display: block;}
+		.layout-accomplishment .accomplishment-rendering {border-radius: 2em;border: gray solid 0.1em;}
+		.certificate .accomplishment-rendering .deco-corner {display: none;}
+		.layout-accomplishment .accomplishment-orgs .wrapper-organization.uni_miskolc {width: 30%;}
+	</style>
 </head>
 
 <body class="layout-accomplishment view-valid-accomplishment ${dir_rtl} ${document_body_class} certificate certificate-${course_mode_class}" data-view="valid-accomplishment">

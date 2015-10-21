@@ -412,7 +412,8 @@ def _update_certificate_context(context, course, user, user_certificate):
     )
 
     # Translators:  This text is bound to the HTML 'title' element of the page and appears in the browser title bar
-    context['document_title'] = _("{partner_name} {course_number} Certificate | {platform_name}").format(
+    # context['document_title'] = _("{partner_name} {course_number} Certificate | {platform_name}").format(
+    context['document_title'] = _("{platform_name} | Certificate").format(
         partner_name=course.org,
         course_number=course.number,
         platform_name=platform_name
