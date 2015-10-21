@@ -21,7 +21,7 @@ course_mode_class = course_mode if course_mode else ''
     <%static:css group='style-certificates'/>
 
 	<style>
-		.layout-accomplishment.certificate-honor .accomplishment-rendering .accomplishment-signatories .signatory .signatory-signature {display: block;}
+		.layout-accomplishment.certificate-honor .accomplishment-rendering div .signatory .signatory-signature {display: block;}
 		.layout-accomplishment .accomplishment-rendering {border-radius: 2em;border: gray solid 0.1em;}
 		.certificate .accomplishment-rendering .deco-corner {display: none;}
 		.layout-accomplishment .accomplishment-orgs .wrapper-organization.uni_miskolc {width: 30%;}
@@ -33,13 +33,22 @@ course_mode_class = course_mode if course_mode else ''
 		.uni_miskolc {list-style: none;text-align: center;}
 		.uni_miskolc img {height: 4em;}
 
+		.list-signatories {text-align: center;border-bottom: 0.125rem solid #e6ebed;}
+		.signatory {text-align: center;width: 22%;display: inline-block;vertical-align: text-top;}
+		.signatory .signatory-signature {width: 70%;display: block;margin: 0 auto;}
+
+		.wrapper-orgs {padding: 2em 0 0 0;}
+
 		@media print {
-			html, body {height: auto;}
+			html, body {height: auto;text-align: center;}
 			.accomplishment-rendering .accomplishment-orgs-title {font-size: .8em;color: gray;display: none;}
 			.uni-miskolc_img {width: 130px;}
 			.uni_miskolc img {height: 2em;}
 			.accomplishment-date .label {display: inline !important;}
+			.wrapper-statement-and-signatories0 div {text-align: center;}
+			.signatory .hd-5 {font-size: .8em;}
 		}
+
 	</style>
 </head>
 

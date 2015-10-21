@@ -320,7 +320,7 @@ def _update_certificate_context(context, course, user, user_certificate):
 
     # Translators:  The format of the date includes the full name of the month
     context['certificate_date_issued'] = _('{month} {day}, {year}').format(
-        month=user_certificate.modified_date.strftime("%B"),
+        month=user_certificate.modified_date.strftime("%m"),
         day=user_certificate.modified_date.day,
         year=user_certificate.modified_date.year
     )
@@ -329,11 +329,12 @@ def _update_certificate_context(context, course, user, user_certificate):
     accd_platform_name_html = '<span class="detail--company">{platform_name}</span>'.format(platform_name=platform_name)
     # Translators: This line appears on the certificate after the name of a course, and provides more
     # information about the organizations providing the course material to platform users
-    context['accomplishment_copy_course_description'] = _('a course of study offered by {partner_name}, '
-                                                          'through {platform_name}.').format(
-        partner_name=accd_course_org_html,
-        platform_name=accd_platform_name_html
-    )
+    # context['accomplishment_copy_course_description'] = _('a course of study offered by {partner_name}, '
+    #                                                       'through {platform_name}.').format(
+    #     partner_name=accd_course_org_html,
+    #     platform_name=accd_platform_name_html
+    # )
+    context['accomplishment_copy_course_description'] = _('a course of study offered by MeMOOC.')
 
     # Translators: Accomplishments describe the awards/certifications obtained by students on this platform
     context['accomplishment_copy_about'] = _('About {platform_name} Accomplishments').format(
@@ -421,12 +422,14 @@ def _update_certificate_context(context, course, user, user_certificate):
 
     # Translators:  This text fragment appears after the student's name (displayed in a large font) on the certificate
     # screen.  The text describes the accomplishment represented by the certificate information displayed to the user
+    # context['accomplishment_copy_description_full'] = _("successfully completed, received a passing grade, and was "
+    #                                                     "awarded a {platform_name} {certificate_type} "
+    #                                                     "Certificate of Completion in ").format(
+    #     platform_name=platform_name,
+    #     certificate_type=context.get("certificate_type")
+    # )
     context['accomplishment_copy_description_full'] = _("successfully completed, received a passing grade, and was "
-                                                        "awarded a {platform_name} {certificate_type} "
-                                                        "Certificate of Completion in ").format(
-        platform_name=platform_name,
-        certificate_type=context.get("certificate_type")
-    )
+                                                        "awarded a MeMOOC Certificate of Completion in ")
 
     certificate_type_description = get_certificate_description(user_certificate.mode, certificate_type, platform_name)
     if certificate_type_description:
