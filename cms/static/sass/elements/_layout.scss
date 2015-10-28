@@ -106,7 +106,7 @@
         @extend %cont-truncated;
         display: inline-block;
         vertical-align: bottom; // correct for extra padding in FF
-        max-width: 250px;
+        max-width: 100%;
         color: $gray;
 
         &.navigation-current {
