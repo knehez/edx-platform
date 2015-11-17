@@ -53,7 +53,8 @@ def marketing_link(name):
         if link_map[name] is not None:
             return reverse(link_map[name])
     else:
-        log.warning("Cannot find corresponding link for name: {name}".format(name=name))
+        # TODO: MeMOOC MKTG_URL_LINK_MAP marketing links block page load
+        # log.warning("Cannot find corresponding link for name: {name}".format(name=name))
         return '#'
 
 

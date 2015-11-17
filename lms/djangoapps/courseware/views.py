@@ -218,13 +218,27 @@ def filtered_courses_list(request, courses_list):
     get_request(request)
     v = get_request().GET
 
-    if not get_request().session.get('filter_courses', False):
-        get_request().session['filter_courses'] = {}
+    data = {}
+    if v.get('filter_courses'):
+        filter_courses = v.get('filter_courses').split('|')
+        order = sorted(filter_conf.items(), key=lambda x: x[1].get("order"))
+        i = 0
+        for val in order:
+            value = filter_courses[i] if len(filter_courses) > i else "all"
+            data[val[0]] = {"key": val[0], "list_key": value}
+            i += 1
 
     if v.get('key'):
-        get_request().session['filter_courses'][v.get('key')] = v
+        data[v.get('key')] = v
 
-    data = get_request().session['filter_courses']
+    # cache problema vegett lett lecserelve
+    # if not get_request().session.get('filter_courses', False):
+    #     get_request().session['filter_courses'] = {}
+    #
+    # if v.get('key'):
+    #     get_request().session['filter_courses'][v.get('key')] = v
+    #
+    # data = get_request().session['filter_courses']
 
     courses_list = filter_cl(courses_list, data)
 
