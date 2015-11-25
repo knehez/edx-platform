@@ -89,6 +89,7 @@ from courseware.url_helpers import get_redirect_url
 from collections import OrderedDict
 
 import re
+import copy
 from datetime import timedelta
 
 log = logging.getLogger("edx.courseware")
@@ -120,7 +121,7 @@ def user_groups(user):
 
     return group_names
 
-filter_conf = {
+filter_conf_base = {
     "lang": {
         "order": 1,
         "title": "Language",
@@ -178,6 +179,7 @@ filter_conf = {
         "cleaning_filter_list": ""
     }
 }
+filter_conf = copy.deepcopy(filter_conf_base)
 filter_tmp = {}
 
 @ensure_csrf_cookie
@@ -215,14 +217,17 @@ def courses(request):
 
 
 def filtered_courses_list(request, courses_list):
+    global filter_conf
     get_request(request)
     v = get_request().GET
+    filter_courses = v.get('filter_courses')
+    filter_conf = copy.deepcopy(filter_conf_base)
 
     data = {}
-    if v.get('filter_courses'):
-        filter_courses = v.get('filter_courses').split('|')
-        order = sorted(filter_conf.items(), key=lambda x: x[1].get("order"))
+    if filter_courses:
+        filter_courses = filter_courses.split('|')
         i = 0
+        order = sorted(filter_conf.items(), key=lambda x: x[1].get("order"))
         for val in order:
             value = filter_courses[i] if len(filter_courses) > i else "all"
             data[val[0]] = {"key": val[0], "list_key": value}
