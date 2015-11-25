@@ -1,6 +1,6 @@
 /* NOTE: This file, which loads all necessary fonts for rendering Studio UI, is 1 of 3 CSS files compiled in our production pipeline  */
 /* No subsetting. */
-
+/*
 @font-face {
   font-family: 'Open Sans';
   src: url('../fonts/OpenSans/OpenSans-Light-webfont.eot');
@@ -88,3 +88,4 @@
   font-weight: 700;
   font-style: italic;
 }
+*/
